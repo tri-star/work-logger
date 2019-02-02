@@ -1,0 +1,10 @@
+/.idea
+/.vagrant
+/.vscode
+/data
+/node_modules
+/public/css
+/public/hot
+/public/js
+/public/storage
+/vendor

@@ -1,0 +1,67 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "test": "node ./node_modules/jest/bin/jest.js",
+        "test-watch": "node ./node_modules/jest/bin/jest.js --watch",
+        "lint-all": "node ./node_modules/eslint/bin/eslint.js --fix --ignore-path=.eslintignore ."
+    },
+    "devDependencies": {
+        "@babel/core": "^7.2.2",
+        "@babel/preset-env": "^7.2.3",
+        "@vue/test-utils": "^1.0.0-beta.28",
+        "axios": "^0.18",
+        "babel-core": "7.0.0-bridge.0",
+        "babel-eslint": "^10.0.1",
+        "babel-jest": "^23.6.0",
+        "babel-preset-power-assert": "^3.0.0",
+        "bootstrap": "^4.0.0",
+        "browser-sync": "^2.26.3",
+        "browser-sync-webpack-plugin": "2.0.1",
+        "cross-env": "^5.1",
+        "eslint": "^5.12.0",
+        "eslint-config-prettier": "^3.4.0",
+        "eslint-config-vue": "^2.0.2",
+        "eslint-plugin-prettier": "^3.0.1",
+        "eslint-plugin-vue": "^5.1.0",
+        "expect": "^23.6.0",
+        "jest": "^23.6.0",
+        "jquery": "^3.2",
+        "jsdom": "^13.1.0",
+        "jsdom-global": "^3.0.2",
+        "laravel-mix": "^4.0.7",
+        "lodash": "^4.17.5",
+        "mocha": "^5.2.0",
+        "mocha-webpack": "^1.1.0",
+        "moxios": "^0.4.0",
+        "popper.js": "^1.12",
+        "power-assert": "^1.6.1",
+        "prettier": "^1.15.3",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.15.2",
+        "sass-loader": "^7.1.0",
+        "vue": "^2.5.22",
+        "vue-jest": "^3.0.2",
+        "vue-test-utils": "^1.0.0-beta.11"
+    },
+    "dependencies": {
+        "css-loader": "^2.1.0",
+        "material-design-icons-iconfont": "^4.0.4",
+        "vue-router": "^3.0.2",
+        "vue-template-compiler": "^2.5.22",
+        "vuetify": "^1.4.4",
+        "vuex": "^3.0.1"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.js$": "babel-jest",
+            "^.+\\.vue$": "vue-jest"
+        }
+    }
+}

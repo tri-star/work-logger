@@ -1,0 +1,41 @@
+- name: Selinuxは無効化されていること
+  selinux: state=disabled
+
+- name: 開発環境ではiptables(firewalld)は無効化されていること
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+  when: stage == 'development'
+
+- name: 日本語のロケールがインストールされていること
+  shell: locale -a | grep ja
+  register: is_japanese_locale_exists
+  ignore_errors: True
+  changed_when: false
+
+- name: 日本語のロケールをインストール
+  shell: yum reinstall -y glibc-common
+  when: is_japanese_locale_exists.stdout == ''
+
+- name: 日本語のロケールが設定されていること
+  shell: localectl set-locale LANG=ja_JP.utf8
+  # TODO: 変更された場合のみ"changed"になるように
+
+- name: タイムゾーンが日本であること
+  timezone:
+    name: Asia/Tokyo
+
+- name: EPELリポジトリがインストールされていること
+  yum: name=epel-release
+
+- name: 基本パッケージがインストール済であること
+  yum:
+    name:
+    - less
+    - vim
+    - curl
+    - git
+    - python
+    - python-pip
+    - python-devel

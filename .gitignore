@@ -1,0 +1,17 @@
+/.idea
+/.vagrant
+/.vscode
+/data
+/node_modules
+/public/css
+/public/fonts
+/public/hot
+/public/js
+/public/mix-manifest.json
+/public/storage
+/storage/*.key
+/vendor
+.env
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log

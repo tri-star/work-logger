@@ -1,0 +1,40 @@
+- name: Check Nodejs installed
+  stat: path=/usr/bin/node
+  register: node_stat_result
+
+- name: Install Nodejs repository
+  shell: curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash -
+  when: not node_stat_result.stat.exists
+
+- name: Install Nodejs
+  yum:
+    name:
+    - nodejs
+  when: not node_stat_result.stat.exists
+
+- name: Check yarn installed
+  become: false
+  shell: which yarn
+  register: is_yarn_installed
+  changed_when: is_yarn_installed.rc != 0
+  ignore_errors: True
+
+- name: Install yarn
+  become: false
+  shell: curl -o- -L https://yarnpkg.com/install.sh | bash
+  when: is_yarn_installed.rc != 0
+
+
+- name: Ensure cross-env exists.
+  become: false
+  shell: which cross-env
+  register: is_cross_env_installed
+  changed_when: is_cross_env_installed.rc != 0
+  ignore_errors: True
+
+
+- name: Install cross-env
+  become: false
+  shell: ~/.yarn/bin/yarn global add cross-env
+  when: is_cross_env_installed.rc != 0
+

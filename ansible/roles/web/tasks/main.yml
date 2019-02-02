@@ -1,0 +1,7 @@
+# 環境の基本設定
+- include: init.yml
+
+# 各種ミドルウェアの初期化
+- include: nginx.yml
+- include: nodejs.yml
+- include: php.yml

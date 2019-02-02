@@ -1,0 +1,22 @@
+# ------------------------------------------------------
+# 環境
+stage: "development"
+env: "vagrant"
+project_root: /vagrant
+app_user: vagrant
+
+# ------------------------------------------------------
+# nginx
+
+# ------------------------------------------------------
+# PHP
+app_key: "base64:GDHMDGMgP2kpi6e2gJ3mKUeuhXLqOKuRbyEIw6JKdaY="  # 外部環境ではVaultで暗号化する
+
+# ------------------------------------------------------
+# MySQL
+db_host: "127.0.0.1"
+db_port: 3306
+db_name: "work_logger"
+db_user: "work_logger"
+db_pass: "secret"  # 外部環境の場合はVaultで暗号化する
+test_db_name: "work_logger_test"
