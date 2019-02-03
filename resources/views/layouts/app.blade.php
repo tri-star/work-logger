@@ -26,19 +26,36 @@
 <div id="app">
 
     <v-app>
-        <v-navigation-drawer app absolute temporary>
+        <v-navigation-drawer app absolute :mini-variant="mini">
             <v-list>
-                <v-list-title>
-                    <v-list-title-action>
+                <v-list-tile v-if="mini" @click="mini = !mini">
+                    <v-list-tile-action>
+                        <v-icon>chevron_right</v-icon>
+                    </v-list-tile-action>
+                </v-list-tile>
+                <v-list-tile  v-if="!mini" @click="mini = !mini">
+                    <v-list-tile-action>
+                        <v-icon>chevron_left</v-icon>
+                    </v-list-tile-action>
+                </v-list-tile>
 
-                    </v-list-title-action>
-                </v-list-title>
             </v-list>
+            <v-list>
+                <v-list-tile>
+                    <v-list-tile-action>
+                        <v-icon>event_note</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>タスク一覧</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+
         </v-navigation-drawer>
         <v-toolbar app></v-toolbar>
         <v-content>
             <v-container fluid>
-                <router-view></router-view>
+                @yield('content')
             </v-container>
         </v-content>
         <v-footer app></v-footer>

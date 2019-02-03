@@ -21,7 +21,6 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
 
 </head>
 <body id="{{-- TODO: ここにページ毎のID --}}">
@@ -40,13 +39,6 @@
         <v-footer app></v-footer>
     </v-app>
 </div>
-
-        {{--<page1></page1>--}}
-        {{--<div id="content-frame-single">--}}
-            {{--<main class="">--}}
-                {{--@yield('content')--}}
-            {{--</main>--}}
-        {{--</div>--}}
 
 </body>
 </html>

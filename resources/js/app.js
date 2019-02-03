@@ -7,7 +7,9 @@ Vue.use(Vuetify)
 window.Vue = Vue
 
 new Vue({
-    data: {},
+    data: {
+        mini: true
+    },
     el: "#app"
     // components: {
     //     Page1
