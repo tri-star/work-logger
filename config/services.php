@@ -31,7 +31,7 @@ return [
     ],
 
     'stripe' => [
-        'model'   => WorkLogger\User::class,
+        'model'   => WorkLogger\Domain\User\User::class,
         'key'     => env('STRIPE_KEY'),
         'secret'  => env('STRIPE_SECRET'),
         'webhook' => [

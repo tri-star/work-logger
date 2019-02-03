@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(WorkLogger\User::class, function (Faker $faker) {
+$factory->define(WorkLogger\DOmain\User\User::class, function (Faker $faker) {
     return [
         'name'              => $faker->name,
         'email'             => $faker->unique()->safeEmail,

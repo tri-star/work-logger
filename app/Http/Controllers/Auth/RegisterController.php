@@ -5,8 +5,8 @@ namespace WorkLogger\Http\Controllers\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use WorkLogger\Domain\User\User;
 use WorkLogger\Http\Controllers\Controller;
-use WorkLogger\User;
 
 class RegisterController extends Controller
 {

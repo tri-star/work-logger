@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => WorkLogger\User::class,
+            'model'  => WorkLogger\Domain\User\User::class,
         ],
 
         // 'users' => [
