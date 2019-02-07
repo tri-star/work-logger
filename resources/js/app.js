@@ -8,7 +8,7 @@ window.Vue = Vue
 
 new Vue({
     data: {
-        mini: true
+        mini: false
     },
     el: "#app"
     // components: {

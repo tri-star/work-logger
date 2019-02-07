@@ -26,7 +26,12 @@
 <div id="app">
 
     <v-app>
-        <v-navigation-drawer app absolute :mini-variant="mini">
+        <v-toolbar app dark color="primary">
+            <v-toolbar-title>Work Logger</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon><v-icon>account_box</v-icon></v-btn>
+        </v-toolbar>
+        <v-navigation-drawer app :mini-variant="mini">
             <v-list>
                 <v-list-tile v-if="mini" @click="mini = !mini">
                     <v-list-tile-action>
@@ -52,7 +57,6 @@
             </v-list>
 
         </v-navigation-drawer>
-        <v-toolbar app></v-toolbar>
         <v-content>
             <v-container fluid>
                 @yield('content')
