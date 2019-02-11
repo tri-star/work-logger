@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use WorkLogger\Domain\User\User;
+use WorkLogger\Domain\Task\Task;
 
 class UserSeeder extends Seeder
 {
@@ -20,9 +21,12 @@ class UserSeeder extends Seeder
             ],
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Task::truncate();
         User::truncate();
         foreach ($users as $user) {
             User::create($user);
         }
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
