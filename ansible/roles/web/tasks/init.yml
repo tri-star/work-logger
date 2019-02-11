@@ -14,9 +14,9 @@
   ignore_errors: True
   changed_when: false
 
-- name: 日本語のロケールをインストール
-  shell: yum reinstall -y glibc-common
-  when: is_japanese_locale_exists.stdout == ''
+#- name: 日本語のロケールをインストール
+#  shell: yum reinstall -y glibc-common
+#  when: is_japanese_locale_exists.stdout == ''
 
 - name: 日本語のロケールが設定されていること
   shell: localectl set-locale LANG=ja_JP.utf8
