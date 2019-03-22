@@ -1,0 +1,61 @@
+# AWS CodeBuildのビルド設定ファイル
+version: 0.2
+
+#env:
+  #variables:
+    # key: "value"
+    # key: "value"
+  #parameter-store:
+    # key: "value"
+    # key: "value"
+
+phases:
+  install:
+    commands:
+      # .envの準備
+      - cp .env.testing .env
+      # yarnのパス設定
+      - . /etc/profile.d/yarn.sh
+      # 依存関係のインストール
+      - composer install
+      - yarn install --frozen-lockfile --ignore-optional
+
+  pre_build:
+    commands:
+      # nginxは"/vagrant"をドキュメントルートとして扱うので、symlinkを張る
+      - ln -s ${CODEBUILD_SRC_DIR} /vagrant
+      # rootパスワードなしでMySQLを初期化
+      - rm -rf /var/lib/mysql
+      - mysqld --initialize-insecure --user=mysql
+      # supervisordの起動
+      - supervisord
+      # MySQLの起動を待つ(暫定の方法)
+      - sleep 5
+      - mysql -u root -e "grant all privileges on *.* to work_logger@'127.0.0.1' identified by 'secret';"
+      - mysql -u root -e "create database work_logger_test default charset utf8mb4;"
+      # パーミッション設定
+      - chmod -R go+w bootstrap/cache storage
+      # マイグレーション
+      - php artisan migrate --env=testing
+      - php artisan db:seed --env=testing
+
+  build:
+    commands:
+      - vendor/bin/phpunit
+  post_build:
+    commands:
+      - supervisorctl stop nginx
+      - supervisorctl stop php-fpm
+      - supervisorctl stop mysqld
+      - supervisorctl shutdown
+
+#artifacts:
+  #files:
+    # - location
+    # - location
+  #name: $(date +%Y-%m-%d)
+    #discard-paths: yes
+    #base-directory: location
+#cache:
+  #paths:
+    # - paths
