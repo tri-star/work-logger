@@ -79,10 +79,3 @@ RUN curl -o /tmp/composer-setup.php -L https://getcomposer.org/installer && \
 COPY docker/code_build/etc /etc
 RUN chmod 644 /etc/my.cnf && \
     rm /etc/php-fpm.d/www.conf
-
-COPY docker/code_build/entry_point.sh /
-
-RUN chmod 755 /entry_point.sh
-
-
-ENTRYPOINT ["/bin/bash", "/entry_point.sh"]
