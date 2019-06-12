@@ -1,0 +1,81 @@
+FROM amazonlinux:2.0.20190228
+
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ARG NO_PROXY
+
+ENV HTTP_PROXY=${HTTP_PROXY} \
+    HTTPS_PROXY=${HTTPS_PROXY} \
+    http_proxy=${HTTP_PROXY} \
+    https_proxy=${HTTPS_PROXY} \
+    no_proxy=${NO_PROXY}
+
+
+# 日本語の有効化
+RUN yum install -y glibc-langpack-ja && yum clean all
+ENV LANG ja_JP.utf8 \
+    LC_ALL ja_JP.utf8
+RUN unlink /etc/localtime && \
+    ln -s /usr/share/zoneinfo/Japan /etc/localtime
+
+# supervisord
+RUN curl -L https://bootstrap.pypa.io/ez_setup.py | python && \
+    easy_install supervisor
+
+# amazon-linux-extras
+RUN amazon-linux-extras enable epel nginx1.12=1.12.2 php7.2=7.2.11
+
+# nginx + etc
+RUN yum install -y \
+    tar \
+    gzip \
+    less \
+    vim \
+    curl \
+    git \
+    jq \
+    nginx && \
+    yum clean all
+
+# MySQL
+RUN yum install -y \
+    https://downloads.mysql.com/archives/get/file/mysql-community-client-5.7.23-1.el7.x86_64.rpm \
+    https://downloads.mysql.com/archives/get/file/mysql-community-common-5.7.23-1.el7.x86_64.rpm \
+    https://downloads.mysql.com/archives/get/file/mysql-community-libs-5.7.23-1.el7.x86_64.rpm \
+    https://downloads.mysql.com/archives/get/file/mysql-community-server-5.7.23-1.el7.x86_64.rpm \
+    https://downloads.mysql.com/archives/get/file/mysql-community-devel-5.7.23-1.el7.x86_64.rpm && \
+    yum clean all
+
+# Node.js
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
+     yum install -y nodejs && \
+     yum clean all
+
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash && \
+     ~/.yarn/bin/yarn global add cross-env && \
+    echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' > /etc/profile.d/yarn.sh
+
+# PHP
+RUN yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
+    yum install -y --enablerepo=remi,remi-php72 \
+    php \
+    php-fpm \
+    php-mbstring \
+    php-xml \
+    php-pecl-yaml \
+    php-json \
+    php-zip \
+    php-mysqlnd \
+    php-opcache \
+    php-process \
+    php-soap \
+    php-xdebug && \
+    yum clean all
+
+RUN curl -o /tmp/composer-setup.php -L https://getcomposer.org/installer && \
+    php /tmp/composer-setup.php --install-dir=/usr/bin --filename=composer && \
+    rm /tmp/composer-setup.php
+
+COPY docker/code_build/etc /etc
+RUN chmod 644 /etc/my.cnf && \
+    rm /etc/php-fpm.d/www.conf
