@@ -8,19 +8,13 @@
     enabled: false
   when: stage == 'development'
 
-- name: 日本語のロケールがインストールされていること
-  shell: locale -a | grep ja
-  register: is_japanese_locale_exists
-  ignore_errors: True
-  changed_when: false
+- name: 日本語のロケールを設定(1)
+  shell: localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+  when: ansible_env.LANG != 'ja_JP.UTF-8'
 
-#- name: 日本語のロケールをインストール
-#  shell: yum reinstall -y glibc-common
-#  when: is_japanese_locale_exists.stdout == ''
-
-- name: 日本語のロケールが設定されていること
+- name: 日本語のロケールを設定(2)
   shell: localectl set-locale LANG=ja_JP.utf8
-  # TODO: 変更された場合のみ"changed"になるように
+  when: ansible_env.LANG != 'ja_JP.UTF-8'
 
 - name: タイムゾーンが日本であること
   timezone:
@@ -39,3 +33,29 @@
     - python
     - python-pip
     - python-devel
+    - jq
+    - lsof
+    - tmux
+
+- name: "[ローカル用]aws-cliがインストールされていること"
+  pip:
+    name:
+      - awscli
+  when: env == 'vagrant'
+
+- name: "[ローカル用]VM起動時のlogrotate実行サービスが定義されていること"
+  template:
+    src: ../templates/etc/systemd/system/dev-logrotate.service.j2
+    dest: /etc/systemd/system/dev-logrotate.service
+    owner: root
+    group: root
+    mode: 0644
+  when: env == 'vagrant'
+
+- name: "[ローカル用]VM起動時のlogrotate実行サービスが定義されていること"
+  systemd:
+    name: dev-logrotate
+    daemon_reload: yes
+    enabled: yes
+  when: env == 'vagrant'
+

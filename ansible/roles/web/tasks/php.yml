@@ -26,7 +26,18 @@
     name:
     - php-xdebug
     state: present
-  when: env == 'development'
+  notify: restart_php-fpm
+  when: env == 'vagrant'
+
+- name: Xdebug設定ファイルが存在すること
+  template:
+    src: ../templates/etc/php.d/15-xdebug.ini.j2
+    dest: /etc/php.d/15-xdebug.ini
+    owner: root
+    group: root
+    mode: 0664
+  notify: restart_php-fpm
+  when: env == 'vagrant'
 
 - name: Composerがインストールされていること
   shell: which composer
@@ -41,18 +52,52 @@
     rm /tmp/composer-setup.php
   when: is_composer_installed.rc != 0
 
-- name: php-fpm.confのインストール
+- name: php.iniが存在すること
   template:
-    src: ../templates/php-fpm.conf.j2
+    src: ../templates/etc/php.ini.j2
+    dest: /etc/php.ini
+    owner: root
+    group: root
+    mode: 0664
+  notify: reload_php-fpm
+
+- name: Opcache用設定ファイルが存在すること
+  template:
+    src: ../templates/etc/php.d/10-opcache.ini
+    dest: /etc/php.d/10-opcache.ini
+    owner: root
+    group: root
+    mode: 0664
+  notify: reload_php-fpm
+
+- name: php.iniが存在すること
+  template:
+    src: ../templates/etc/php.ini.j2
+    dest: /etc/php.ini
+    owner: root
+    group: root
+    mode: 0664
+  notify: reload_php-fpm
+
+- name: php-fpm.confが存在すること
+  template:
+    src: ../templates/etc/php-fpm.conf.j2
     dest: /etc/php-fpm.conf
     owner: root
     group: root
     mode: 0664
   notify: reload_php-fpm
 
+- name: php-fpmのプール設定(デフォルト)は存在しないこと
+  file:
+    path: /etc/php-fpm.d/www.conf
+    state: absent
+  notify: reload_php-fpm
+
+
 - name: php-fpmのプール設定のインストール
   template:
-    src: ../templates/php-fpm.d/web.conf.j2
+    src: ../templates/etc/php-fpm.d/web.conf.j2
     dest: /etc/php-fpm.d/web.conf
     owner: root
     group: root
@@ -65,25 +110,46 @@
     enabled: true
     state: started
 
-- name: .envファイルの設定
+- name: php-fpmのログディレクトリが書き込み可能で存在すること
+  file:
+    path: /var/log/php-fpm
+    owner: nginx
+    group: nginx
+    mode: 0755
+    state: directory
+  notify: reload_php-fpm
+
+- name: エラーログをrootユーザー以外も参照できること
+  file:
+    path: /var/log/php-fpm/error.log
+    owner: root
+    group: root
+    mode: 0644
+    state: touch
+  notify: reload_php-fpm
+
+- name: php-fpm用logrotate設定が存在すること
   template:
-    src: "../templates/.env.{{ env }}"
-    dest: "{{ project_root }}/.env"
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-    mode: 0664
+    src: ../templates/etc/logrotate.d/php-fpm.j2
+    dest: /etc/logrotate.d/php-fpm
+    owner: root
+    group: root
+    mode: 0644
 
-- name: ストレージフォルダが書き込み可能であること
-  file:
-    path: "{{ project_root }}/storage"
-    state: directory
-    recurse: true
-    mode: 0777
+- name: "[外部環境用]HTTP用アプリケーションログのlogrotate設定が存在すること"
+  template:
+    src: ../templates/etc/logrotate.d/laravel.j2
+    dest: /etc/logrotate.d/laravel
+    owner: root
+    group: root
+    mode: 0644
+  when: env != 'vagrant'
 
-- name: キャッシュフォルダが書き込み可能であること
-  file:
-    path: "{{ project_root }}/bootstrap/cache"
-    state: directory
-    recurse: true
-    mode: 0777
-  
+- name: "[外部環境用]CLI用アプリケーションログのlogrotate設定が存在すること"
+  template:
+    src: ../templates/etc/logrotate.d/laravel-cli.j2
+    dest: /etc/logrotate.d/laravel-cli
+    owner: root
+    group: root
+    mode: 0644
+  when: env != 'vagrant'

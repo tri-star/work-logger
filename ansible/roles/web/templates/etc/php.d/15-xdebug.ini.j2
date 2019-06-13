@@ -1,0 +1,12 @@
+; Enable xdebug extension module
+zend_extension=xdebug.so
+
+; 全設定値は以下を参照
+; https://xdebug.org/docs/all_settings
+
+xdebug.default_enable = 0 ;エラー時にスタックトレースを残すかどうか。Laravelは別の手段でスタックトレースを残すのでOFFにする
+xdebug.idekey = hypat-ix
+xdebug.remote_enable = 0 ; リモートデバッグを有効にする場合1にする
+xdebug.remote_host = 192.168.56.1
+xdebug.remote_port = 9200 ;IDE側がLISTENするポート番号
+xdebug.remote_autostart = 0 ; バッチ処理をデバッグするには1にする

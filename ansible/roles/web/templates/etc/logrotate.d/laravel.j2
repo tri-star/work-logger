@@ -1,0 +1,10 @@
+{{ project_root }}/storage/logs/laravel.log
+{{ project_root }}/storage/logs/post.log {
+    su nginx nginx
+    create 0644 nginx nginx
+    daily
+    dateext
+    missingok
+    notifempty
+    rotate {{ log_keep_days }}
+}

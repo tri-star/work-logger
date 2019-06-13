@@ -1,0 +1,55 @@
+- name: Fluentdがインストールされていること
+  stat: path=/sbin/td-agent
+  register: fluentd_stat_result
+
+- name: Fluentdのインストール
+  shell: curl -L https://toolbelt.treasu/redata.com/sh/install-redhat-td-agent3.sh | bash
+  when: not fluentd_stat_result.stat.exists
+
+- name: fluent-plugin-cloudwatch-logs がインストールされていること
+  gem:
+    executable: /usr/sbin/td-agent-gem
+    name: fluent-plugin-cloudwatch-logs
+    state: present
+    user_install: no
+    version: 0.7.3
+
+- name: Fluentd用設定ディレクトリが存在すること
+  file:
+    path: /etc/td-agent/config.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    recurse: yes
+
+- name: Fluentd用設定ファイルが存在すること
+  template:
+    src: "../templates/etc/td-agent/{{ item }}"
+    dest: "/etc/td-agent/{{ item }}"
+    owner: root
+    group: root
+    mode: 0664
+  with_items:
+  - td-agent.conf
+  - config.d/input_laravel.conf
+  - config.d/input_nginx.conf
+  - config.d/input_php-fpm.conf
+  - config.d/output.conf
+# notifyするとhandlerの処理中にfluentdが起動してしまうので設定変更があってもここでは通知しない。
+# fluentdは必要な時にcloud-init等を経由して起動させることにする
+#  notify: reload_td-agent
+
+- name: Fluentd用作業ディレクトリが存在すること
+  file:
+    path: /var/log/td-agent
+    state: directory
+    owner: td-agent
+    group: td-agent
+    mode: 0755
+
+- name: Fluentdサービスが手動起動設定になっていること
+  systemd:
+    name: td-agent.service
+    enabled: false
+    state: stopped

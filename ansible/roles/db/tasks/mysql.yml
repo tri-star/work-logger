@@ -13,11 +13,11 @@
 - name: MySQLのインストール
   yum:
     name:
-    - https://downloads.mysql.com/archives/get/file/mysql-community-client-5.7.23-1.el7.x86_64.rpm
-    - https://downloads.mysql.com/archives/get/file/mysql-community-common-5.7.23-1.el7.x86_64.rpm
-    - https://downloads.mysql.com/archives/get/file/mysql-community-libs-5.7.23-1.el7.x86_64.rpm
-    - https://downloads.mysql.com/archives/get/file/mysql-community-server-5.7.23-1.el7.x86_64.rpm
-    - https://downloads.mysql.com/archives/get/file/mysql-community-devel-5.7.23-1.el7.x86_64.rpm
+    - "https://downloads.mysql.com/archives/get/file/mysql-community-client-{{ mysql_version_major }}.{{ mysql_version_minor }}-1.el7.x86_64.rpm"
+    - "https://downloads.mysql.com/archives/get/file/mysql-community-common-{{ mysql_version_major }}.{{ mysql_version_minor }}-1.el7.x86_64.rpm"
+    - "https://downloads.mysql.com/archives/get/file/mysql-community-libs-{{ mysql_version_major }}.{{ mysql_version_minor }}-1.el7.x86_64.rpm"
+    - "https://downloads.mysql.com/archives/get/file/mysql-community-server-{{ mysql_version_major }}.{{ mysql_version_minor }}-1.el7.x86_64.rpm"
+    - "https://downloads.mysql.com/archives/get/file/mysql-community-devel-{{ mysql_version_major }}.{{ mysql_version_minor }}-1.el7.x86_64.rpm"
   when: not mysql_stat.stat.exists
 
 - name: Mysql-pythonがインストールされていること
@@ -38,7 +38,7 @@
     path: /var/log/mysql
     owner: mysql
     group: mysql
-    mode: 0775
+    mode: 0755
     state: directory
 
 - name: データディレクトリが初期化済であること
@@ -62,6 +62,14 @@
     enabled: true
     state: started
 
+- name: MySQLのlogrotate設定が存在すること
+  template:
+    src: ../templates/logrotate.d/mysql.j2
+    dest: /etc/logrotate.d/mysql
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Ansible用MySQL rootユーザー設定ファイルが存在すること
   template:
     src: ../templates/.my.cnf_for_root.j2
@@ -71,10 +79,10 @@
     mode: 0600
 
 - name: 開発用DBの作成
-  mysql_db: db={{ db_name }} state=present encoding=utf8
+  mysql_db: db={{ db_name }} state=present encoding=utf8mb4
 
 - name: TEST用DBの作成
-  mysql_db: db={{ test_db_name }} state=present encoding=utf8
+  mysql_db: db={{ test_db_name }} state=present encoding=utf8mb4
   when: not (test_db_name == '')
 
 - name: MySQL開発DBアカウントの作成
@@ -89,4 +97,4 @@
   - "127.0.0.1"
   - "localhost"
   - "192.168.%"
-  - "%"
+  - "10.0.%"

@@ -1,0 +1,11 @@
+[Unit]
+Description=システム起動時にlogrotateを1回実行します
+After=network.target
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/sbin/logrotate -f /etc/logrotate.conf
+
+[Install]
+WantedBy=multi-user.target

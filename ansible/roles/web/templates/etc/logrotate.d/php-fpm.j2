@@ -1,0 +1,15 @@
+{{ project_root }}/storage/logs/php_error.log
+/var/log/php-fpm/*.log
+{
+    su nginx nginx
+    create 0644 nginx nginx
+    daily
+    dateext
+    missingok
+    notifempty
+    rotate {{ log_keep_days }}
+    sharedscripts
+    postrotate
+    /bin/kill -SIGUSR1 `cat /run/php7.2-fpm.pid 2>/dev/null` 2>/dev/null || true
+    endscript
+}

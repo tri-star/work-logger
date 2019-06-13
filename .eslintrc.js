@@ -15,15 +15,12 @@ module.exports = {
     parserOptions: {
         parser: "babel-eslint",
         sourceType: "module",
-        ecmaFeatures: {
-            experimentalObjectRestSpread: true
-        }
     },
     rules: {
         "comma-dangle": ["error", "only-multiline"],
         "generator-star-spacing": "off", // async/awaitを許可するために必要
         "no-console": "off",
-        "no-unused-vars": ["error"],
+        "no-unused-vars": ["error", {"args": "none"}],
         "no-var": "error",
         "object-shorthand": "error",
         "prefer-arrow-callback": "warn",

@@ -9,10 +9,12 @@
                 <v-card-text class="display-1">0</v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn>追加</v-btn>
+                    <v-btn @click="openAddTaskDialog">追加</v-btn>
                 </v-card-actions>
             </v-card>
         </v-flex>
     </v-layout>
 </div>
+<add-task-dialog ref="AddTaskDialog"></add-task-dialog>
+
 @stop

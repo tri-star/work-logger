@@ -1,0 +1,140 @@
+[PHP]
+
+engine = On
+short_open_tag = Off
+
+output_buffering = 4096
+
+ignore_user_abort = Off
+
+zend.enable_gc = On
+
+expose_php = Off
+
+max_execution_time = {{ php_max_execution_time }}
+max_input_time = {{ php_max_input_time }}
+memory_limit = {{ php_memory_limit }}
+
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+display_errors = Off
+display_startup_errors = Off
+
+log_errors = On
+log_errors_max_len = 1024
+ignore_repeated_errors = Off
+ignore_repeated_source = Off
+report_memleaks = On
+html_errors = On
+error_log = {{ project_root }}/storage/logs/cli.log
+
+; Default Value: "EGPCS"
+; Development Value: "GPCS"
+; Production Value: "GPCS";
+; http://php.net/variables-order
+variables_order = "GPCS"
+
+; Default Value: None
+; Development Value: "GP"
+; Production Value: "GP"
+; http://php.net/request-order
+request_order = "GP"
+
+; Default Value: On
+; Development Value: Off
+; Production Value: Off
+; http://php.net/register-argc-argv
+register_argc_argv = Off
+
+auto_globals_jit = On
+
+post_max_size = {{ php_post_max_size }}
+upload_max_filesize = {{ php_upload_max_filesize }}
+max_file_uploads = {{ php_max_file_uploads }}
+
+default_mimetype = "text/html"
+
+
+allow_url_fopen = On
+
+default_socket_timeout = {{ php_default_socket_timeout }}
+
+[CLI Server]
+cli_server.color = On
+
+[Date]
+date.timezone = Asia/Tokyo
+
+[Pcre]
+pcre.jit=0
+
+[Pdo_mysql]
+; If mysqlnd is used: Number of cache slots for the internal result set cache
+; http://php.net/pdo_mysql.cache_size
+pdo_mysql.cache_size = 2000
+
+
+[mail function]
+sendmail_path = /usr/sbin/sendmail -t -i
+mail.add_x_header = On
+
+[mysqlnd]
+mysqlnd.collect_statistics = On
+mysqlnd.collect_memory_statistics = Off
+
+[bcmath]
+bcmath.scale = 0
+
+[Session]
+session.save_handler = files
+session.use_strict_mode = 0
+
+session.name = PHPSESSID
+session.gc_probability = 1
+
+; Default Value: 100
+; Development Value: 1000
+; Production Value: 1000
+; http://php.net/session.gc-divisor
+session.gc_divisor = {{ php_session_gc_divisor }}
+
+session.gc_maxlifetime = {{ php_session_gc_maxlifetime }}
+
+; Default Value: 32
+; Development Value: 26
+; Production Value: 26
+session.sid_length = 26
+
+;   4  (4 bits: 0-9, a-f)
+;   5  (5 bits: 0-9, a-v)
+;   6  (6 bits: 0-9, a-z, A-Z, "-", ",")
+; Default Value: 4
+; Development Value: 5
+; Production Value: 5
+; http://php.net/session.hash-bits-per-character
+session.sid_bits_per_character = 5
+
+
+[Assertion]
+; Default Value: 1
+; Development Value: 1
+; Production Value: -1
+; http://php.net/zend.assertions
+zend.assertions = -1
+
+[soap]
+; Enables or disables WSDL caching feature.
+; http://php.net/soap.wsdl-cache-enabled
+soap.wsdl_cache_enabled=1
+
+; RPM note : cache directory must be owned by process owner
+; for mod_php, see /etc/httpd/conf.d/php.conf
+; for php-fpm, see /etc/php-fpm.d/*conf
+soap.wsdl_cache_dir="/tmp"
+
+; (time to live) Sets the number of second while cached file will be used
+; instead of original one.
+; http://php.net/soap.wsdl-cache-ttl
+soap.wsdl_cache_ttl=86400
+
+; Sets the size of the cache limit. (Max. number of WSDL files to cache)
+soap.wsdl_cache_limit = 5
