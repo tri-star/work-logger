@@ -8,6 +8,7 @@
   yum:
     enablerepo: "remi,remi-php72"
     name:
+    - unzip
     - php
     - php-fpm
     - php-mbstring

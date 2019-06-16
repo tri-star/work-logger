@@ -171,10 +171,10 @@ return [
          * Application Service Providers...
          */
         WorkLogger\Providers\AppServiceProvider::class,
-        WorkLogger\Providers\AuthServiceProvider::class,
         // WorkLogger\Providers\BroadcastServiceProvider::class,
         WorkLogger\Providers\EventServiceProvider::class,
         WorkLogger\Providers\RouteServiceProvider::class,
+        WorkLogger\Providers\AuthServiceProvider::class,
 
     ],
 
