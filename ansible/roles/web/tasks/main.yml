@@ -5,6 +5,9 @@
 # 各種ミドルウェアの初期化
 - include: nginx.yml
 - include: nodejs.yml
+- include: redis.yml
+  when: env == 'vagrant'
 - include: php.yml
 - include: fluentd.yml
 
+-include: app.yml
