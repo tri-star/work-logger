@@ -52,7 +52,7 @@
         "vue-test-utils": "^1.0.0-beta.11"
     },
     "dependencies": {
-        "css-loader": "^2.1.0",
+        "css-loader": "^3.0.0",
         "material-design-icons-iconfont": "^4.0.4",
         "vue-router": "^3.0.2",
         "vue-template-compiler": "^2.5.22",
