@@ -23,6 +23,11 @@ mix.js("resources/js/app.js", "public/js")
         "vuex"
     ])
     .sass("resources/sass/app.scss", "public/css")
+    .sass("resources/sass/guest-home.scss", "public/css")
+    .copyDirectory("resources/images", "public/images")
+    .options({
+        processCssUrls: false
+    })
     .version()
 
 mix.webpackConfig({

@@ -1,0 +1,39 @@
+html {
+    box-sizing: border-box;
+    color: $base-font-color;
+}
+
+* {
+    box-sizing: inherit;
+    margin: 0;
+    color: inherit;
+}
+
+
+
+.frame {
+    background-color: $frame-background-color;
+    border: 1px solid #FFE0CC;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+
+}
+
+.text-box {
+    border: 1px solid lighten($brand-color-second, 10%);
+    box-shadow: 1px 1px 0 rgba(0,0,0, 0.2);
+    padding: 5px;
+}
+
+.invalid-feedback {
+    color: #f00;
+    font-size: 0.8rem;
+}
+
+.button {
+    background-color: lighten($brand-color-primary, 20%);
+    color: $brand-color-second;
+    font-weight: bold;
+    border: 1px solid lighten($brand-color-primary, 10%);
+    box-shadow: 3px 3px 0 rgba(0,0,0, 0.2);
+    padding: 5px 10px;
+}

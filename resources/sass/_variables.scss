@@ -1,24 +1,15 @@
 
-// Body
-$body-bg: #f8fafc;
 
-// Typography
-$font-family-sans-serif: "Nunito", sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
+$base-font-color: #A64B00;
 
-$brand-color-primary: #31B073;
-$brand-color-secondary: #8E796B;
-$brand-color-third: #FFCC33;
+$brand-color-primary: #FF7400;
+$brand-color-second: #006363;
 
-// Colors
-$blue: #3490dc;
-$indigo: #6574cd;
-$purple: #9561e2;
-$pink: #f66D9b;
-$red: #e3342f;
-$orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
-$teal: #4dc0b5;
-$cyan: #6cb2eb;
+
+$primary-font-color: $brand-color-second;
+
+@image-path: "..";
+
+$frame-background-color: #FFF6F0;
+//$frame-border: 1px solid #FFE0CC;
+

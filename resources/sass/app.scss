@@ -2,12 +2,11 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
-
-// mixins
-@import 'mixins';
-
-@import "~vuetify/dist/vuetify.min.css";
+@import 'imports';
 
 @import "~material-design-icons-iconfont/dist/material-design-icons.css";
+
+
+.container {
+    min-height: 100vh;
+}

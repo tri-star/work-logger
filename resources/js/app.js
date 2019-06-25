@@ -1,13 +1,10 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import Vuetify from "vuetify"
 import initStore from "./store"
-
-import AddTaskDialog from "./components/task/add-task-dialog"
+import DefaultHeader from "./components/header/default-header"
 
 require("./bootstrap")
 
-Vue.use(Vuetify)
 Vue.use(Vuex)
 window.Vue = Vue
 
@@ -17,14 +14,10 @@ new Vue({
     data: {
         mini: false
     },
-    methods: {
-        openAddTaskDialog() {
-            this.$refs.AddTaskDialog.open()
-        }
-    },
+    methods: {},
     el: "#app",
     store,
     components: {
-        AddTaskDialog
+        DefaultHeader
     }
 })

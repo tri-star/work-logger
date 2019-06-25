@@ -9,26 +9,19 @@
 
     <title>Work Logger</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/manifest.js') }}" defer></script>
-    <script src="{{ mix('js/vendor.js') }}" defer></script>
-    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/guest-home.css') }}" rel="stylesheet">
 
 </head>
-<body id="{{-- TODO: ここにページ毎のID --}}">
-<div id="app">
-    <div class="container">
-        <default-header>
-        </default-header>
-        @yield('content')
-    </div>
+<body id="">
+<div class="guest-home-container">
+@yield('content')
 </div>
+
 </body>
 </html>
