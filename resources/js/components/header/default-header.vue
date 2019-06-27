@@ -8,4 +8,15 @@ export default {}
 
 <style lang="scss" scoped>
 @import "../../../sass/imports";
+
+header {
+    background-color: $header-background-color;
+    color: $header-font-color;
+    padding: 5px;
+    height: $header-height;
+
+    .logo {
+        font-size: 40pt;
+    }
+}
 </style>

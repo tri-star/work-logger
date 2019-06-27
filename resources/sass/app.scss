@@ -10,3 +10,50 @@
 .container {
     min-height: 100vh;
 }
+
+.side-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-left: 250px;
+
+    transition: margin-left 0.3s;
+    .item {
+        width: calc(250px - 20px);
+    }
+
+    .menu-content {
+        display: block;
+        opacity: 1;
+        width: 250px;
+    }
+    .menu-content-small {
+        display: none;
+        opacity: 0;
+        width: $side-menu-small-width;
+    }
+
+}
+
+.side-hide {
+    margin-left: $side-menu-small-width;
+    transition: margin-left, width 0.3s;
+
+    aside {
+        width: $side-menu-small-width;
+        transition: width 0.3s;
+
+        .item {
+            width: $side-menu-small-width - 20px;
+        }
+        .menu-content {
+            display: none;
+            opacity: 0;
+        }
+        .menu-content-small {
+            display: block;
+            opacity: 1;
+        }
+    }
+
+}

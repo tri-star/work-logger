@@ -24,11 +24,6 @@
 </head>
 <body id="{{-- TODO: ここにページ毎のID --}}">
 <div id="app">
-    <div class="container">
-        <default-header>
-        </default-header>
-        @yield('content')
-    </div>
 </div>
 </body>
 </html>

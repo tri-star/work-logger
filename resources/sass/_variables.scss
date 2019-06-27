@@ -8,8 +8,13 @@ $brand-color-second: #006363;
 
 $primary-font-color: $brand-color-second;
 
-@image-path: "..";
+$header-background-color: $brand-color-primary;
+$header-font-color: #fff;
+$header-height: 85px;
+
+$side-menu-background-color: $brand-color-second;
+$side-menu-small-width: 45px;
 
 $frame-background-color: #FFF6F0;
-//$frame-border: 1px solid #FFE0CC;
+$frame-border: 1px solid #FFE0CC;
 
