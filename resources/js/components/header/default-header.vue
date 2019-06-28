@@ -14,6 +14,10 @@ header {
     color: $header-font-color;
     padding: 5px;
     height: $header-height;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    z-index: 10000;
 
     .logo {
         font-size: 40pt;

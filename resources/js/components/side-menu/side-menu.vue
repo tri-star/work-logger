@@ -25,12 +25,12 @@ export default {}
 @import "../../../sass/imports";
 aside {
     position: fixed;
+    top: $header-height;
     left: 0;
     z-index: 10000;
     height: 100%;
-    /*width: 250px;*/
 
-    transition: margin-left, width 0.3s;
+    transition: width 0.3s;
     background-color: $side-menu-background-color;
 
     .item {
