@@ -53,6 +53,7 @@
         "vue-test-utils": "^1.0.0-beta.11"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.9.0",
         "css-loader": "^3.0.0",
         "material-design-icons-iconfont": "^4.0.4",
         "vue-router": "^3.0.6",
