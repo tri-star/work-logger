@@ -7,6 +7,13 @@
 @import "~material-design-icons-iconfont/dist/material-design-icons.css";
 
 
+.clear-fix::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+
+
 .container {
     min-height: 100vh;
 }
@@ -72,26 +79,4 @@ main {
         }
     }
 
-}
-
-.heading-1 {
-    height: $heading1-height;
-    font-size: $heading1-font-size;
-    font-weight: bold;
-    text-decoration: underline;
-    color: $heading1-font-color;
-    margin-bottom: 30px;
-}
-
-.heading-2 {
-    background-color: $heading2-background-color;
-    border: 1px solid darken($heading2-background-color, 5%);
-    box-shadow: 2px 2px 0 rgba(0,0,0, 0.2);
-    height: $heading2-height;
-    font-size: $heading2-font-size;
-    font-weight: bold;
-    color: $heading2-font-color;
-    line-height: 2;
-    padding-left: 10px;
-    margin-bottom: 20px;
 }

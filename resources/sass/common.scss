@@ -10,6 +10,15 @@ html {
 }
 
 
+a {
+    color: $link-color;
+}
+a:hover {
+    color: $link-hover-color;
+}
+a:visited {
+    color: $link-visited-color;
+}
 
 .frame {
     background-color: $frame-background-color;
@@ -37,3 +46,61 @@ html {
     box-shadow: 3px 3px 0 rgba(0,0,0, 0.2);
     padding: 5px 10px;
 }
+
+.command-button {
+    display: inline-block;
+    background-color: $light-primary-color;
+    border: darken($light-primary-color, 10%);
+    padding: 5px 10px;
+    box-shadow: 1px 1px 0 rgba(0,0,0, 0.2);
+    margin-bottom: 5px;
+    color: $base-font-color;
+    cursor: pointer;
+
+    .icon {
+        margin-right: 10px;
+    }
+}
+
+.command-button:hover {
+    background-color: darken($light-primary-color, 5%);
+    color: darken($base-font-color, 5%);
+}
+
+.heading-1 {
+    height: $heading1-height;
+    font-size: $heading1-font-size;
+    font-weight: bold;
+    text-decoration: underline;
+    color: $heading1-font-color;
+    margin-bottom: 30px;
+}
+
+.heading-2 {
+    background-color: $heading2-background-color;
+    border: 1px solid darken($heading2-background-color, 5%);
+    box-shadow: 3px 3px 0 rgba(0,0,0, 0.2);
+    height: $heading2-height;
+    font-size: $heading2-font-size;
+    font-weight: bold;
+    color: $heading2-font-color;
+    line-height: 2;
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+
+.small-table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    border: solid 1px #fff;
+    width: 100%;
+
+    td {
+        background-color: #FFF6F0;
+        border: solid 1px #fff;
+        padding: 5px;
+        color: #FF9640;
+    }
+}
+
