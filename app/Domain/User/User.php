@@ -34,4 +34,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(\WorkLogger\Domain\Task\Task::class);
     }
+
+
+    public function projects()
+    {
+        return $this->belongsToMany(\WorkLogger\Domain\Project\Project::class);
+    }
 }
