@@ -12,7 +12,7 @@ Vue.use(Vuex)
 Vue.use(VueRouter)
 window.Vue = Vue
 
-const router = new VueRouter({ routes })
+const router = new VueRouter({ mode: "history", routes })
 const store = initStore()
 
 new Vue({

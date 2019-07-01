@@ -31,7 +31,7 @@
                     プロジェクト一覧
                 </template>
                 <template slot="body">
-                    <ProjectList />
+                    <ProjectList :projects="projects" />
                 </template>
             </WlFrame>
             <WlFrame class="frame-item" :width="'30%'">
@@ -53,11 +53,24 @@
 <script>
 import WlFrame from "../../components/wl-frame"
 import ProjectList from "./project-list"
+import adapterFactory from "../../adapters/adapter-factory"
 
 export default {
+    data() {
+        return {
+            projects: []
+        }
+    },
     components: {
         WlFrame,
         ProjectList
+    },
+
+    mounted() {
+        const dashboardAdapter = adapterFactory.get("DashboardAdapter")
+        dashboardAdapter.getProjectList().then(projects => {
+            this.projects = projects
+        })
     }
 }
 </script>
@@ -70,7 +83,7 @@ export default {
 .stat-number-box {
     display: table;
     width: 100%;
-    height: 100px;
+    height: 100%;
 }
 
 .stat-number {

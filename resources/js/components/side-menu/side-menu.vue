@@ -2,16 +2,22 @@
     <aside class="side">
         <div class="menu-content">
             <div class="item icon-toggle" @click="$emit('toggle')"></div>
-            <div class="item icon-tasks">タスク一覧</div>
+            <router-link tag="div" to="/" class="item icon-dashboard">
+                ダッシュボード
+            </router-link>
             <div class="item icon-stats">統計情報</div>
-            <div class="item icon-folder">フォルダ</div>
+            <div class="item icon-tasks">タスク一覧</div>
             <div class="item icon-config">設定</div>
         </div>
         <div class="menu-content-small">
             <div class="item icon-toggle" @click="$emit('toggle')"></div>
-            <div class="item icon-tasks"></div>
+            <router-link
+                tag="div"
+                to="/"
+                class="item icon-dashboard"
+            ></router-link>
             <div class="item icon-stats"></div>
-            <div class="item icon-folder"></div>
+            <div class="item icon-tasks"></div>
             <div class="item icon-config"></div>
         </div>
     </aside>
@@ -54,17 +60,17 @@ aside {
         display: block;
         background: url("/images/menu-toggle.png") no-repeat 5px 5px;
     }
-    .icon-tasks {
+    .icon-dashboard {
         display: block;
-        background: url("/images/menu-tasks.png") no-repeat 5px 5px;
+        background: url("/images/menu-dashboard.png") no-repeat 5px 5px;
     }
     .icon-stats {
         display: block;
         background: url("/images/menu-stats.png") no-repeat 5px 5px;
     }
-    .icon-folder {
+    .icon-tasks {
         display: block;
-        background: url("/images/menu-folder.png") no-repeat 5px 5px;
+        background: url("/images/menu-tasks.png") no-repeat 5px 5px;
     }
     .icon-config {
         display: block;
