@@ -40,6 +40,7 @@ export default {
 .body {
     display: inline-block;
     width: 100%;
+    min-height: 200px;
     padding: 5px;
 }
 </style>

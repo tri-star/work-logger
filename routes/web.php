@@ -15,4 +15,4 @@ Route::get('/', 'HomeController@index')->name('top');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::fallback('HomeController@index');
