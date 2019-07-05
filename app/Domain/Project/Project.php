@@ -12,6 +12,15 @@ class Project extends Model
         'description'
     ];
 
+    public function isMember(User $user)
+    {
+        foreach ($this->users as $user) {
+            if ($user->id === $user->id) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public function users()
     {

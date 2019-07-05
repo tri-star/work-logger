@@ -2,11 +2,9 @@ class ProjectAdapter {
     construct() {}
 
     async getProject(id) {
-        return {
-            id,
-            project_name: "プロジェクトA",
-            description: "プロジェクトAの説明"
-        }
+        const response = await window.axios.get(`/api/v1/project/detail/${id}`)
+
+        return response.data
     }
 }
 

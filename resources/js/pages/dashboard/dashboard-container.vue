@@ -91,7 +91,7 @@ export default {
     text-align: center;
     vertical-align: middle;
 
-    font-size: 40pt;
+    font-size: 120px;
     font-weight: bold;
     text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
 }
