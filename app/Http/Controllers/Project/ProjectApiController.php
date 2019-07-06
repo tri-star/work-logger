@@ -5,6 +5,7 @@ namespace WorkLogger\Http\Controllers\Project;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WorkLogger\Domain\Project\Project;
+use WorkLogger\Domain\Project\TaskStatQueryBuilder;
 use WorkLogger\Http\Controllers\Controller;
 use WorkLogger\Http\Response\JsonResponse;
 
@@ -49,5 +50,25 @@ class ProjectApiController extends Controller
         ];
 
         return new JsonResponse($json);
+    }
+
+
+    public function getTaskStatList(int $id)
+    {
+        $user = \Auth::user();
+        $project = Project::with('users:id,name')->find($id);
+
+        if (!$project || !$project->isMember($user)) {
+            throw new NotFoundHttpException('無効なプロジェクトが指定されました');
+        }
+
+
+        $taskStatQueryBuilder = new TaskStatQueryBuilder();
+        $data = [
+            'weekly_done_count' => $taskStatQueryBuilder->getWeeklyDoneTaskStat($project->id),
+            'daily_done_list' => $taskStatQueryBuilder->getDailyDoneTaskList($project->id)
+        ];
+
+        return new JsonResponse($data);
     }
 }

@@ -80,22 +80,6 @@ export default {
     width: 100%;
 }
 
-.stat-number-box {
-    display: table;
-    width: 100%;
-    height: 100%;
-}
-
-.stat-number {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-
-    font-size: 120px;
-    font-weight: bold;
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
-}
-
 .frame-item {
     float: left;
 }

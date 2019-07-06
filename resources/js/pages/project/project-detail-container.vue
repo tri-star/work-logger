@@ -8,13 +8,30 @@
                 <template slot="title">
                     タスク完了件数
                 </template>
-                <template slot="body"></template>
+                <template slot="body">
+                    <div class="stat-number-box">
+                        <strong class="stat-number">
+                            {{ taskStat.weekly_done_count }}
+                        </strong>
+                    </div>
+                </template>
             </WlFrame>
             <WlFrame class="frame-item" :width="'400px;'">
                 <template slot="title">
                     タスク完了件数(日別)
                 </template>
-                <template slot="body"></template>
+                <template slot="body">
+                    <table class="small-table">
+                        <tr
+                            v-for="(dailyCount,
+                            date) in taskStat.daily_done_list"
+                            :key="date"
+                        >
+                            <td>{{ date }}</td>
+                            <td class="number-col">{{ dailyCount }}</td>
+                        </tr>
+                    </table>
+                </template>
             </WlFrame>
         </div>
         <h2 class="heading-2">直近の状況</h2>
@@ -57,7 +74,8 @@ export default {
     },
     data() {
         return {
-            project: {}
+            project: {},
+            taskStat: {}
         }
     },
 
@@ -65,7 +83,10 @@ export default {
         const projectAdapter = adapterFactory.get("ProjectAdapter")
         projectAdapter.getProject(this.id).then(project => {
             this.project = project
-            console.log(this.project)
+        })
+
+        projectAdapter.getTaskStat(this.id).then(stat => {
+            this.taskStat = stat
         })
     }
 }

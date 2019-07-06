@@ -43,5 +43,6 @@ export default {
     width: 100%;
     height: calc(300px - 45px - 5px);
     padding: 5px;
+    overflow-y: auto;
 }
 </style>

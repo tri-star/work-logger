@@ -3,6 +3,7 @@
 namespace WorkLogger\Domain\Project;
 
 use Illuminate\Database\Eloquent\Model;
+use WorkLogger\Domain\Task\Task;
 use WorkLogger\Domain\User\User;
 
 class Project extends Model
@@ -31,5 +32,14 @@ class Project extends Model
     public function adminUsers()
     {
         return $this->belongsToMany(User::class)->withPivot('is_admin')->WherePivot('is_admin', 1);
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }
