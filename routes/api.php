@@ -13,4 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth')->get('/project/list', 'Project\ProjectApiController@getList');
+Route::middleware('auth')->prefix('v1')->group(function () {
+    Route::get('/project/list', 'Project\ProjectApiController@getList');
+    Route::get('/project/{id}/detail', 'Project\ProjectApiController@getDetail');
+    Route::get('/project/{id}/task-stat', 'Project\ProjectApiController@getTaskStatList');
+});

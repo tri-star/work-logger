@@ -2,7 +2,9 @@
 
 namespace WorkLogger\Domain\User;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -30,14 +32,14 @@ class User extends Authenticatable
     ];
 
 
-    public function tasks()
-    {
-        return $this->hasMany(\WorkLogger\Domain\Task\Task::class);
-    }
-
-
     public function projects()
     {
         return $this->belongsToMany(\WorkLogger\Domain\Project\Project::class);
+    }
+
+
+    public function tasks()
+    {
+        return $this->hasMany(\WorkLogger\Domain\Task\Task::class);
     }
 }

@@ -9,7 +9,7 @@
 export default {
     props: {
         width: {
-            default: "300px",
+            default: "400px",
             type: String
         }
     }
@@ -25,6 +25,7 @@ export default {
     margin-bottom: 20px;
     display: block;
     min-width: 300px;
+    height: 300px;
 }
 
 .title {
@@ -40,7 +41,8 @@ export default {
 .body {
     display: inline-block;
     width: 100%;
-    min-height: 200px;
+    height: calc(300px - 45px - 5px);
     padding: 5px;
+    overflow-y: auto;
 }
 </style>
