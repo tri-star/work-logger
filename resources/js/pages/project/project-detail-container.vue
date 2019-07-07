@@ -28,7 +28,7 @@
                             :key="date"
                         >
                             <td>{{ date }}</td>
-                            <td class="number-col">{{ dailyCount }}</td>
+                            <td class="col-number">{{ dailyCount }}</td>
                         </tr>
                     </table>
                 </template>
@@ -40,7 +40,21 @@
                 <template slot="title">
                     今日のタスク
                 </template>
-                <template slot="body"></template>
+                <template slot="body">
+                    <table class="small-table">
+                        <tr v-for="(task, id) of scheduledTasks" :key="id">
+                            <td>{{ task.title }}</td>
+                            <td class="col-number">
+                                {{ task.estimate_minutes }}h
+                            </td>
+                            <td class="col-icons">
+                                <router-link :to="`/task/${id}/add-log`"
+                                    ><i class="icon fas fa-plus-circle"></i
+                                ></router-link>
+                            </td>
+                        </tr>
+                    </table>
+                </template>
             </WlFrame>
             <WlFrame class="frame-item" :width="'400px;'">
                 <template slot="title">
@@ -75,7 +89,8 @@ export default {
     data() {
         return {
             project: {},
-            taskStat: {}
+            taskStat: {},
+            scheduledTasks: {}
         }
     },
 
@@ -87,6 +102,11 @@ export default {
 
         projectAdapter.getTaskStat(this.id).then(stat => {
             this.taskStat = stat
+        })
+
+        projectAdapter.getScheduledTasks(this.id).then(list => {
+            console.log(list)
+            this.scheduledTasks = list
         })
     }
 }
