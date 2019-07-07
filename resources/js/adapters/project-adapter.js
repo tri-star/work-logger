@@ -14,6 +14,14 @@ class ProjectAdapter {
 
         return response.data
     }
+
+    async getScheduledTasks(id) {
+        const response = await window.axios.get(
+            `/api/v1/project/${id}/scheduled-tasks`
+        )
+
+        return response.data
+    }
 }
 
 const projectAdapter = new ProjectAdapter()
