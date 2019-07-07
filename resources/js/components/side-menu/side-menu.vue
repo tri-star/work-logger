@@ -2,29 +2,57 @@
     <aside class="side">
         <div class="menu-content">
             <div class="item icon-toggle" @click="$emit('toggle')"></div>
-            <router-link tag="div" to="/" class="item icon-dashboard">
-                ダッシュボード
+            <router-link
+                v-for="(menuItem, index) in menuList"
+                tag="div"
+                :to="menuItem.to"
+                :class="`item ${menuItem.icon}`"
+                :key="index"
+            >
+                {{ menuItem.label }}
             </router-link>
-            <div class="item icon-stats">統計情報</div>
-            <div class="item icon-tasks">タスク一覧</div>
-            <div class="item icon-config">設定</div>
         </div>
         <div class="menu-content-small">
             <div class="item icon-toggle" @click="$emit('toggle')"></div>
             <router-link
+                v-for="(menuItem, index) in menuList"
                 tag="div"
-                to="/"
-                class="item icon-dashboard"
-            ></router-link>
-            <div class="item icon-stats"></div>
-            <div class="item icon-tasks"></div>
-            <div class="item icon-config"></div>
+                :to="menuItem.to"
+                :class="`item ${menuItem.icon}`"
+                :key="index"
+            >
+            </router-link>
         </div>
     </aside>
 </template>
 
 <script>
-export default {}
+const menues = {
+    default: [
+        { icon: "icon-dashboard", label: "ダッシュボード", to: "/" },
+        { icon: "icon-stats", label: "統計情報", to: "" },
+        { icon: "icon-config", label: "設定", to: "" }
+    ],
+    project: [
+        { icon: "icon-dashboard", label: "ダッシュボード", to: "/" },
+        { icon: "icon-tasks", label: "タスク一覧", to: "/tasks" },
+        { icon: "icon-config", label: "設定", to: "" }
+    ]
+}
+
+export default {
+    props: {
+        sideMenuType: {
+            type: String,
+            required: true
+        }
+    },
+    computed: {
+        menuList() {
+            return menues[this.sideMenuType] ? menues[this.sideMenuType] : []
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
