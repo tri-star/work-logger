@@ -29,13 +29,16 @@
 <script>
 const menues = {
     default: [
-        { icon: "icon-dashboard", label: "ダッシュボード", to: "/" },
         { icon: "icon-stats", label: "統計情報", to: "" },
         { icon: "icon-config", label: "設定", to: "" }
     ],
     project: [
         { icon: "icon-dashboard", label: "ダッシュボード", to: "/" },
-        { icon: "icon-tasks", label: "タスク一覧", to: "/tasks" },
+        {
+            icon: "icon-tasks",
+            label: "タスク一覧",
+            to: "/project/:id/tasks"
+        },
         { icon: "icon-config", label: "設定", to: "" }
     ]
 }
@@ -45,11 +48,29 @@ export default {
         sideMenuType: {
             type: String,
             required: true
+        },
+        sideMenuParams: {
+            type: Object,
+            default: () => {
+                return {}
+            }
         }
     },
     computed: {
         menuList() {
-            return menues[this.sideMenuType] ? menues[this.sideMenuType] : []
+            if (!menues[this.sideMenuType]) {
+                return []
+            }
+            const convertedMenues = menues[this.sideMenuType].map(item => {
+                Object.keys(this.sideMenuParams).forEach(key => {
+                    item.to = item.to.replace(
+                        `:${key}`,
+                        this.sideMenuParams[key]
+                    )
+                })
+                return item
+            })
+            return convertedMenues
         }
     }
 }

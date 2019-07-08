@@ -2,7 +2,11 @@
     <div class="container">
         <DefaultHeader />
         <div :class="{ 'side-wrapper': 1, 'side-hide': hideMenu }">
-            <SideMenu @toggle="handleToggle" :sideMenuType="sideMenuType" />
+            <SideMenu
+                @toggle="handleToggle"
+                :sideMenuType="sideMenuType"
+                :sideMenuParams="sideMenuParams"
+            />
             <main class="content">
                 <router-view @changeSideMenu="handleChangeSideMenu" />
             </main>
@@ -18,7 +22,8 @@ export default {
     data() {
         return {
             hideMenu: true,
-            sideMenuType: "default"
+            sideMenuType: "default",
+            sideMenuParams: {}
         }
     },
     components: {
@@ -29,8 +34,9 @@ export default {
         handleToggle() {
             this.hideMenu = !this.hideMenu
         },
-        handleChangeSideMenu(menuType) {
+        handleChangeSideMenu(menuType, params = {}) {
             this.sideMenuType = menuType
+            this.sideMenuParams = params
         }
     }
 }
