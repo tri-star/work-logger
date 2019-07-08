@@ -90,6 +90,27 @@ a:visited {
 }
 
 
+.list-table {
+    border-collapse: collapse;
+    border-spacing: 1px;
+    border: solid 1px darken($brand-color-primary, 10%);
+    width: 100%;
+
+    th {
+        background-color: $table-head-color;
+        border: solid 1px $table-border-color;
+        padding: 5px;
+        color: $base-font-color;
+        font-weight: bold;
+    }
+    td {
+        background-color: #fff;
+        border: solid 1px $table-border-color;
+        padding: 5px;
+    }
+
+}
+
 .small-table {
     border-collapse: separate;
     border-spacing: 2px;
@@ -127,6 +148,11 @@ a:visited {
 }
 
 .col-icons {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.col-checkbox {
     text-align: center;
     vertical-align: middle;
 }

@@ -7,5 +7,10 @@ export default [
         path: "/project/:id",
         component: require("./pages/project/project-detail-container").default,
         props: route => ({ id: Number(route.params.id) })
+    },
+    {
+        path: "/project/:id/tasks",
+        component: require("./pages/project/task-list-container").default,
+        props: route => ({ id: Number(route.params.id) })
     }
 ]
