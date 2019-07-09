@@ -67,6 +67,7 @@ export default {
     },
 
     mounted() {
+        this.$emit("changeSideMenu", "default")
         const dashboardAdapter = adapterFactory.get("DashboardAdapter")
         dashboardAdapter.getProjectList().then(projects => {
             this.projects = projects

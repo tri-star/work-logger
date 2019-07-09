@@ -95,6 +95,10 @@ export default {
     },
 
     mounted() {
+        this.$emit("changeSideMenu", "project", {
+            id: this.id
+        })
+
         const projectAdapter = adapterFactory.get("ProjectAdapter")
         projectAdapter.getProject(this.id).then(project => {
             this.project = project
