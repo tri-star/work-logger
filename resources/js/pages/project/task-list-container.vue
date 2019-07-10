@@ -6,7 +6,7 @@
 
         <section>
             <section class="action-area">
-                <a class="command-button">
+                <a class="command-button" @click="openNewForm">
                     <i class="icon fas fa-plus-circle"></i>新規登録
                 </a>
             </section>
@@ -25,7 +25,11 @@
                 <tr v-for="task in taskList" :key="task.id">
                     <td class="col-checkbox"><input type="checkbox" /></td>
                     <td class="col-number">{{ task.id }}</td>
-                    <td class="col-task-name">{{ task.title }}</td>
+                    <td class="col-task-name">
+                        <a href="#" @click="openEditForm(task.id)">{{
+                            task.title
+                        }}</a>
+                    </td>
                     <td></td>
                     <td>{{ getStatusName(task.status) }}</td>
                     <td>{{ task.start_date }}</td>
@@ -34,12 +38,18 @@
                 </tr>
             </table>
         </section>
+        <TaskFormContainer
+            ref="taskForm"
+            :project="project"
+            @taskRegistered="handleTaskRegistered"
+        />
     </div>
 </template>
 
 <script>
 import adapterFactory from "../../adapters/adapter-factory"
 import Task from "../../domain/task.js"
+import TaskFormContainer from "../tasks/task-form-container"
 
 export default {
     props: {
@@ -48,7 +58,9 @@ export default {
             required: true
         }
     },
-    components: {},
+    components: {
+        TaskFormContainer
+    },
     data() {
         return {
             project: {},
@@ -59,6 +71,22 @@ export default {
     methods: {
         getStatusName(status) {
             return Task.getStatusName(status)
+        },
+        handleTaskRegistered() {
+            this.loadTaskList()
+        },
+        loadTaskList() {
+            const taskAdapter = adapterFactory.get("TaskAdapter")
+            taskAdapter.search(this.id).then(result => {
+                this.taskList = result
+            })
+        },
+
+        openNewForm() {
+            this.$refs.taskForm.open(0)
+        },
+        openEditForm(id) {
+            this.$refs.taskForm.open(id)
         }
     },
 
@@ -72,9 +100,7 @@ export default {
             this.project = project
         })
 
-        projectAdapter.searchTaskList(this.id).then(result => {
-            this.taskList = result
-        })
+        this.loadTaskList()
     }
 }
 </script>

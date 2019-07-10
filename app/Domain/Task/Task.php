@@ -17,10 +17,16 @@ class Task extends Model
     const STATE_PAUSE = 30;
     const STATE_INVALID = 40;
 
+    const MAX_TITLE_LENGTH = 50;
+    const MAX_ISSUE_NO_LENGTH = 50;
+    const MAX_DESCRIPTION_LENGTH = 255;
+
     protected $fillable = [
         'issue_no',
         'title',
         'description',
+        'start_date',
+        'end_date',
         'estimate_minutes',
         'actual_minutes',
         'status',
@@ -34,6 +40,22 @@ class Task extends Model
     public static function getEndStatuses(): array
     {
         return [
+            self::STATE_DONE,
+            self::STATE_PAUSE,
+            self::STATE_INVALID,
+        ];
+    }
+
+
+    /**
+     * 全ての選択肢の一覧を返す
+     * @return array
+     */
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATE_NONE,
+            self::STATE_IN_PROGRESS,
             self::STATE_DONE,
             self::STATE_PAUSE,
             self::STATE_INVALID,
@@ -75,7 +97,14 @@ class Task extends Model
         return $query->where('project_id', $projectId)
             ->where('user_id', $userId)
             ->whereNotIn('status', $this->getEndStatuses())
-            ->where('start_date', '>=', $now->format('Y-m-d'))
+            ->where('start_date', '<=', $now->format('Y-m-d'))
             ->orderBy('end_date');
+    }
+
+
+    public function scopeInProject(Builder $query, int $projectId)
+    {
+        return $query->where('project_id', $projectId)
+            ->orderBy('updated_at', 'desc');
     }
 }
