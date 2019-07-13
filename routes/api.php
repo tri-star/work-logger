@@ -18,4 +18,10 @@ Route::middleware('auth')->prefix('v1')->group(function () {
     Route::get('/project/{id}/detail', 'Project\ProjectApiController@getDetail');
     Route::get('/project/{id}/task-stat', 'Project\ProjectApiController@getTaskStatList');
     Route::get('/project/{id}/scheduled-tasks', 'Project\ProjectApiController@getScheduledTaskList');
+    Route::post('/project/{projectId}/task/add', 'TaskApiController@addTask');
+    Route::get('/project/{projectId}/task/list', 'TaskApiController@getTaskList');
+});
+
+Route::middleware('auth')->prefix('v1')->group(function () {
+    Route::get('/task/{id}', 'TaskApiController@getTask');
 });
