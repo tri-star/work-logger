@@ -10,12 +10,25 @@ use WorkLogger\Domain\Project\Project;
 use WorkLogger\Domain\Task\Task;
 use WorkLogger\Http\Response\JsonResponse;
 use WorkLogger\UseCase\Task\RegisterTaskUseCase;
+use WorkLogger\UseCase\Task\UpdateTaskUseCase;
 
 class TaskApiController extends Controller
 {
     public function addTask(int $projectId, Request $request, RegisterTaskUseCase $useCase)
     {
         $result = $useCase->execute(\Auth::user(), $projectId, $request->input());
+
+        $statusCode = 200;
+        if (!$result['success']) {
+            $statusCode = 400;
+        }
+        return new JsonResponse($result, $statusCode);
+    }
+
+
+    public function updateTask(int $taskId, Request $request, UpdateTaskUseCase $useCase)
+    {
+        $result = $useCase->execute(\Auth::user(), $taskId, $request->input());
 
         $statusCode = 200;
         if (!$result['success']) {

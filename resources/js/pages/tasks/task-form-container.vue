@@ -129,9 +129,29 @@ export default {
             }
         },
         save() {
+            if (this.id === 0) {
+                this.addTask()
+            } else {
+                this.updateTask()
+            }
+        },
+        addTask() {
             const adapter = AdapterFactory.get("TaskAdapter")
             adapter
                 .addTask(this.project.id, this.task)
+                .then(() => {
+                    this.$emit("taskRegistered")
+                    this.showModal = false
+                })
+                .catch(error => {
+                    console.error(error)
+                    alert(error)
+                })
+        },
+        updateTask() {
+            const adapter = AdapterFactory.get("TaskAdapter")
+            adapter
+                .updateTask(this.id, this.task)
                 .then(() => {
                     this.$emit("taskRegistered")
                     this.showModal = false

@@ -16,6 +16,18 @@ class TaskAdapter {
         return response.data
     }
 
+    async updateTask(id, task) {
+        const response = await window.axios.post(`/api/v1/task/${id}`, {
+            title: task.title,
+            start_date: task.start_date,
+            end_date: task.end_date,
+            estimate_minutes: task.estimate_minutes,
+            status: task.status
+        })
+
+        return response.data
+    }
+
     async getTask(id) {
         const response = await window.axios.get(`/api/v1/task/${id}`)
 

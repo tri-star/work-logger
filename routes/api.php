@@ -24,4 +24,5 @@ Route::middleware('auth')->prefix('v1')->group(function () {
 
 Route::middleware('auth')->prefix('v1')->group(function () {
     Route::get('/task/{id}', 'TaskApiController@getTask');
+    Route::post('/task/{id}', 'TaskApiController@updateTask');
 });
