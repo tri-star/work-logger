@@ -125,7 +125,7 @@ class TaskTest extends TestCase
         $project = factory(Project::class)->create();
         $tasks = $validScheduleTaskGenerator($project, $user, $now, 1);
         $tasks->each(function ($task) use ($now) {
-            $task->start_date = $now->copy()->subDay();
+            $task->start_date = $now->copy()->addDay();
             $task->save();
         });
 
