@@ -35,6 +35,11 @@ const menues = {
     project: [
         { icon: "fas fa-chart-line", label: "ダッシュボード", to: "/" },
         {
+            icon: "fas fa-project-diagram",
+            label: "プロジェクト",
+            to: "/project/:id"
+        },
+        {
             icon: "fas fa-tasks",
             label: "タスク一覧",
             to: "/project/:id/tasks"
