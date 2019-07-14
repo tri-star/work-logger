@@ -46,10 +46,10 @@ class TaskTest extends TestCase
         $validScheduleTaskGenerator = function (Project $project, User $user, Carbon $now, int $count) {
             $tasks = factory(Task::class, 4)->create([
                 'project_id' => $project->id,
-                'user_id' => $user->id,
-                'status' => Task::STATE_NONE,
+                'user_id'    => $user->id,
+                'status'     => Task::STATE_NONE,
                 'start_date' => $now->format('Y-m-d H:i:s'),
-                'end_date' => $now,
+                'end_date'   => $now,
             ], $count);
 
             return $tasks;
@@ -64,9 +64,9 @@ class TaskTest extends TestCase
 
         yield
             '自分が担当_開始日を過ぎて未着手なものはカウントする' => [
-                'user' => $user,
-                'project' => $project,
-                'now' => $now,
+                'user'          => $user,
+                'project'       => $project,
+                'now'           => $now,
                 'expectedCount' => 4,
         ];
 
@@ -82,9 +82,9 @@ class TaskTest extends TestCase
 
         yield
         '自分が担当_開始日を過ぎて着手中状態のものはカウントする' => [
-            'user' => $user,
-            'project' => $project,
-            'now' => $now,
+            'user'          => $user,
+            'project'       => $project,
+            'now'           => $now,
             'expectedCount' => 4,
         ];
 
@@ -98,9 +98,9 @@ class TaskTest extends TestCase
 
         yield
         '他ユーザーのタスクをカウントしないこと' => [
-            'user' => $user,
-            'project' => $project,
-            'now' => $now,
+            'user'          => $user,
+            'project'       => $project,
+            'now'           => $now,
             'expectedCount' => 0,
         ];
 
@@ -113,9 +113,9 @@ class TaskTest extends TestCase
 
         yield
         '他プロジェクトのタスクをカウントしないこと' => [
-            'user' => $user,
-            'project' => $project,
-            'now' => $now,
+            'user'          => $user,
+            'project'       => $project,
+            'now'           => $now,
             'expectedCount' => 0,
         ];
 
@@ -131,9 +131,9 @@ class TaskTest extends TestCase
 
         yield
         '開始日前のタスクをカウントしないこと' => [
-            'user' => $user,
-            'project' => $project,
-            'now' => $now,
+            'user'          => $user,
+            'project'       => $project,
+            'now'           => $now,
             'expectedCount' => 0,
         ];
 
@@ -149,9 +149,9 @@ class TaskTest extends TestCase
 
         yield
         '中断したタスクをカウントいないこと' => [
-            'user' => $user,
-            'project' => $project,
-            'now' => $now,
+            'user'          => $user,
+            'project'       => $project,
+            'now'           => $now,
             'expectedCount' => 0,
         ];
 
@@ -167,9 +167,9 @@ class TaskTest extends TestCase
 
         yield
         '中断したタスクをカウントいないこと' => [
-            'user' => $user,
-            'project' => $project,
-            'now' => $now,
+            'user'          => $user,
+            'project'       => $project,
+            'now'           => $now,
             'expectedCount' => 0,
         ];
     }
