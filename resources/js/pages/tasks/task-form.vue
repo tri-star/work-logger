@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="col-center button-area">
-                <button class="button" @click="$emit('save')">
+                <button class="button" @click="$emit('save', task)">
                     {{ buttonTitle }}
                 </button>
                 <button class="button" @click="$emit('close')">
@@ -72,20 +72,13 @@
 import Task from "../../domain/task"
 
 export default {
-    props: {
-        id: {
-            type: Number,
-            required: true
-        },
-        task: {
-            type: Object,
-            required: true
-        }
-    },
+    props: {},
 
     components: {},
     data() {
         return {
+            id: 0,
+            task: {},
             statuses: Task.getStatusNames()
         }
     },
@@ -99,9 +92,12 @@ export default {
         }
     },
 
-    methods: {},
-
-    mounted() {}
+    methods: {
+        init(id, task) {
+            this.id = id
+            this.task = Object.assign({}, this.task, task)
+        }
+    }
 }
 </script>
 

@@ -1,12 +1,7 @@
 <template>
     <WlModal :showModal="showModal">
         <template v-slot:body>
-            <TaskForm
-                :id="id"
-                :task="task"
-                @save="handleSave"
-                @close="handleClose"
-            />
+            <TaskForm ref="taskForm" @save="handleSave" @close="handleClose" />
         </template>
     </WlModal>
 </template>
@@ -43,7 +38,7 @@ export default {
             const adapter = AdapterFactory.get("TaskAdapter")
             return await adapter.getTask(id)
         },
-        open(id) {
+        async open(id) {
             this.id = id
             this.showModal = true
             if (this.id === 0) {
@@ -55,30 +50,26 @@ export default {
                     status: 0
                 }
             } else {
-                this.loadTask(this.id)
-                    .then(task => {
-                        this.task = task
-                    })
-                    .catch(error => {
-                        console.error(error)
-                        alert(error)
-                    })
+                this.task = await this.loadTask(this.id)
             }
+            this.$nextTick(() => {
+                this.$refs.taskForm.init(this.id, this.task)
+            })
         },
-        handleSave() {
+        handleSave(task) {
             if (this.id === 0) {
-                this.addTask()
+                this.addTask(task)
             } else {
-                this.updateTask()
+                this.updateTask(task)
             }
         },
         handleClose() {
             this.showModal = false
         },
-        addTask() {
+        addTask(task) {
             const adapter = AdapterFactory.get("TaskAdapter")
             adapter
-                .addTask(this.project.id, this.task)
+                .addTask(this.project.id, task)
                 .then(() => {
                     this.$emit("taskRegistered")
                     this.showModal = false
@@ -88,10 +79,10 @@ export default {
                     alert(error)
                 })
         },
-        updateTask() {
+        updateTask(task) {
             const adapter = AdapterFactory.get("TaskAdapter")
             adapter
-                .updateTask(this.id, this.task)
+                .updateTask(this.id, task)
                 .then(() => {
                     this.$emit("taskRegistered")
                     this.showModal = false
