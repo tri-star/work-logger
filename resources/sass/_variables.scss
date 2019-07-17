@@ -1,18 +1,18 @@
 
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
-$base-font-color: #A64B00;
-
 $brand-color-primary: #FF7400;
 $brand-color-second: #006363;
 
 $light-primary-color: #FFF6F0;
 
+$base-font-color: $brand-color-second;
+
 $primary-font-color: $brand-color-second;
 
-$link-color: #FF9640;
+$link-color: darken($brand-color-second, 10%);
 $link-hover-color: lighten($link-color, 10%);
-$link-visited-color: darken($link-color, 10%);
+$link-visited-color: darken($brand-color-second, 10%);
 
 
 $header-background-color: $brand-color-primary;
@@ -37,3 +37,8 @@ $heading2-font-color: $brand-color-second;
 
 $table-head-color: #FF9640;
 $table-border-color: darken($table-head-color, 30%);
+$table-font-color: $primary-font-color;
+
+$small-table-border-color: #FFF;
+$small-table-background-color: $light-primary-color;
+$small-table-font-color: lighten($primary-font-color, 10%);
