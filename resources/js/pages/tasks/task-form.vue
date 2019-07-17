@@ -8,9 +8,20 @@
                 <div class="col">
                     <input
                         type="text"
+                        name="title"
                         v-model="task.title"
+                        data-vv-as="タスク名"
+                        v-validate="'required'"
                         class="text-box task-name"
                     />
+                    <ul class="errors">
+                        <li
+                            v-for="(error, index) in errors.collect('title')"
+                            :key="index"
+                        >
+                            {{ error }}
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row">
@@ -18,9 +29,22 @@
                 <div class="col">
                     <input
                         type="text"
+                        name="start_date"
                         v-model="task.start_date"
+                        data-vv-as="開始予定日"
+                        v-validate="'required|date_format:yyyy-MM-dd'"
                         class="text-box"
                     />
+                    <ul class="errors">
+                        <li
+                            v-for="(error, index) in errors.collect(
+                                'start_date'
+                            )"
+                            :key="index"
+                        >
+                            {{ error }}
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row">
@@ -28,9 +52,20 @@
                 <div class="col">
                     <input
                         type="text"
+                        name="end_date"
                         v-model="task.end_date"
+                        data-vv-as="完了予定日"
+                        v-validate="'date_format:yyyy-MM-dd'"
                         class="text-box"
                     />
+                    <ul class="errors">
+                        <li
+                            v-for="(error, index) in errors.collect('end_date')"
+                            :key="index"
+                        >
+                            {{ error }}
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row">
@@ -38,9 +73,22 @@
                 <div class="col">
                     <input
                         type="number"
+                        name="estimate_minutes"
                         v-model="task.estimate_minutes"
+                        data-vv-as="予定工数"
+                        v-validate="'required'"
                         class="text-box estimate-time"
                     />
+                    <ul class="errors">
+                        <li
+                            v-for="(error, index) in errors.collect(
+                                'estimate_minutes'
+                            )"
+                            :key="index"
+                        >
+                            {{ error }}
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row">
@@ -57,7 +105,7 @@
                 </div>
             </div>
             <div class="col-center button-area">
-                <button class="button" @click="$emit('save', task)">
+                <button class="button" @click="submit" :disabled="!canSubmit">
                     {{ buttonTitle }}
                 </button>
                 <button class="button" @click="$emit('close')">
@@ -89,6 +137,9 @@ export default {
         },
         buttonTitle() {
             return this.id === 0 ? "登録" : "更新"
+        },
+        canSubmit() {
+            return this.errors.all().length == 0
         }
     },
 
@@ -96,6 +147,14 @@ export default {
         init(id, task) {
             this.id = id
             this.task = Object.assign({}, this.task, task)
+        },
+        submit() {
+            this.$validator.validate().then(result => {
+                if (!result) {
+                    return
+                }
+                this.$emit("save", this.task)
+            })
         }
     }
 }
@@ -138,6 +197,17 @@ export default {
 
     .button-area {
         margin-top: 10px;
+    }
+}
+
+.errors {
+    margin-top: 5px;
+    background-color: rgba(255, 100, 100, 0.2);
+    list-style: none;
+    padding: 0;
+    li {
+        padding: 5px 10px;
+        color: #e00;
     }
 }
 </style>

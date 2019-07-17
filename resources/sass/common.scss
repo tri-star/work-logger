@@ -47,6 +47,15 @@ a:visited {
     padding: 5px 10px;
 }
 
+.button:disabled {
+    background-color: grayscale(lighten($brand-color-primary, 20%));
+    color: grayscale($brand-color-second);
+    font-weight: bold;
+    border: 1px solid grayscale(lighten($brand-color-primary, 10%));
+    box-shadow: 3px 3px 0 rgba(0,0,0, 0.2);
+    padding: 5px 10px;
+}
+
 .command-button {
     display: inline-block;
     background-color: $light-primary-color;
