@@ -1,5 +1,5 @@
 <template>
-    <header><h1 class="logo">Task Logger</h1></header>
+    <header><h1 class="logo">Work Logger</h1></header>
 </template>
 
 <script>
