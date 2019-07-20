@@ -48,9 +48,9 @@
                                 {{ task.estimate_minutes }}h
                             </td>
                             <td class="col-icons">
-                                <router-link :to="`/task/${id}/add-log`"
+                                <a @click="addTaskLog(task)"
                                     ><i class="icon fas fa-plus-circle"></i
-                                ></router-link>
+                                ></a>
                             </td>
                         </tr>
                     </table>
@@ -68,6 +68,7 @@
                 </template>
                 <template slot="body"></template>
             </WlFrame>
+            <TaskLogFormContainer ref="taskLogForm" />
         </div>
     </div>
 </template>
@@ -75,6 +76,7 @@
 <script>
 import adapterFactory from "../../adapters/adapter-factory"
 import WlFrame from "../../components/wl-frame"
+import TaskLogFormContainer from "../tasks/task-log-form-container"
 
 export default {
     props: {
@@ -84,13 +86,20 @@ export default {
         }
     },
     components: {
-        WlFrame
+        WlFrame,
+        TaskLogFormContainer
     },
     data() {
         return {
             project: {},
             taskStat: {},
             scheduledTasks: {}
+        }
+    },
+
+    methods: {
+        addTaskLog(task) {
+            this.$refs.taskLogForm.open(task, 0)
         }
     },
 

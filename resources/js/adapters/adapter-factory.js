@@ -1,11 +1,13 @@
 import DashboardAdapter from "./dashboard-adapter"
 import ProjectAdapter from "./project-adapter"
 import TaskAdapter from "./task-adapter"
+import TaskLogAdapter from "./task-log-adapter"
 
 const adapters = {
     DashboardAdapter,
     ProjectAdapter,
-    TaskAdapter
+    TaskAdapter,
+    TaskLogAdapter
 }
 
 class AdapterFactory {
