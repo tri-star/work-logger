@@ -15,6 +15,9 @@ return [
 
     'date_format' => ':attributeは :format の形式で入力してください',
     'in'          => ':attribute の入力内容が無効です',
+    'min'         => [
+        'numeric' => ':attributeは:min以上を入力してください',
+    ],
     'max'         => [
         'string'  => ':attribute は :max 文字以内で入力してください',
     ],
