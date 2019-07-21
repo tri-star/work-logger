@@ -51,12 +51,9 @@ class UpdateTaskUseCase
                 ];
             }
 
+            $task->changeStatus($parameters['status']);
             $task->fill($parameters);
             $task->user_id = $user->id;
-
-            if ($task->isDirty('status') && $task->status == Task::STATE_DONE) {
-                $task->completed_at = Carbon::now();
-            }
 
             $task->save();
         } catch (\Exception $e) {
