@@ -52,7 +52,7 @@ class RegisterTaskLogUseCase
             $taskLog->task_id = $taskId;
             $taskLog->save();
 
-            $task->status = $taskLog->status;
+            $task->changeStatus($taskLog->status);
             $task->save();
             \DB::commit();
         } catch (\Exception $e) {

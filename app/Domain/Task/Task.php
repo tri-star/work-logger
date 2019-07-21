@@ -64,6 +64,19 @@ class Task extends Model
 
 
     /**
+     * タスクの状態を更新する(状態変化に伴う操作も実行する)。
+     * @param int $newStatus
+     */
+    public function changeStatus(int $newStatus)
+    {
+        if ($this->status !== $newStatus && $newStatus == self::STATE_DONE) {
+            $this->completed_at = Carbon::now();
+        }
+        $this->status = $newStatus;
+    }
+
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
