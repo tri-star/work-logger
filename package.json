@@ -10,7 +10,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "test": "node ./node_modules/jest/bin/jest.js",
         "test-watch": "node ./node_modules/jest/bin/jest.js --watch",
-        "lint-all": "node ./node_modules/eslint/bin/eslint.js --fix --ignore-path=.eslintignore ."
+        "lint-all": "eslint --ignore-path=.eslintignore ."
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",
