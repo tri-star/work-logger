@@ -32,7 +32,7 @@
                         name="start_date"
                         v-model="task.start_date"
                         data-vv-as="開始予定日"
-                        v-validate="'required|date_format:yyyy-MM-dd'"
+                        v-validate="'date_format:yyyy-MM-dd'"
                         class="text-box"
                     />
                     <ul class="errors">
@@ -76,7 +76,7 @@
                         name="estimate_minutes"
                         v-model="task.estimate_minutes"
                         data-vv-as="予定工数"
-                        v-validate="'required'"
+                        v-validate="'required|min_value:0.1'"
                         class="text-box estimate-time"
                     />
                     <ul class="errors">

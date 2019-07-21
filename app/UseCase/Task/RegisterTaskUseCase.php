@@ -74,8 +74,8 @@ class RegisterTaskUseCase
         $maxTitleLength = Task::MAX_TITLE_LENGTH;
         $rules = [
             'title'      => "required|max:{$maxTitleLength}",
-            'start_date' => 'date_format:Y-m-d',
-            'end_date'   => 'date_format:Y-m-d',
+            'start_date' => 'nullable|date_format:Y-m-d',
+            'end_date'   => 'nullable|date_format:Y-m-d',
             'status'     => Rule::in(Task::getStatuses()),
         ];
 
