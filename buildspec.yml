@@ -41,6 +41,8 @@ phases:
 
   build:
     commands:
+      - yarn lint-all
+      - yarn dev
       - vendor/bin/phpunit
   post_build:
     commands:
