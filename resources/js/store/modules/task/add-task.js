@@ -16,8 +16,6 @@ export default {
         }
     },
     actions: {
-        async create(context, payload) {
-
-        }
+        async create(context, payload) {}
     }
 }

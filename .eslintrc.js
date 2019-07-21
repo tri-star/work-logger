@@ -32,6 +32,7 @@ module.exports = {
         "semi": ["warn", "never"],
         "template-curly-spacing": "error",
         "yield-star-spacing": "error",
+        "sort-imports": "error",
         "prettier/prettier": [
             "warn",
             {

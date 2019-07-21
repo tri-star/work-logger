@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import WlModal from "../../components/wl-modal"
+import AdapterFactory from "../../adapters/adapter-factory"
 import Task from "../../domain/task"
 import TaskForm from "./task-form"
-import AdapterFactory from "../../adapters/adapter-factory"
+import WlModal from "../../components/wl-modal"
 
 export default {
     props: {

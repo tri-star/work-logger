@@ -1,11 +1,11 @@
-import Vue from "vue"
-import Vuex from "vuex"
-import VueRouter from "vue-router"
-import VeeValidate from "vee-validate"
-import initStore from "./store"
-import routes from "./routes"
 import DefaultLayout from "./pages/default-layout"
 import JapaneseValidationMessages from "./strings/validation_ja"
+import VeeValidate from "vee-validate"
+import Vue from "vue"
+import VueRouter from "vue-router"
+import Vuex from "vuex"
+import initStore from "./store"
+import routes from "./routes"
 
 require("./bootstrap")
 require("es6-promise/auto")
