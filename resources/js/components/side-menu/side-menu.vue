@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import _cloneDeep from "lodash/cloneDeep"
+
 const menues = {
     default: [
         { icon: "fas fa-chart-pie", label: "統計情報", to: "" },
@@ -66,15 +68,17 @@ export default {
             if (!menues[this.sideMenuType]) {
                 return []
             }
-            const convertedMenues = menues[this.sideMenuType].map(item => {
-                Object.keys(this.sideMenuParams).forEach(key => {
-                    item.to = item.to.replace(
-                        `:${key}`,
-                        this.sideMenuParams[key]
-                    )
-                })
-                return item
-            })
+            const convertedMenues = _cloneDeep(menues[this.sideMenuType]).map(
+                item => {
+                    Object.keys(this.sideMenuParams).forEach(key => {
+                        item.to = item.to.replace(
+                            `:${key}`,
+                            this.sideMenuParams[key]
+                        )
+                    })
+                    return item
+                }
+            )
             return convertedMenues
         }
     }

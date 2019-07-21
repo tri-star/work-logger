@@ -47,9 +47,9 @@
 </template>
 
 <script>
-import adapterFactory from "../../adapters/adapter-factory"
 import Task from "../../domain/task.js"
 import TaskFormContainer from "../tasks/task-form-container"
+import adapterFactory from "../../adapters/adapter-factory"
 
 export default {
     props: {
@@ -87,20 +87,30 @@ export default {
         },
         openEditForm(id) {
             this.$refs.taskForm.open(id)
+        },
+        handleMounted() {
+            console.log(`project: ${this.id}`)
+            this.$emit("changeSideMenu", "project", {
+                id: this.id
+            })
+
+            const projectAdapter = adapterFactory.get("ProjectAdapter")
+            projectAdapter.getProject(this.id).then(project => {
+                this.project = project
+            })
+
+            this.loadTaskList()
         }
     },
 
     mounted() {
-        this.$emit("changeSideMenu", "project", {
-            id: this.id
-        })
-
-        const projectAdapter = adapterFactory.get("ProjectAdapter")
-        projectAdapter.getProject(this.id).then(project => {
-            this.project = project
-        })
-
-        this.loadTaskList()
+        this.handleMounted()
+    },
+    beforeRouteUpdate(to, from, next) {
+        // if (to !== from) {
+        this.handleMounted()
+        // }
+        next()
     }
 }
 </script>

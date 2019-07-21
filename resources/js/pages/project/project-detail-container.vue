@@ -74,9 +74,9 @@
 </template>
 
 <script>
-import adapterFactory from "../../adapters/adapter-factory"
-import WlFrame from "../../components/wl-frame"
 import TaskLogFormContainer from "../tasks/task-log-form-container"
+import WlFrame from "../../components/wl-frame"
+import adapterFactory from "../../adapters/adapter-factory"
 
 export default {
     props: {
@@ -100,27 +100,35 @@ export default {
     methods: {
         addTaskLog(task) {
             this.$refs.taskLogForm.open(task, 0)
+        },
+        handleMounted() {
+            this.$emit("changeSideMenu", "project", {
+                id: this.id
+            })
+
+            const projectAdapter = adapterFactory.get("ProjectAdapter")
+            projectAdapter.getProject(this.id).then(project => {
+                this.project = project
+            })
+
+            projectAdapter.getTaskStat(this.id).then(stat => {
+                this.taskStat = stat
+            })
+
+            projectAdapter.getScheduledTasks(this.id).then(list => {
+                this.scheduledTasks = list
+            })
         }
     },
 
     mounted() {
-        this.$emit("changeSideMenu", "project", {
-            id: this.id
-        })
-
-        const projectAdapter = adapterFactory.get("ProjectAdapter")
-        projectAdapter.getProject(this.id).then(project => {
-            this.project = project
-        })
-
-        projectAdapter.getTaskStat(this.id).then(stat => {
-            this.taskStat = stat
-        })
-
-        projectAdapter.getScheduledTasks(this.id).then(list => {
-            console.log(list)
-            this.scheduledTasks = list
-        })
+        this.handleMounted()
+    },
+    beforeRouteUpdate(to, from, next) {
+        if (to !== from) {
+            this.handleMounted()
+        }
+        next()
     }
 }
 </script>
