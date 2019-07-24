@@ -94,6 +94,15 @@ class Task extends Model
 
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function logs()
+    {
+        return $this->hasMany(TaskLog::class)->orderBy('id', 'desc');
+    }
+
+
+    /**
      * ユーザーに割り当てられたタスクのうち、開始日を過ぎて未完了のものの一覧を返す
      * @param Builder $query
      * @param int $projectId プロジェクトID

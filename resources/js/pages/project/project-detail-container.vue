@@ -43,7 +43,11 @@
                 <template slot="body">
                     <table class="small-table">
                         <tr v-for="(task, id) of scheduledTasks" :key="id">
-                            <td>{{ task.title }}</td>
+                            <td>
+                                <router-link :to="`/task/${task.id}`">{{
+                                    task.title
+                                }}</router-link>
+                            </td>
                             <td class="col-number">
                                 {{ task.estimate_minutes }}h
                             </td>

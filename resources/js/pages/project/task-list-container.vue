@@ -89,7 +89,6 @@ export default {
             this.$refs.taskForm.open(id)
         },
         handleMounted() {
-            console.log(`project: ${this.id}`)
             this.$emit("changeSideMenu", "project", {
                 id: this.id
             })
