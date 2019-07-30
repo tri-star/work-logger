@@ -28,8 +28,14 @@ class TaskAdapter {
         return response.data
     }
 
-    async getTask(id) {
-        const response = await window.axios.get(`/api/v1/task/${id}`)
+    async getTask(id, options = {}) {
+        let queries = {}
+        if (options["with_task_logs"]) {
+            queries["with_task_logs"] = 1
+        }
+        const response = await window.axios.get(`/api/v1/task/${id}`, {
+            params: queries
+        })
 
         return response.data
     }

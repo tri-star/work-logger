@@ -39,14 +39,24 @@ class TaskApiController extends Controller
     }
 
 
-    public function getTask(int $id)
+    public function getTask(int $id, Request $request)
     {
-        $task = Task::with('project')->find($id);
+        $withTaskLogs = $request->query->has('with_task_logs');
+        $relations = ['project'];
+        if ($withTaskLogs) {
+            $relations[] = 'logs';
+        }
+
+        $task = Task::with($relations)->find($id);
         if (!$task || !$task->project->isMember(\Auth::user())) {
             throw new NotFoundHttpException();
         }
 
-        return new JsonResponse($task);
+        $response = $task->attributesToArray();
+        if ($withTaskLogs) {
+            $response['logs'] = $task->logs->toArray();
+        }
+        return new JsonResponse($response);
     }
 
 
