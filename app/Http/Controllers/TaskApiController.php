@@ -55,6 +55,7 @@ class TaskApiController extends Controller
         $response = $task->attributesToArray();
         if ($withTaskLogs) {
             $response['logs'] = $task->logs->toArray();
+            $response['actual_time'] = $task->getActualTime();
         }
         return new JsonResponse($response);
     }

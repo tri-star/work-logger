@@ -103,6 +103,15 @@ class Task extends Model
 
 
     /**
+     * @return float
+     */
+    public function getActualTime()
+    {
+        return $this->logs()->sum('hours');
+    }
+
+
+    /**
      * ユーザーに割り当てられたタスクのうち、開始日を過ぎて未完了のものの一覧を返す
      * @param Builder $query
      * @param int $projectId プロジェクトID
