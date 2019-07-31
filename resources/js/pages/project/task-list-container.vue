@@ -26,9 +26,9 @@
                     <td class="col-checkbox"><input type="checkbox" /></td>
                     <td class="col-number">{{ task.id }}</td>
                     <td class="col-task-name">
-                        <a href="#" @click="openEditForm(task.id)">{{
+                        <router-link :to="`/task/${task.id}`">{{
                             task.title
-                        }}</a>
+                        }}</router-link>
                     </td>
                     <td></td>
                     <td>{{ getStatusName(task.status) }}</td>
