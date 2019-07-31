@@ -19,7 +19,7 @@
 export default {
     props: {
         projects: {
-            type: Array,
+            type: Object,
             required: true
         }
     }

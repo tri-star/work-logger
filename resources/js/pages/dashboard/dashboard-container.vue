@@ -51,14 +51,14 @@
 </template>
 
 <script>
-import WlFrame from "../../components/wl-frame"
 import ProjectList from "./project-list"
+import WlFrame from "../../components/wl-frame"
 import adapterFactory from "../../adapters/adapter-factory"
 
 export default {
     data() {
         return {
-            projects: []
+            projects: {}
         }
     },
     components: {
