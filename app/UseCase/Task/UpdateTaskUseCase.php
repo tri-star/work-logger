@@ -54,6 +54,9 @@ class UpdateTaskUseCase
             $task->changeStatus($parameters['status']);
             $task->fill($parameters);
             $task->user_id = $user->id;
+            if (is_null($task->issue_no)) {
+                $task->issue_no = '';
+            }
 
             $task->save();
         } catch (\Exception $e) {

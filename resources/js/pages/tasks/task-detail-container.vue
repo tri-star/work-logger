@@ -6,7 +6,11 @@
             :taskLogs="taskLogs"
             @openEditForm="handleOpenEditForm"
         />
-        <TaskFormContainer ref="editForm" :project="project" />
+        <TaskFormContainer
+            ref="editForm"
+            :project="project"
+            @taskSaved="handleTaskSaved"
+        />
     </div>
 </template>
 
@@ -50,6 +54,12 @@ export default {
         },
         handleOpenEditForm() {
             this.$refs.editForm.open(this.id)
+        },
+        handleTaskSaved() {
+            this.loadTask(this.id).then(task => {
+                console.log(this.task)
+                this.task = Object.assign({}, this.task, task)
+            })
         }
     },
 

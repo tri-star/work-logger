@@ -6,6 +6,19 @@
 
         <div class="detail-table">
             <div class="detail-row">
+                <label>課題番号</label>
+                <div class="detail-col">
+                    {{ task.issue_no }}
+                </div>
+            </div>
+            <div class="detail-row">
+                <label>詳細</label>
+                <div
+                    class="detail-col description"
+                    v-html="task.description"
+                ></div>
+            </div>
+            <div class="detail-row">
                 <label>予定期間</label>
                 <div class="detail-col">
                     {{ task.start_date }} ～ {{ task.end_date }}
@@ -116,6 +129,10 @@ export default {
         .detail-col-right {
             display: table-cell;
             text-align: right;
+        }
+
+        .description {
+            white-space: pre-line;
         }
     }
 }

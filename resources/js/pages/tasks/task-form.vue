@@ -25,6 +25,41 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-header">課題番号</div>
+                <div class="col">
+                    <input
+                        type="text"
+                        name="issue_no"
+                        v-model="task.issue_no"
+                        data-vv-as="課題番号"
+                        class="text-box"
+                    />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-header">詳細</div>
+                <div class="col">
+                    <textarea
+                        type="text"
+                        name="description"
+                        v-model="task.description"
+                        data-vv-as="詳細"
+                        v-validate="'required'"
+                        class="text-box task-description"
+                    ></textarea>
+                    <ul class="errors">
+                        <li
+                            v-for="(error, index) in errors.collect(
+                                'description'
+                            )"
+                            :key="index"
+                        >
+                            {{ error }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-header">開始予定日</div>
                 <div class="col">
                     <input
@@ -163,6 +198,10 @@ export default {
 <style lang="scss" scoped>
 .task-name {
     width: 300px;
+}
+.task-description {
+    width: 300px;
+    height: 100px;
 }
 .estimate-time {
     width: 60px;

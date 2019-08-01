@@ -6,6 +6,8 @@ class TaskAdapter {
             `/api/v1/project/${projectId}/task/add`,
             {
                 title: task.title,
+                issue_no: task.issue_no,
+                description: task.description,
                 start_date: task.start_date,
                 end_date: task.end_date,
                 estimate_minutes: task.estimate_minutes,
@@ -19,6 +21,8 @@ class TaskAdapter {
     async updateTask(id, task) {
         const response = await window.axios.post(`/api/v1/task/${id}`, {
             title: task.title,
+            issue_no: task.issue_no,
+            description: task.description,
             start_date: task.start_date,
             end_date: task.end_date,
             estimate_minutes: task.estimate_minutes,

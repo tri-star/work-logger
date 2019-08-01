@@ -56,41 +56,28 @@ export default {
                 this.$refs.taskForm.init(this.id, this.task)
             })
         },
-        handleSave(task) {
+        async handleSave(task) {
             if (this.id === 0) {
-                this.addTask(task)
+                await this.addTask(task)
             } else {
-                this.updateTask(task)
+                await this.updateTask(task)
             }
+            this.$emit("taskSaved")
         },
         handleClose() {
             this.showModal = false
         },
-        addTask(task) {
+        async addTask(task) {
             const adapter = AdapterFactory.get("TaskAdapter")
-            adapter
-                .addTask(this.project.id, task)
-                .then(() => {
-                    this.$emit("taskRegistered")
-                    this.showModal = false
-                })
-                .catch(error => {
-                    console.error(error)
-                    alert(error)
-                })
+            await adapter.addTask(this.project.id, task)
+            this.$emit("taskRegistered")
+            this.showModal = false
         },
-        updateTask(task) {
+        async updateTask(task) {
             const adapter = AdapterFactory.get("TaskAdapter")
-            adapter
-                .updateTask(this.id, task)
-                .then(() => {
-                    this.$emit("taskRegistered")
-                    this.showModal = false
-                })
-                .catch(error => {
-                    console.error(error)
-                    alert(error)
-                })
+            await adapter.updateTask(this.id, task)
+            this.$emit("taskRegistered")
+            this.showModal = false
         }
     },
 
