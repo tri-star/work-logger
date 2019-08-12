@@ -46,7 +46,7 @@
         "prettier": "^1.18.2",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.22.9",
-        "sass-loader": "^7.1.0",
+        "sass-loader": "^7.2.0",
         "vee-validate": "^2.2.14",
         "vue": "^2.6.10",
         "vue-jest": "^3.0.4",
