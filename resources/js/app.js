@@ -4,6 +4,7 @@ import VeeValidate from "vee-validate"
 import Vue from "vue"
 import VueRouter from "vue-router"
 import Vuex from "vuex"
+import WlErrorHandler from "./lib/errors/wl-error-handler"
 import initStore from "./store"
 import routes from "./routes"
 
@@ -35,4 +36,14 @@ new Vue({
         DefaultLayout
     },
     template: `<DefaultLayout/>`
+})
+
+window.Vue.config.errorHandler = (err, vm, info) => {
+    WlErrorHandler.fromVueError(err, vm, info)
+}
+window.addEventListener("error", event => {
+    WlErrorHandler.fromGeneralError(event)
+})
+window.addEventListener("unhandledrejection", event => {
+    WlErrorHandler.fromPromiseError(event)
 })
