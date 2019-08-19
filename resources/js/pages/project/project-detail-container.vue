@@ -21,45 +21,32 @@
                     タスク完了件数(日別)
                 </template>
                 <template slot="body">
-                    <table class="small-table">
-                        <tr
-                            v-for="(dailyCount,
-                            date) in taskStat.daily_done_list"
-                            :key="date"
-                        >
-                            <td>{{ date }}</td>
-                            <td class="col-number">{{ dailyCount }}</td>
-                        </tr>
-                    </table>
+                    <WlLoadingProxy :loadingFunction="loadTaskStat">
+                        <template slot="done">
+                            <table class="small-table">
+                                <tr
+                                    v-for="(dailyCount,
+                                    date) in taskStat.daily_done_list"
+                                    :key="date"
+                                >
+                                    <td>{{ date }}</td>
+                                    <td class="col-number">{{ dailyCount }}</td>
+                                </tr>
+                            </table>
+                        </template>
+                    </WlLoadingProxy>
                 </template>
             </WlFrame>
         </div>
         <h2 class="heading-2">直近の状況</h2>
         <div class="clear-fix">
-            <WlFrame class="frame-item" :width="'400px;'">
-                <template slot="title">
-                    今日のタスク
-                </template>
-                <template slot="body">
-                    <table class="small-table">
-                        <tr v-for="(task, id) of scheduledTasks" :key="id">
-                            <td>
-                                <router-link :to="`/task/${task.id}`">{{
-                                    task.title
-                                }}</router-link>
-                            </td>
-                            <td class="col-number">
-                                {{ task.estimate_minutes }}h
-                            </td>
-                            <td class="col-icons">
-                                <a @click="addTaskLog(task)"
-                                    ><i class="icon fas fa-plus-circle"></i
-                                ></a>
-                            </td>
-                        </tr>
-                    </table>
-                </template>
-            </WlFrame>
+            <ScheduledTaskList
+                class="frame-item"
+                :width="'400px;'"
+                :taskList="scheduledTasks"
+                :loadingFunction="loadScheduledTasks"
+                @addTaskLog="addTaskLogHandler"
+            />
             <WlFrame class="frame-item" :width="'400px;'">
                 <template slot="title">
                     期限の近いタスク
@@ -78,8 +65,10 @@
 </template>
 
 <script>
+import ScheduledTaskList from "./scheduled-task-list"
 import TaskLogFormContainer from "../tasks/task-log-form-container"
 import WlFrame from "../../components/wl-frame"
+import WlLoadingProxy from "../../components/wl-loading-proxy"
 import adapterFactory from "../../adapters/adapter-factory"
 
 export default {
@@ -90,8 +79,10 @@ export default {
         }
     },
     components: {
+        ScheduledTaskList,
+        TaskLogFormContainer,
         WlFrame,
-        TaskLogFormContainer
+        WlLoadingProxy
     },
     data() {
         return {
@@ -102,7 +93,7 @@ export default {
     },
 
     methods: {
-        addTaskLog(task) {
+        addTaskLogHandler(task) {
             this.$refs.taskLogForm.open(task, 0)
         },
         handleMounted() {
@@ -114,14 +105,16 @@ export default {
             projectAdapter.getProject(this.id).then(project => {
                 this.project = project
             })
-
-            projectAdapter.getTaskStat(this.id).then(stat => {
-                this.taskStat = stat
-            })
-
-            projectAdapter.getScheduledTasks(this.id).then(list => {
-                this.scheduledTasks = list
-            })
+        },
+        async loadTaskStat() {
+            const projectAdapter = adapterFactory.get("ProjectAdapter")
+            this.taskStat = await projectAdapter.getTaskStat(this.id)
+        },
+        async loadScheduledTasks() {
+            const projectAdapter = adapterFactory.get("ProjectAdapter")
+            this.scheduledTasks = await projectAdapter.getScheduledTasks(
+                this.id
+            )
         }
     },
 
