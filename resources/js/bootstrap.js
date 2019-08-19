@@ -29,7 +29,6 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"
 
 window.axios.interceptors.response.use(
     response => {
-        console.log(response)
         return response
     },
     error => {
