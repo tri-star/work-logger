@@ -17,9 +17,17 @@
                     タスク完了件数
                 </template>
                 <template slot="body">
-                    <div class="stat-number-box">
-                        <strong class="stat-number">10</strong>
-                    </div>
+                    <WlLoadingProxy
+                        :loading-function="loadTotalCompletedTaskCount"
+                    >
+                        <template slot="done">
+                            <div class="stat-number-box">
+                                <strong class="stat-number">{{
+                                    totalCompletedTaskCount
+                                }}</strong>
+                            </div>
+                        </template>
+                    </WlLoadingProxy>
                 </template>
             </WlFrame>
         </div>
@@ -31,7 +39,11 @@
                     プロジェクト一覧
                 </template>
                 <template slot="body">
-                    <ProjectList :projects="projects" />
+                    <WlLoadingProxy :loading-function="loadProjectList">
+                        <template slot="done">
+                            <ProjectList :projects="projects" />
+                        </template>
+                    </WlLoadingProxy>
                 </template>
             </WlFrame>
             <WlFrame class="frame-item" :width="'30%'">
@@ -53,25 +65,36 @@
 <script>
 import ProjectList from "./project-list"
 import WlFrame from "../../components/wl-frame"
+import WlLoadingProxy from "../../components/wl-loading-proxy"
 import adapterFactory from "../../adapters/adapter-factory"
 
 export default {
     data() {
         return {
-            projects: {}
+            projects: {},
+            totalCompletedTaskCount: 0
         }
     },
     components: {
         WlFrame,
+        WlLoadingProxy,
         ProjectList
+    },
+
+    methods: {
+        async loadTotalCompletedTaskCount() {
+            const dashboardAdapter = adapterFactory.get("DashboardAdapter")
+            this.totalCompletedTaskCount = await dashboardAdapter.getTotalCompletedTaskCount()
+        },
+        async loadProjectList() {
+            const dashboardAdapter = adapterFactory.get("DashboardAdapter")
+            this.projects = await dashboardAdapter.getProjectList()
+        }
     },
 
     mounted() {
         this.$emit("changeSideMenu", "default")
-        const dashboardAdapter = adapterFactory.get("DashboardAdapter")
-        dashboardAdapter.getProjectList().then(projects => {
-            this.projects = projects
-        })
+        this.loadProjectList()
     }
 }
 </script>
