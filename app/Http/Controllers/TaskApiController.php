@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WorkLogger\Domain\Project\Project;
 use WorkLogger\Domain\Task\Task;
+use WorkLogger\Domain\User\User;
 use WorkLogger\Http\Response\JsonResponse;
 use WorkLogger\UseCase\Task\RegisterTaskLogUseCase;
 use WorkLogger\UseCase\Task\RegisterTaskUseCase;
@@ -83,5 +84,12 @@ class TaskApiController extends Controller
             $statusCode = 400;
         }
         return new JsonResponse($result, $statusCode);
+    }
+
+
+    public function getTotalCompletedTaskCount()
+    {
+        $count = \Auth::user()->getTotalCompletedTaskCount();
+        return new JsonResponse(['count' => $count]);
     }
 }

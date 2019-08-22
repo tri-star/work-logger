@@ -8,6 +8,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use WorkLogger\Domain\Task\Task;
 
 class User extends Authenticatable
 {
@@ -41,5 +42,20 @@ class User extends Authenticatable
     public function tasks()
     {
         return $this->hasMany(\WorkLogger\Domain\Task\Task::class);
+    }
+
+
+    /**
+     * ユーザーが参加している全プロジェクトの完了タスク数を返す
+     * @return int
+     */
+    public function getTotalCompletedTaskCount(): int
+    {
+        $totalCount = Task::join('project_user', function ($join) {
+            $join->on('project_user.project_id', '=', 'tasks.project_id')
+                ->where('project_user.user_id', '=', $this->id);
+        })->where('tasks.status', Task::STATE_DONE)
+        ->count('*');
+        return $totalCount;
     }
 }
