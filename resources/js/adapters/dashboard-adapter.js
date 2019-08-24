@@ -14,6 +14,14 @@ class DashboardAdapter {
 
         return response.data.count
     }
+
+    async getNearDeadlineTaskList() {
+        const response = await window.axios.get(
+            "/api/v1/task/near-deadline-list"
+        )
+
+        return response.data.tasks
+    }
 }
 
 const dashboardAdapter = new DashboardAdapter()

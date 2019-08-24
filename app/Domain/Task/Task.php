@@ -117,7 +117,7 @@ class Task extends Model
      * @param int $projectId プロジェクトID
      * @param int $userId ユーザーID
      * @param Carbon|null $now
-     * @return Builder|\Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeScheduledTasks(Builder $query, int $projectId, int $userId, Carbon $now=null)
     {
@@ -129,6 +129,28 @@ class Task extends Model
             ->where('user_id', $userId)
             ->whereNotIn('status', $this->getEndStatuses())
             ->where('start_date', '<=', $now->format('Y-m-d'))
+            ->orderBy('end_date');
+    }
+
+
+    /**
+     *
+     * @param Builder $query クエリ
+     * @param int $userId ユーザーID
+     * @param int $deadlineDays 締め切りまでの日数
+     * @param Carbon|null $now 現在時刻
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeNearDeadline(Builder $query, int $userId, int $deadlineDays, ?Carbon $now=null)
+    {
+        if (is_null($now)) {
+            $now = Carbon::now();
+        }
+
+        return $query->where('user_id', $userId)
+            ->whereNotIn('status', $this->getEndStatuses())
+            ->where('start_date', '<=', $now->format('Y-m-d'))
+            ->where('end_date', '<=', $now->clone()->addDays($deadlineDays)->format('Y-m-d'))
             ->orderBy('end_date');
     }
 
