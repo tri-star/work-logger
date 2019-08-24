@@ -173,4 +173,84 @@ class TaskTest extends TestCase
             'expectedCount' => 0,
         ];
     }
+
+
+    /**
+     * @dataProvider getDataForScopeNearDeadline_未完了状態のタスクのみカウントすること
+     */
+    public function test_scopeNearDeadline_未完了状態のタスクのみカウントすること($state, $expectedCount)
+    {
+        $task = factory(Task::class)->create([
+            'status'      => $state,
+            'start_date'  => Carbon::now(),
+            'end_date'    => Carbon::now()->addDay(),
+        ]);
+
+        $actualCount = Task::nearDeadline($task->user_id, 1)->count();
+        $this->assertEquals($expectedCount, $actualCount);
+    }
+
+
+    public function getDataForScopeNearDeadline_未完了状態のタスクのみカウントすること()
+    {
+        return [
+            'なし'  => [Task::STATE_NONE, 1],
+            '作業中' => [Task::STATE_IN_PROGRESS, 1],
+            '完了'  => [Task::STATE_DONE, 0],
+            '中断'  => [Task::STATE_PAUSE, 0],
+            '無効'  => [Task::STATE_INVALID, 0],
+        ];
+    }
+
+
+    public function test_scopeNearDeadline__別ユーザーのタスクはカウントしないこと()
+    {
+        $users = factory(User::class, 2)->create();
+
+        $task = factory(Task::class)->create([
+            'user_id'     => $users[0]->id,
+            'status'      => Task::STATE_IN_PROGRESS,
+            'start_date'  => Carbon::now(),
+            'end_date'    => Carbon::now()->addDay(),
+        ]);
+        $task2 = factory(Task::class)->create([
+            'user_id'     => $users[1]->id,
+            'status'      => Task::STATE_IN_PROGRESS,
+            'start_date'  => Carbon::now(),
+            'end_date'    => Carbon::now()->addDay(),
+        ]);
+
+        $actualCount = Task::nearDeadline($task->user_id, 1)->count();
+        $this->assertEquals(1, $actualCount);
+    }
+
+
+    /**
+     * @dataProvider getDataForScopeNearDeadline_開始日_終了日間のタスクのみが対象になること
+     */
+    public function test_scopeNearDeadline_開始日_終了日間のタスクのみが対象になること($now, $startDate, $endDate, $expectedCount)
+    {
+        $task = factory(Task::class)->create([
+            'status'      => Task::STATE_IN_PROGRESS,
+            'start_date'  => $startDate,
+            'end_date'    => $endDate,
+        ]);
+
+        $actualCount = Task::nearDeadline($task->user_id, 1, $now)->count();
+        $this->assertEquals($expectedCount, $actualCount);
+    }
+
+
+    public function getDataForScopeNearDeadline_開始日_終了日間のタスクのみが対象になること()
+    {
+        $now = Carbon::parse('2019-01-01 00:00:00');
+        $endDate = $now->clone()->addDays(2);
+        return [
+            '開始日前'             => ['now' => $now, 'start_date' => $now->clone()->subSecond(), 'end_date' => $endDate, 'expected_count' => 0],
+            '期間中_締め切りまで1日以上'   => ['now' => $now, 'start_date' => $now, 'end_date' => $now->clone()->addDays(2), 'expected_count' => 0],
+            '期間中_締め切りまで1日'     => ['now' => $now, 'start_date' => $now, 'end_date' => $now->clone()->addDays(1), 'expected_count' => 1],
+            '期間中_締め切りまで1日未満'   => ['now' => $now, 'start_date' => $now, 'end_date' => $now->clone()->addDays(1)->subSecond(), 'expected_count' => 1],
+            '終了日後'             => ['now' => $now, 'start_date' => $now->clone()->subDays(2), 'end_date' => $endDate->clone()->subDays(1), 'expected_count' => 1],
+        ];
+    }
 }

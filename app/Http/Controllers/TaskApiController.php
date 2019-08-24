@@ -92,4 +92,14 @@ class TaskApiController extends Controller
         $count = \Auth::user()->getTotalCompletedTaskCount();
         return new JsonResponse(['count' => $count]);
     }
+
+
+    public function getNearDeadlineList()
+    {
+        $user = \Auth::user();
+        $taskList = Task::nearDeadline($user->id, 2)->get()->mapWithKeys(function ($task) {
+            return [$task->id => $task];
+        });
+        return new JsonResponse(['tasks' => $taskList]);
+    }
 }

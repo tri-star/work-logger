@@ -50,7 +50,13 @@
                 <template slot="title">
                     期限の近いタスク一覧
                 </template>
-                <template slot="body"> </template>
+                <template slot="body">
+                    <WlLoadingProxy :loading-function="loadNearDeadlineList">
+                        <template slot="done">
+                            <TaskList :tasks="nearDeadlineTasks" />
+                        </template>
+                    </WlLoadingProxy>
+                </template>
             </WlFrame>
             <WlFrame class="frame-item" :width="'30%'">
                 <template slot="title">
@@ -64,6 +70,7 @@
 
 <script>
 import ProjectList from "./project-list"
+import TaskList from "./task-list"
 import WlFrame from "../../components/wl-frame"
 import WlLoadingProxy from "../../components/wl-loading-proxy"
 import adapterFactory from "../../adapters/adapter-factory"
@@ -72,13 +79,15 @@ export default {
     data() {
         return {
             projects: {},
-            totalCompletedTaskCount: 0
+            totalCompletedTaskCount: 0,
+            nearDeadlineTasks: {}
         }
     },
     components: {
         WlFrame,
         WlLoadingProxy,
-        ProjectList
+        ProjectList,
+        TaskList
     },
 
     methods: {
@@ -89,6 +98,10 @@ export default {
         async loadProjectList() {
             const dashboardAdapter = adapterFactory.get("DashboardAdapter")
             this.projects = await dashboardAdapter.getProjectList()
+        },
+        async loadNearDeadlineList() {
+            const dashboardAdapter = adapterFactory.get("DashboardAdapter")
+            this.nearDeadlineTasks = await dashboardAdapter.getNearDeadlineTaskList()
         }
     },
 
