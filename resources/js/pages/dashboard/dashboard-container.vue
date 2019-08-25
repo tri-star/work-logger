@@ -9,7 +9,15 @@
                     プロジェクト別課題件数
                 </template>
                 <template slot="body">
-                    body
+                    <WlLoadingProxy
+                        :loading-function="loadProjectTaskCountList"
+                    >
+                        <template slot="done">
+                            <ProjectTaskCountList
+                                :projects="projectTaskCountList"
+                            />
+                        </template>
+                    </WlLoadingProxy>
                 </template>
             </WlFrame>
             <WlFrame class="frame-item">
@@ -76,6 +84,7 @@
 
 <script>
 import ProjectList from "./project-list"
+import ProjectTaskCountList from "./project-task-count-list"
 import TaskList from "./task-list"
 import WlFrame from "../../components/wl-frame"
 import WlLoadingProxy from "../../components/wl-loading-proxy"
@@ -85,6 +94,7 @@ export default {
     data() {
         return {
             projects: {},
+            projectTaskCountList: {},
             totalCompletedTaskCount: 0,
             nearDeadlineTasks: {},
             inProgressTasks: {}
@@ -94,6 +104,7 @@ export default {
         WlFrame,
         WlLoadingProxy,
         ProjectList,
+        ProjectTaskCountList,
         TaskList
     },
 
@@ -101,6 +112,10 @@ export default {
         async loadTotalCompletedTaskCount() {
             const dashboardAdapter = adapterFactory.get("DashboardAdapter")
             this.totalCompletedTaskCount = await dashboardAdapter.getTotalCompletedTaskCount()
+        },
+        async loadProjectTaskCountList() {
+            const dashboardAdapter = adapterFactory.get("DashboardAdapter")
+            this.projectTaskCountList = await dashboardAdapter.getProjectTaskCountList()
         },
         async loadProjectList() {
             const dashboardAdapter = adapterFactory.get("DashboardAdapter")

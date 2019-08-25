@@ -19,12 +19,12 @@ class ProjectApiController extends Controller
         $projects = $user->projects()->orderBy('updated_at', 'desc')->get()->mapWithKeys(function ($project) {
             return [
                 $project->id => [
-                    'id' => $project->id,
+                    'id'           => $project->id,
                     'project_name' => $project->project_name,
-                    'description' => $project->description,
-                    'created_at' => $project->created_at,
-                    'updated_at' => $project->updated_at,
-                ]
+                    'description'  => $project->description,
+                    'created_at'   => $project->created_at,
+                    'updated_at'   => $project->updated_at,
+                ],
             ];
         });
         return new JsonResponse($projects);
@@ -37,10 +37,10 @@ class ProjectApiController extends Controller
         $project = $this->getProject($id, $user);
 
         $json = [
-            'id' => $project->id,
+            'id'           => $project->id,
             'project_name' => $project->project_name,
-            'description' => $project->description,
-            'users' => $project->users->mapWithKeys(function ($user) {
+            'description'  => $project->description,
+            'users'        => $project->users->mapWithKeys(function ($user) {
                 return [
                     $user->id => $user->name,
                  ];
@@ -59,7 +59,7 @@ class ProjectApiController extends Controller
         $taskStatQueryBuilder = new TaskStatQueryBuilder();
         $data = [
             'weekly_done_count' => $taskStatQueryBuilder->getWeeklyDoneTaskStat($project->id),
-            'daily_done_list' => $taskStatQueryBuilder->getDailyDoneTaskList($project->id)
+            'daily_done_list'   => $taskStatQueryBuilder->getDailyDoneTaskList($project->id),
         ];
 
         return new JsonResponse($data);
@@ -77,7 +77,7 @@ class ProjectApiController extends Controller
 
         $list = Task::scheduledTasks($project->id, $user->id)->get()->mapWithKeys(function ($item) {
             return [
-                $item->id => $item
+                $item->id => $item,
             ];
         });
         return new JsonResponse($list);
@@ -98,5 +98,18 @@ class ProjectApiController extends Controller
             throw new NotFoundHttpException('無効なプロジェクトが指定されました');
         }
         return $project;
+    }
+
+
+    /**
+     * プロジェクト毎のタスク件数の一覧を返す
+     */
+    public function getTaskCountList()
+    {
+        $user = \Auth::user();
+        $list = Project::getTaskCountList($user->id)->mapWithKeys(function ($project) {
+            return [$project->project_id => $project];
+        });
+        return new JsonResponse(['projects' => $list]);
     }
 }
