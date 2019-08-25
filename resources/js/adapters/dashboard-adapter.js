@@ -22,6 +22,12 @@ class DashboardAdapter {
 
         return response.data.tasks
     }
+
+    async getInProgressTaskList() {
+        const response = await window.axios.get("/api/v1/task/in-progress-list")
+
+        return response.data.tasks
+    }
 }
 
 const dashboardAdapter = new DashboardAdapter()

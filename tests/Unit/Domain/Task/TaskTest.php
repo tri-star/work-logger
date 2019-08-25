@@ -253,4 +253,96 @@ class TaskTest extends TestCase
             '終了日後'             => ['now' => $now, 'start_date' => $now->clone()->subDays(2), 'end_date' => $endDate->clone()->subDays(1), 'expected_count' => 1],
         ];
     }
+
+
+    /**
+     * @dataProvider getDataFor_scopeInProgress_作業中状態のもののみ取得すること
+     */
+    public function test_scopeInProgress_作業中状態のもののみ取得すること($state, $expectedCount)
+    {
+        $task = factory(Task::class)->create([
+            'status' => $state,
+        ]);
+
+        $actualCount = Task::inProgress($task->user_id)->count();
+        $this->assertEquals($expectedCount, $actualCount);
+    }
+
+
+    public function getDataFor_scopeInProgress_作業中状態のもののみ取得すること()
+    {
+        return [
+            'なし'  => [Task::STATE_NONE, 0],
+            '作業中' => [Task::STATE_IN_PROGRESS, 1],
+            '完了'  => [Task::STATE_DONE, 0],
+            '中断'  => [Task::STATE_PAUSE, 0],
+            '無効'  => [Task::STATE_INVALID, 0],
+        ];
+    }
+
+
+    public function test_scopeInProgress_他人のタスクは取得しないこと()
+    {
+        $users = factory(User::class, 2)->create();
+
+        $task = factory(Task::class)->create([
+            'user_id' => $users[0]->id,
+            'status'  => Task::STATE_IN_PROGRESS,
+        ]);
+        $task2 = factory(Task::class)->create([
+            'user_id' => $users[1]->id,
+            'status'  => Task::STATE_IN_PROGRESS,
+        ]);
+
+        $actualCount = Task::inProgress($task->user_id)->count();
+        $this->assertEquals(1, $actualCount);
+
+        $actualTasks = Task::inProgress($task->user_id)->get();
+        $this->assertEquals($task->id, $actualTasks[0]->id);
+    }
+
+
+    public function test_scopeInProgress_プロジェクトを指定しない場合_他プロジェクトも対象にすること()
+    {
+        $user = factory(User::class)->create();
+        $projects = factory(Project::class, 2)->create();
+        $projects[0]->users()->save($user);
+        $projects[1]->users()->save($user);
+
+        $task = factory(Task::class)->create([
+            'user_id'    => $user->id,
+            'project_id' => $projects[0]->id,
+            'status'     => Task::STATE_IN_PROGRESS,
+        ]);
+        $task2 = factory(Task::class)->create([
+            'user_id'    => $user->id,
+            'project_id' => $projects[1]->id,
+            'status'     => Task::STATE_IN_PROGRESS,
+        ]);
+
+        $actualCount = Task::inProgress($task->user_id)->count();
+        $this->assertEquals(2, $actualCount);
+    }
+
+    public function test_scopeInProgress_プロジェクトを指定した場合_対象プロジェクトのみであること()
+    {
+        $user = factory(User::class)->create();
+        $projects = factory(Project::class, 2)->create();
+        $projects[0]->users()->save($user);
+        $projects[1]->users()->save($user);
+
+        $task = factory(Task::class)->create([
+            'user_id'    => $user->id,
+            'project_id' => $projects[0]->id,
+            'status'     => Task::STATE_IN_PROGRESS,
+        ]);
+        $task2 = factory(Task::class)->create([
+            'user_id'    => $user->id,
+            'project_id' => $projects[1]->id,
+            'status'     => Task::STATE_IN_PROGRESS,
+        ]);
+
+        $actualCount = Task::inProgress($task->user_id, $projects[0]->id)->count();
+        $this->assertEquals(1, $actualCount);
+    }
 }

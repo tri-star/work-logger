@@ -60,9 +60,15 @@
             </WlFrame>
             <WlFrame class="frame-item" :width="'30%'">
                 <template slot="title">
-                    見積差分の大きいタスク一覧
+                    作業中のタスク一覧
                 </template>
-                <template slot="body"> </template>
+                <template slot="body">
+                    <WlLoadingProxy :loading-function="loadInProgressTaskList">
+                        <template slot="done">
+                            <TaskList :tasks="inProgressTasks" />
+                        </template>
+                    </WlLoadingProxy>
+                </template>
             </WlFrame>
         </div>
     </div>
@@ -80,7 +86,8 @@ export default {
         return {
             projects: {},
             totalCompletedTaskCount: 0,
-            nearDeadlineTasks: {}
+            nearDeadlineTasks: {},
+            inProgressTasks: {}
         }
     },
     components: {
@@ -102,12 +109,15 @@ export default {
         async loadNearDeadlineList() {
             const dashboardAdapter = adapterFactory.get("DashboardAdapter")
             this.nearDeadlineTasks = await dashboardAdapter.getNearDeadlineTaskList()
+        },
+        async loadInProgressTaskList() {
+            const dashboardAdapter = adapterFactory.get("DashboardAdapter")
+            this.inProgressTasks = await dashboardAdapter.getInProgressTaskList()
         }
     },
 
     mounted() {
         this.$emit("changeSideMenu", "default")
-        this.loadProjectList()
     }
 }
 </script>
