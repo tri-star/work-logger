@@ -102,4 +102,13 @@ class TaskApiController extends Controller
         });
         return new JsonResponse(['tasks' => $taskList]);
     }
+
+    public function getInProgressList()
+    {
+        $user = \Auth::user();
+        $taskList = Task::inProgress($user->id)->get()->mapWithKeys(function ($task) {
+            return [$task->id => $task];
+        });
+        return new JsonResponse(['tasks' => $taskList]);
+    }
 }

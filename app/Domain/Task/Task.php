@@ -155,6 +155,28 @@ class Task extends Model
     }
 
 
+    /**
+     * 作業中のタスク一覧を返す
+     * @param Builder $query クエリ
+     * @param int $userId ユーザーID
+     * @param ?int $projectId プロジェクトID
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeInProgress(Builder $query, int $userId, ?int $projectId=null)
+    {
+        $query->where('user_id', $userId)
+            ->where('status', Task::STATE_IN_PROGRESS)
+            ->orderBy('end_date')
+            ->orderBy('id', 'desc');
+
+        $query->when($projectId, function ($query, $projectId) {
+            $query->where('project_id', $projectId);
+        });
+
+        return $query;
+    }
+
+
     public function scopeInProject(Builder $query, int $projectId)
     {
         return $query->where('project_id', $projectId)

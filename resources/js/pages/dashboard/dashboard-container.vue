@@ -9,7 +9,15 @@
                     プロジェクト別課題件数
                 </template>
                 <template slot="body">
-                    body
+                    <WlLoadingProxy
+                        :loading-function="loadProjectTaskCountList"
+                    >
+                        <template slot="done">
+                            <ProjectTaskCountList
+                                :projects="projectTaskCountList"
+                            />
+                        </template>
+                    </WlLoadingProxy>
                 </template>
             </WlFrame>
             <WlFrame class="frame-item">
@@ -60,9 +68,15 @@
             </WlFrame>
             <WlFrame class="frame-item" :width="'30%'">
                 <template slot="title">
-                    見積差分の大きいタスク一覧
+                    作業中のタスク一覧
                 </template>
-                <template slot="body"> </template>
+                <template slot="body">
+                    <WlLoadingProxy :loading-function="loadInProgressTaskList">
+                        <template slot="done">
+                            <TaskList :tasks="inProgressTasks" />
+                        </template>
+                    </WlLoadingProxy>
+                </template>
             </WlFrame>
         </div>
     </div>
@@ -70,6 +84,7 @@
 
 <script>
 import ProjectList from "./project-list"
+import ProjectTaskCountList from "./project-task-count-list"
 import TaskList from "./task-list"
 import WlFrame from "../../components/wl-frame"
 import WlLoadingProxy from "../../components/wl-loading-proxy"
@@ -79,14 +94,17 @@ export default {
     data() {
         return {
             projects: {},
+            projectTaskCountList: {},
             totalCompletedTaskCount: 0,
-            nearDeadlineTasks: {}
+            nearDeadlineTasks: {},
+            inProgressTasks: {}
         }
     },
     components: {
         WlFrame,
         WlLoadingProxy,
         ProjectList,
+        ProjectTaskCountList,
         TaskList
     },
 
@@ -95,6 +113,10 @@ export default {
             const dashboardAdapter = adapterFactory.get("DashboardAdapter")
             this.totalCompletedTaskCount = await dashboardAdapter.getTotalCompletedTaskCount()
         },
+        async loadProjectTaskCountList() {
+            const dashboardAdapter = adapterFactory.get("DashboardAdapter")
+            this.projectTaskCountList = await dashboardAdapter.getProjectTaskCountList()
+        },
         async loadProjectList() {
             const dashboardAdapter = adapterFactory.get("DashboardAdapter")
             this.projects = await dashboardAdapter.getProjectList()
@@ -102,12 +124,15 @@ export default {
         async loadNearDeadlineList() {
             const dashboardAdapter = adapterFactory.get("DashboardAdapter")
             this.nearDeadlineTasks = await dashboardAdapter.getNearDeadlineTaskList()
+        },
+        async loadInProgressTaskList() {
+            const dashboardAdapter = adapterFactory.get("DashboardAdapter")
+            this.inProgressTasks = await dashboardAdapter.getInProgressTaskList()
         }
     },
 
     mounted() {
         this.$emit("changeSideMenu", "default")
-        this.loadProjectList()
     }
 }
 </script>

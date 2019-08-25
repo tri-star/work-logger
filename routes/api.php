@@ -18,6 +18,7 @@ Route::middleware('auth')->prefix('v1')->group(function () {
     Route::get('/project/{id}/detail', 'Project\ProjectApiController@getDetail');
     Route::get('/project/{id}/task-stat', 'Project\ProjectApiController@getTaskStatList');
     Route::get('/project/{id}/scheduled-tasks', 'Project\ProjectApiController@getScheduledTaskList');
+    Route::get('/project/task-count-list', 'Project\ProjectApiController@getTaskCountList');
     Route::post('/project/{projectId}/task/add', 'TaskApiController@addTask');
     Route::get('/project/{projectId}/task/list', 'TaskApiController@getTaskList');
 });
@@ -25,6 +26,7 @@ Route::middleware('auth')->prefix('v1')->group(function () {
 Route::middleware('auth')->prefix('v1')->group(function () {
     Route::get('/task/total-completed-task-count', 'TaskApiController@getTotalCompletedTaskCount');
     Route::get('/task/near-deadline-list', 'TaskApiController@getNearDeadlineList');
+    Route::get('/task/in-progress-list', 'TaskApiController@getInProgressList');
     Route::get('/task/{id}', 'TaskApiController@getTask');
     Route::post('/task/{id}', 'TaskApiController@updateTask');
     Route::post('/task/{id}/log/add', 'TaskApiController@addTaskLog');
