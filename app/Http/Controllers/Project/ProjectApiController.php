@@ -10,9 +10,23 @@ use WorkLogger\Domain\Task\Task;
 use WorkLogger\Domain\User\User;
 use WorkLogger\Http\Controllers\Controller;
 use WorkLogger\Http\Response\JsonResponse;
+use WorkLogger\UseCase\Project\RegisterProjectUseCase;
 
 class ProjectApiController extends Controller
 {
+    public function addProject(RegisterProjectUseCase $useCase, Request $request)
+    {
+        $user = \Auth::user();
+
+        $result = $useCase->execute($user, $request->input());
+        $statusCode = 200;
+        if (!$result['success']) {
+            $statusCode = 400;
+        }
+        return new JsonResponse($result, $statusCode);
+    }
+
+
     public function getList()
     {
         $user = \Auth::user();

@@ -49,7 +49,10 @@
                 <template slot="body">
                     <WlLoadingProxy :loading-function="loadProjectList">
                         <template slot="done">
-                            <ProjectList :projects="projects" />
+                            <ProjectList
+                                :projects="projects"
+                                @openNewProjectForm="handleOpenNewProjectForm"
+                            />
                         </template>
                     </WlLoadingProxy>
                 </template>
@@ -79,10 +82,15 @@
                 </template>
             </WlFrame>
         </div>
+        <ProjectFormContainer
+            ref="projectFormContainer"
+            @projectSaved="handleProjectSaved"
+        />
     </div>
 </template>
 
 <script>
+import ProjectFormContainer from "../project/project-form-container"
 import ProjectList from "./project-list"
 import ProjectTaskCountList from "./project-task-count-list"
 import TaskList from "./task-list"
@@ -103,6 +111,7 @@ export default {
     components: {
         WlFrame,
         WlLoadingProxy,
+        ProjectFormContainer,
         ProjectList,
         ProjectTaskCountList,
         TaskList
@@ -128,6 +137,12 @@ export default {
         async loadInProgressTaskList() {
             const dashboardAdapter = adapterFactory.get("DashboardAdapter")
             this.inProgressTasks = await dashboardAdapter.getInProgressTaskList()
+        },
+        handleOpenNewProjectForm() {
+            this.$refs.projectFormContainer.open(0)
+        },
+        handleProjectSaved() {
+            this.loadProjectList()
         }
     },
 

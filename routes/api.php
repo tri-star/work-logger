@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth')->prefix('v1')->group(function () {
+    Route::post('/project/add', 'Project\ProjectApiController@addProject');
     Route::get('/project/list', 'Project\ProjectApiController@getList');
     Route::get('/project/{id}/detail', 'Project\ProjectApiController@getDetail');
     Route::get('/project/{id}/task-stat', 'Project\ProjectApiController@getTaskStatList');

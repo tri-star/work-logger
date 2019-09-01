@@ -22,6 +22,12 @@ class ProjectAdapter {
 
         return response.data
     }
+
+    async addProject(project) {
+        await window.axios.post("/api/v1/project/add", {
+            ...project
+        })
+    }
 }
 
 const projectAdapter = new ProjectAdapter()

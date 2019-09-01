@@ -174,7 +174,7 @@ export default {
             return this.id === 0 ? "登録" : "更新"
         },
         canSubmit() {
-            return this.errors.all().length == 0
+            return this.errors.all().length === 0
         }
     },
 
