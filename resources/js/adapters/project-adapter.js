@@ -28,6 +28,12 @@ class ProjectAdapter {
             ...project
         })
     }
+
+    async editProject(id, project) {
+        await window.axios.post(`/api/v1/project/${id}/edit`, {
+            ...project
+        })
+    }
 }
 
 const projectAdapter = new ProjectAdapter()

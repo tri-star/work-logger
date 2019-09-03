@@ -30,9 +30,10 @@ export default {
     },
 
     methods: {
-        open(id) {
+        async open(id) {
             if (id) {
-                //編集
+                this.id = id
+                this.project = await this.loadProject(id)
             } else {
                 this.id = 0
                 this.project = {
@@ -48,10 +49,11 @@ export default {
         },
 
         async handleSave(project) {
+            const projectAdapter = AdapterFactory.get("ProjectAdapter")
             if (project.id) {
-                //編集
+                await projectAdapter.editProject(this.id, project)
             } else {
-                await this.addProject(project)
+                await projectAdapter.addProject(project)
             }
             this.showModal = false
             this.$emit("projectSaved")
@@ -61,9 +63,9 @@ export default {
             this.showModal = false
         },
 
-        async addProject(project) {
+        async loadProject(id) {
             const projectAdapter = AdapterFactory.get("ProjectAdapter")
-            await projectAdapter.addProject(project)
+            return await projectAdapter.getProject(id)
         }
     }
 }
