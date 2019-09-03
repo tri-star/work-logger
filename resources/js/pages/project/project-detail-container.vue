@@ -1,6 +1,18 @@
 <template>
     <div>
-        <h1 class="heading-1">{{ project.project_name }}</h1>
+        <div class="heading">
+            <h1 class="heading-1 heading-item">{{ project.project_name }}</h1>
+            <div class="heading-item">
+                <a
+                    class="command-button edit-button"
+                    @click="openProjectFormHandler"
+                >
+                    <i class="icon fas fa-pen"></i>編集
+                </a>
+            </div>
+        </div>
+
+        <div class="description">{{ project.description }}</div>
 
         <h2 class="heading-2">統計情報</h2>
         <div class="clear-fix">
@@ -60,11 +72,16 @@
                 <template slot="body"></template>
             </WlFrame>
             <TaskLogFormContainer ref="taskLogForm" />
+            <ProjectFormContainer
+                ref="projectForm"
+                @projectSaved="projectSavedHandler"
+            />
         </div>
     </div>
 </template>
 
 <script>
+import ProjectFormContainer from "../project/project-form-container"
 import ScheduledTaskList from "./scheduled-task-list"
 import TaskLogFormContainer from "../tasks/task-log-form-container"
 import WlFrame from "../../components/wl-frame"
@@ -79,6 +96,7 @@ export default {
         }
     },
     components: {
+        ProjectFormContainer,
         ScheduledTaskList,
         TaskLogFormContainer,
         WlFrame,
@@ -95,6 +113,9 @@ export default {
     methods: {
         addTaskLogHandler(task) {
             this.$refs.taskLogForm.open(task, 0)
+        },
+        openProjectFormHandler() {
+            this.$refs.projectForm.open(this.project.id)
         },
         handleMounted() {
             this.$emit("changeSideMenu", "project", {
@@ -115,6 +136,9 @@ export default {
             this.scheduledTasks = await projectAdapter.getScheduledTasks(
                 this.id
             )
+        },
+        projectSavedHandler() {
+            this.handleMounted()
         }
     },
 
@@ -131,6 +155,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.heading {
+    display: flex;
+    align-items: center;
+
+    .heading-item {
+    }
+}
+
+.edit-button {
+    margin-left: 20px;
+}
+
+.description {
+    white-space: pre-line;
+    margin-bottom: 20px;
+}
+
 .frame-item {
     float: left;
 }

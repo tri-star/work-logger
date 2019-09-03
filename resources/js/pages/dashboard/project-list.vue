@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a class="command-button">
+        <a class="command-button" @click="$emit('openNewProjectForm')">
             <i class="icon fas fa-plus-circle"></i>新規作成
         </a>
         <table class="small-table project-list">
