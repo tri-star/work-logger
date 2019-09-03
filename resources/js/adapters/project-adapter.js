@@ -1,3 +1,5 @@
+import _pick from "lodash/pick"
+
 class ProjectAdapter {
     construct() {}
 
@@ -25,13 +27,13 @@ class ProjectAdapter {
 
     async addProject(project) {
         await window.axios.post("/api/v1/project/add", {
-            ...project
+            ..._pick(project, ["project_name", "description"])
         })
     }
 
     async editProject(id, project) {
         await window.axios.post(`/api/v1/project/${id}/edit`, {
-            ...project
+            ..._pick(project, ["project_name", "description"])
         })
     }
 }
