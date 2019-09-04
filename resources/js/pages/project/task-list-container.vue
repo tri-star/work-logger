@@ -24,17 +24,17 @@
                 </tr>
                 <tr v-for="task in taskList" :key="task.id">
                     <td class="col-checkbox"><input type="checkbox" /></td>
-                    <td class="col-number">{{ task.id }}</td>
+                    <td class="col-number col-id">{{ task.id }}</td>
                     <td class="col-task-name">
                         <router-link :to="`/task/${task.id}`">{{
                             task.title
                         }}</router-link>
                     </td>
                     <td></td>
-                    <td>{{ getStatusName(task.status) }}</td>
-                    <td>{{ task.start_date }}</td>
-                    <td>{{ task.end_date }}</td>
-                    <td>{{ task.updated_at }}</td>
+                    <td class="col-status">{{ getStatusName(task.status) }}</td>
+                    <td class="col-datetime">{{ task.start_date }}</td>
+                    <td class="col-datetime">{{ task.end_date }}</td>
+                    <td class="col-datetime">{{ task.updated_at }}</td>
                 </tr>
             </table>
         </section>
@@ -118,8 +118,19 @@ export default {
 .action-area {
     margin-bottom: 10px;
 }
-
+.col-checkbox {
+    width: 60px;
+}
+.col-id {
+    width: 60px;
+}
 .col-task-name {
-    width: 300px;
+}
+.col-status {
+    width: 100px;
+}
+
+.col-datetime {
+    width: 200px;
 }
 </style>
