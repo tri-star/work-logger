@@ -40,6 +40,9 @@
             <a class="command-button" @click="$emit('openEditForm')">
                 <i class="icon fas fa-pen"></i>編集
             </a>
+            <a class="command-button" @click="$emit('openTaskLogForm')">
+                <i class="icon fas fa-plus"></i>作業履歴
+            </a>
         </div>
 
         <h2 class="heading-2">作業履歴</h2>

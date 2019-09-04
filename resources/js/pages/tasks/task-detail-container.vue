@@ -5,11 +5,17 @@
             :project="project"
             :taskLogs="taskLogs"
             @openEditForm="handleOpenEditForm"
+            @openTaskLogForm="handleOpenTaskLogForm"
         />
         <TaskFormContainer
             ref="editForm"
             :project="project"
             @taskSaved="handleTaskSaved"
+        />
+        <TaskLogFormContainer
+            ref="taskLogForm"
+            :task="task"
+            @taskLogRegistered="handleTaskLogRegistered"
         />
     </div>
 </template>
@@ -19,6 +25,7 @@ import AdapterFactory from "../../adapters/adapter-factory"
 import Task from "../../domain/task"
 import TaskDetail from "./task-detail"
 import TaskFormContainer from "./task-form-container"
+import TaskLogFormContainer from "./task-log-form-container"
 
 export default {
     props: {
@@ -30,7 +37,8 @@ export default {
 
     components: {
         TaskDetail,
-        TaskFormContainer
+        TaskFormContainer,
+        TaskLogFormContainer
     },
     data() {
         return {
@@ -60,6 +68,13 @@ export default {
                 console.log(this.task)
                 this.task = Object.assign({}, this.task, task)
             })
+        },
+        handleOpenTaskLogForm() {
+            this.$refs.taskLogForm.open(this.task, 0)
+        },
+        async handleTaskLogRegistered() {
+            this.task = await this.loadTask(this.id)
+            this.taskLogs = this.task.logs
         }
     },
 
