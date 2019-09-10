@@ -103,6 +103,7 @@ li {
     padding: 5px;
     background-color: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
 }
 
 li:hover {

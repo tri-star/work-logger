@@ -9,6 +9,10 @@
                 <a class="command-button" @click="openNewForm">
                     <i class="icon fas fa-plus-circle"></i>新規登録
                 </a>
+                <BulkActionButton
+                    title="一括操作"
+                    :menuList="bulkActionMenuList"
+                />
             </section>
 
             <table class="list-table">
@@ -47,6 +51,7 @@
 </template>
 
 <script>
+import BulkActionButton from "../../components/bulk-action-button"
 import Task from "../../domain/task.js"
 import TaskFormContainer from "../tasks/task-form-container"
 import adapterFactory from "../../adapters/adapter-factory"
@@ -59,12 +64,17 @@ export default {
         }
     },
     components: {
+        BulkActionButton,
         TaskFormContainer
     },
     data() {
         return {
             project: {},
-            taskList: {}
+            taskList: {},
+            bulkActionMenuList: [
+                { title: "状態の変更", handler: () => {} },
+                { title: "開始日・終了日の変更", handler: () => {} }
+            ]
         }
     },
 
