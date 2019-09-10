@@ -17,7 +17,12 @@
 
             <table class="list-table">
                 <tr>
-                    <th class="col-checkbox"><input type="checkbox" /></th>
+                    <th class="col-checkbox">
+                        <input
+                            type="checkbox"
+                            @change="toggleChecks($event.target.checked)"
+                        />
+                    </th>
                     <th>ID</th>
                     <th class="col-task-name">タスク名</th>
                     <th>タグ</th>
@@ -27,7 +32,13 @@
                     <th>更新日</th>
                 </tr>
                 <tr v-for="task in taskList" :key="task.id">
-                    <td class="col-checkbox"><input type="checkbox" /></td>
+                    <td class="col-checkbox">
+                        <input
+                            type="checkbox"
+                            :value="task.id"
+                            v-model="checks"
+                        />
+                    </td>
                     <td class="col-number col-id">{{ task.id }}</td>
                     <td class="col-task-name">
                         <router-link :to="`/task/${task.id}`">{{
@@ -69,6 +80,7 @@ export default {
     },
     data() {
         return {
+            checks: [],
             project: {},
             taskList: {},
             bulkActionMenuList: [
@@ -109,6 +121,15 @@ export default {
             })
 
             this.loadTaskList()
+        },
+        toggleChecks(checked) {
+            if (!checked) {
+                this.checks.splice(0)
+                return
+            }
+            this.taskList.forEach(task => {
+                this.checks.push(task.id)
+            })
         }
     },
 
