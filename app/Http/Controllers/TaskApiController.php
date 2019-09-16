@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WorkLogger\Domain\Project\Project;
 use WorkLogger\Domain\Task\Task;
+use WorkLogger\Domain\Task\TaskSearchQueryBuilder;
 use WorkLogger\Domain\User\User;
 use WorkLogger\Http\Response\JsonResponse;
 use WorkLogger\UseCase\Task\RegisterTaskLogUseCase;
@@ -62,15 +63,15 @@ class TaskApiController extends Controller
     }
 
 
-    public function getTaskList(int $projectId)
+    public function getTaskList(int $projectId, Request $request)
     {
         $project = Project::find($projectId);
         if (!$project || !$project->isMember(\Auth::user())) {
             throw new NotFoundHttpException();
         }
 
-
-        $tasks = Task::inProject($projectId)->get();
+        $queryBuilder = new TaskSearchQueryBuilder();
+        $tasks = $queryBuilder->build($projectId, $request->query->all())->get();
         return new JsonResponse($tasks);
     }
 
