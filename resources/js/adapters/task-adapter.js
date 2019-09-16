@@ -44,9 +44,16 @@ class TaskAdapter {
         return response.data
     }
 
-    async search(projectId) {
+    async search(projectId, conditions) {
         const response = await window.axios.get(
-            `/api/v1/project/${projectId}/task/list`
+            `/api/v1/project/${projectId}/task/list`,
+            {
+                params: {
+                    keyword: window._.get(conditions, "keyword", ""),
+                    sort_order: window._.get(conditions, "sortOrder", ""),
+                    statuses: window._.get(conditions, "statuses", [])
+                }
+            }
         )
 
         return response.data
