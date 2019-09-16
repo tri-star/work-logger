@@ -17,18 +17,18 @@
             <div class="row">
                 <label class="label">状態</label>
                 <div class="col">
-                    <label
+                    <span
                         v-for="(statusName, statusCode) in statusList"
                         :for="`status-${statusCode}`"
                         :key="statusCode"
                     >
-                        <input
-                            type="checkbox"
+                        <WlCheckBox
                             :id="`status-${statusCode}`"
                             :value="statusCode"
+                            :label="statusName"
                             v-model="conditions.statuses"
-                        />{{ statusName }}
-                    </label>
+                        />
+                    </span>
                 </div>
             </div>
             <div class="row">
@@ -121,6 +121,7 @@
 import BulkActionButton from "../../components/bulk-action-button"
 import Task from "../../domain/task.js"
 import TaskFormContainer from "../tasks/task-form-container"
+import WlCheckBox from "../../components/form/wl-checkbox"
 import WlLoadingProxy from "../../components/wl-loading-proxy"
 import adapterFactory from "../../adapters/adapter-factory"
 
@@ -134,6 +135,7 @@ export default {
     components: {
         BulkActionButton,
         TaskFormContainer,
+        WlCheckBox,
         WlLoadingProxy
     },
     data() {
