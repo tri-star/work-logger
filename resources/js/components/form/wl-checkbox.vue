@@ -1,11 +1,12 @@
 <template>
-    <div class="checkbox-container">
+    <div class="checkbox-container" name="aaa" type="checkbox">
         <input
             type="checkbox"
             :name="name"
             :value="value"
             :id="id"
-            @change="$emit('change')"
+            :checked="isChecked"
+            @change="handleChange"
         />
         <label :for="id" class="label">{{ label }}</label>
     </div>
@@ -13,6 +14,10 @@
 
 <script>
 export default {
+    model: {
+        prop: "checkedItems",
+        event: "change"
+    },
     props: {
         id: {
             type: String,
@@ -23,11 +28,44 @@ export default {
             default: null
         },
         value: {
+            type: String,
             required: true
         },
         label: {
             type: String,
             default: ""
+        },
+        checkedItems: {
+            type: Array
+        }
+    },
+    data() {
+        return {
+            internalChecks: this.checkedItems.map(v => {
+                return String(v)
+            })
+        }
+    },
+    computed: {
+        isChecked() {
+            return window._.includes(this.internalChecks, String(this.value))
+        }
+    },
+    methods: {
+        handleChange(event) {
+            const index = this.internalChecks.indexOf(String(this.value))
+            let checks = window._.cloneDeep(this.internalChecks)
+            if (index === -1) {
+                checks.push(String(this.value))
+            } else {
+                checks.splice(index, 1)
+            }
+            this.$emit("change", checks)
+        }
+    },
+    watch: {
+        checkedItems(newCheckedItems) {
+            this.internalChecks = newCheckedItems
         }
     }
 }
