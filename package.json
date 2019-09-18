@@ -24,7 +24,7 @@
         "bootstrap": "^4.3.1",
         "browser-sync": "^2.26.7",
         "browser-sync-webpack-plugin": "2.2.2",
-        "cross-env": "^5.2",
+        "cross-env": "^6.0",
         "es6-promise": "^4.2.8",
         "eslint": "^5.16.0",
         "eslint-config-prettier": "^6.3.0",
