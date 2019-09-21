@@ -34,14 +34,11 @@
             <div class="row">
                 <label class="label">ソート順</label>
                 <div class="col">
-                    <select v-model="conditions.sortOrder">
-                        <option
-                            v-for="(sortOrder, sortOrderCode) in sortOrderList"
-                            :key="sortOrderCode"
-                            :value="sortOrderCode"
-                            >{{ sortOrder }}</option
-                        >
-                    </select>
+                    <WlDropDown
+                        name="sort-order"
+                        :menues="sortOrderList"
+                        v-model="conditions.sortOrder"
+                    />
                 </div>
             </div>
         </section>
@@ -122,6 +119,7 @@ import BulkActionButton from "../../components/bulk-action-button"
 import Task from "../../domain/task.js"
 import TaskFormContainer from "../tasks/task-form-container"
 import WlCheckBox from "../../components/form/wl-checkbox"
+import WlDropDown from "../../components/form/wl-dropdown"
 import WlLoadingProxy from "../../components/wl-loading-proxy"
 import adapterFactory from "../../adapters/adapter-factory"
 
@@ -136,6 +134,7 @@ export default {
         BulkActionButton,
         TaskFormContainer,
         WlCheckBox,
+        WlDropDown,
         WlLoadingProxy
     },
     data() {
