@@ -23,7 +23,7 @@
                         :key="statusCode"
                     >
                         <WlCheckBox
-                            :id="`status-${statusCode}`"
+                            :id="`search-status-${statusCode}`"
                             :value="statusCode"
                             :label="statusName"
                             v-model="conditions.statuses"
