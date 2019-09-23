@@ -62,8 +62,7 @@
             <div class="row">
                 <div class="col-header">開始予定日</div>
                 <div class="col">
-                    <input
-                        type="text"
+                    <WlDate
                         name="start_date"
                         v-model="task.start_date"
                         data-vv-as="開始予定日"
@@ -85,8 +84,7 @@
             <div class="row">
                 <div class="col-header">完了予定日</div>
                 <div class="col">
-                    <input
-                        type="text"
+                    <WlDate
                         name="end_date"
                         v-model="task.end_date"
                         data-vv-as="完了予定日"
@@ -150,12 +148,14 @@
 
 <script>
 import Task from "../../domain/task"
+import WlDate from "../../components/form/wl-date"
 import WlDropDown from "../../components/form/wl-dropdown"
 
 export default {
     props: {},
 
     components: {
+        WlDate,
         WlDropDown
     },
     data() {
