@@ -56,14 +56,11 @@
             <div class="row">
                 <div class="col-header">ステータス</div>
                 <div class="col">
-                    <select v-model="taskLog.status">
-                        <option
-                            v-for="(statusName, value) of statuses"
-                            :value="value"
-                            :key="value"
-                            >{{ statusName }}</option
-                        >
-                    </select>
+                    <WlDropDown
+                        name="status"
+                        :menues="statuses"
+                        v-model="taskLog.status"
+                    />
                 </div>
             </div>
             <div class="col-center button-area">
@@ -80,11 +77,14 @@
 
 <script>
 import Task from "../../domain/task"
+import WlDropDown from "../../components/form/wl-dropdown"
 
 export default {
     props: {},
 
-    components: {},
+    components: {
+        WlDropDown
+    },
     data() {
         return {
             id: 0,

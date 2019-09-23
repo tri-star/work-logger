@@ -13,9 +13,9 @@
                 <li v-for="(label, key) in menues" :key="key">
                     <input
                         type="radio"
-                        name="name"
+                        :name="name"
                         :value="key"
-                        :id="`${name}-${key}`"
+                        :id="getMenuId(key)"
                         @change="changeHandler(key)"
                     /><label :for="`${name}-${key}`">{{ label }}</label>
                 </li>
@@ -34,6 +34,10 @@ export default {
         name: {
             type: String,
             required: "false"
+        },
+        idPrefix: {
+            type: String,
+            default: null
         },
         menues: {
             type: Object,
@@ -61,6 +65,13 @@ export default {
             this.selectedKey = selectedKey
             this.showMenu = false
             this.$emit("change", this.selectedKey)
+        },
+
+        getMenuId(value) {
+            if (this.idPrefix === null) {
+                return `${this.name}-${value}`
+            }
+            return `${this.idPrefix}-${value}`
         }
     },
 
