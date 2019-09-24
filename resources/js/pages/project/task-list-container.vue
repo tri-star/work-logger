@@ -74,7 +74,6 @@
                             </th>
                             <th>ID</th>
                             <th class="col-task-name">タスク名</th>
-                            <th>タグ</th>
                             <th>ステータス</th>
                             <th>開始日</th>
                             <th>終了日</th>
@@ -94,7 +93,6 @@
                                     task.title
                                 }}</router-link>
                             </td>
-                            <td></td>
                             <td class="col-status">
                                 {{ getStatusName(task.status) }}
                             </td>
