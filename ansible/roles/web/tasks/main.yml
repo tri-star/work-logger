@@ -10,4 +10,4 @@
 - include: php.yml
 - include: fluentd.yml
 
--include: app.yml
+- include: app.yml
