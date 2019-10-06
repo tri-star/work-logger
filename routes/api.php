@@ -29,6 +29,7 @@ Route::middleware('auth')->prefix('v1')->group(function () {
     Route::get('/task/total-completed-task-count', 'TaskApiController@getTotalCompletedTaskCount');
     Route::get('/task/near-deadline-list', 'TaskApiController@getNearDeadlineList');
     Route::get('/task/in-progress-list', 'TaskApiController@getInProgressList');
+    Route::post('/task/bulk-date-update', 'TaskApiController@bulkUpdateDate');
     Route::get('/task/{id}', 'TaskApiController@getTask');
     Route::post('/task/{id}', 'TaskApiController@updateTask');
     Route::post('/task/{id}/log/add', 'TaskApiController@addTaskLog');

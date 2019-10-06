@@ -56,6 +56,7 @@
                 </a>
                 <BulkActionButton
                     title="一括操作"
+                    :disabled="!itemChecked"
                     :menuList="bulkActionMenuList"
                 />
             </section>
@@ -74,7 +75,6 @@
                             </th>
                             <th>ID</th>
                             <th class="col-task-name">タスク名</th>
-                            <th>タグ</th>
                             <th>ステータス</th>
                             <th>開始日</th>
                             <th>終了日</th>
@@ -94,7 +94,6 @@
                                     task.title
                                 }}</router-link>
                             </td>
-                            <td></td>
                             <td class="col-status">
                                 {{ getStatusName(task.status) }}
                             </td>
@@ -111,11 +110,13 @@
             :project="project"
             @taskRegistered="handleTaskRegistered"
         />
+        <BulkDateUpdateFormContainer ref="bulkDateUpdateFormContainer" />
     </div>
 </template>
 
 <script>
 import BulkActionButton from "../../components/bulk-action-button"
+import BulkDateUpdateFormContainer from "./bulk-date-update-form-container"
 import Task from "../../domain/task.js"
 import TaskFormContainer from "../tasks/task-form-container"
 import WlCheckBox from "../../components/form/wl-checkbox"
@@ -132,6 +133,7 @@ export default {
     },
     components: {
         BulkActionButton,
+        BulkDateUpdateFormContainer,
         TaskFormContainer,
         WlCheckBox,
         WlDropDown,
@@ -144,7 +146,12 @@ export default {
             taskList: {},
             bulkActionMenuList: [
                 { title: "状態の変更", handler: () => {} },
-                { title: "開始日・終了日の変更", handler: () => {} }
+                {
+                    title: "開始日・終了日の変更",
+                    handler: () => {
+                        this.$refs.bulkDateUpdateFormContainer.open(this.checks)
+                    }
+                }
             ],
             statusList: window._.pick(Task.getStatusNames(), [
                 Task.STATE_NONE,
@@ -202,6 +209,14 @@ export default {
             this.taskList.forEach(task => {
                 this.checks.push(task.id)
             })
+        }
+    },
+    computed: {
+        /**
+         * 一覧の項目を選択しているかどうか
+         */
+        itemChecked() {
+            return this.checks.length > 0
         }
     },
 
