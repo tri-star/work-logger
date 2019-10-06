@@ -11,6 +11,7 @@ use WorkLogger\Domain\Task\Task;
 use WorkLogger\Domain\Task\TaskSearchQueryBuilder;
 use WorkLogger\Domain\User\User;
 use WorkLogger\Http\Response\JsonResponse;
+use WorkLogger\UseCase\Task\BulkUpdateDateUseCase;
 use WorkLogger\UseCase\Task\RegisterTaskLogUseCase;
 use WorkLogger\UseCase\Task\RegisterTaskUseCase;
 use WorkLogger\UseCase\Task\UpdateTaskUseCase;
@@ -40,6 +41,20 @@ class TaskApiController extends Controller
         return new JsonResponse($result, $statusCode);
     }
 
+
+    public function bulkUpdateDate(Request $request, BulkUpdateDateUseCase $useCase)
+    {
+        $ids = $request->input('ids', []);
+        $type = (int)$request->input('type', 0);
+        $params = $request->input('params', []);
+        $result = $useCase->execute(\Auth::user(), $ids, $type, $params);
+
+        $statusCode = 200;
+        if (!$result['success']) {
+            $statusCode = 400;
+        }
+        return new JsonResponse($result, $statusCode);
+    }
 
     public function getTask(int $id, Request $request)
     {

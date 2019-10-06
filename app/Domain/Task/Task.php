@@ -32,6 +32,10 @@ class Task extends Model
         'status',
     ];
 
+    protected $dates = [
+        'start_date',
+        'end_date',
+    ];
 
     /**
      * 終了した状態のステータス一覧を返す
@@ -73,6 +77,21 @@ class Task extends Model
             $this->completed_at = Carbon::now();
         }
         $this->status = $newStatus;
+    }
+
+
+    /**
+     * 指定した日数分開始日と終了日をずらす
+     * @param int $offset
+     */
+    public function updateDateByOffset(int $offset)
+    {
+        if ($this->start_date) {
+            $this->start_date = $this->start_date->addDays($offset);
+        }
+        if ($this->end_date) {
+            $this->end_date = $this->end_date->addDays($offset);
+        }
     }
 
 

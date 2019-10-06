@@ -58,6 +58,14 @@ class TaskAdapter {
 
         return response.data
     }
+
+    async bulkDateUpdate(taskIds, type, params) {
+        await window.axios.post("/api/v1/task/bulk-date-update", {
+            ids: taskIds,
+            type,
+            params
+        })
+    }
 }
 
 const taskAdapter = new TaskAdapter()
