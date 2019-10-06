@@ -56,6 +56,7 @@
                 </a>
                 <BulkActionButton
                     title="一括操作"
+                    :disabled="!itemChecked"
                     :menuList="bulkActionMenuList"
                 />
             </section>
@@ -208,6 +209,14 @@ export default {
             this.taskList.forEach(task => {
                 this.checks.push(task.id)
             })
+        }
+    },
+    computed: {
+        /**
+         * 一覧の項目を選択しているかどうか
+         */
+        itemChecked() {
+            return this.checks.length > 0
         }
     },
 

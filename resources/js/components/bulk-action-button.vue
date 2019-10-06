@@ -5,7 +5,12 @@
             class="modal-overlay"
             @mousedown="toggleMenu()"
         ></div>
-        <button ref="button" class="command-button" @click="toggleMenu()">
+        <button
+            ref="button"
+            class="command-button"
+            :disabled="disabled"
+            @click="toggleMenu()"
+        >
             <i class="icon fas fa-check-square"></i>{{ title }}
             <span class="separator"></span>
             <span class="icon fas fa-caret-down"></span>
@@ -32,6 +37,10 @@ export default {
         menuList: {
             type: Array,
             required: true
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -43,6 +52,11 @@ export default {
 
     methods: {
         toggleMenu() {
+            if (this.disabled) {
+                this.showMenu = false
+                return
+            }
+
             this.showMenu = !this.showMenu
 
             const menuListElement = this.$refs.button.querySelector("ul.menu")
