@@ -111,12 +111,14 @@
             @taskRegistered="handleTaskRegistered"
         />
         <BulkDateUpdateFormContainer ref="bulkDateUpdateFormContainer" />
+        <BulkStateUpdateFormContainer ref="bulkStateUpdateFormContainer" />
     </div>
 </template>
 
 <script>
 import BulkActionButton from "../../components/bulk-action-button"
 import BulkDateUpdateFormContainer from "./bulk-date-update-form-container"
+import BulkStateUpdateFormContainer from "./bulk-state-update-form-container"
 import Task from "../../domain/task.js"
 import TaskFormContainer from "../tasks/task-form-container"
 import WlCheckBox from "../../components/form/wl-checkbox"
@@ -134,6 +136,7 @@ export default {
     components: {
         BulkActionButton,
         BulkDateUpdateFormContainer,
+        BulkStateUpdateFormContainer,
         TaskFormContainer,
         WlCheckBox,
         WlDropDown,
@@ -145,7 +148,14 @@ export default {
             project: {},
             taskList: {},
             bulkActionMenuList: [
-                { title: "状態の変更", handler: () => {} },
+                {
+                    title: "状態の変更",
+                    handler: () => {
+                        this.$refs.bulkStateUpdateFormContainer.open(
+                            this.checks
+                        )
+                    }
+                },
                 {
                     title: "開始日・終了日の変更",
                     handler: () => {

@@ -66,6 +66,13 @@ class TaskAdapter {
             params
         })
     }
+
+    async bulkStateUpdate(taskIds, newState) {
+        await window.axios.post("/api/v1/task/bulk-state-update", {
+            ids: taskIds,
+            new_state: newState
+        })
+    }
 }
 
 const taskAdapter = new TaskAdapter()
