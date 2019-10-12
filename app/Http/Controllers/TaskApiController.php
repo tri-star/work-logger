@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WorkLogger\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WorkLogger\Domain\Project\Project;
 use WorkLogger\Domain\Task\Task;
@@ -85,6 +86,13 @@ class TaskApiController extends Controller
         }
 
         $response = $task->attributesToArray();
+        if (!empty($response['start_date'])) {
+            $response['start_date'] = Carbon::parse($response['start_date'])->format('Y-m-d');
+        }
+        if (!empty($response['end_date'])) {
+            $response['end_date'] = Carbon::parse($response['end_date'])->format('Y-m-d');
+        }
+
         if ($withTaskLogs) {
             $response['logs'] = $task->logs->toArray();
             $response['actual_time'] = $task->getActualTime();

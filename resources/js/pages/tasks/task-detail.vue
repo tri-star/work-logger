@@ -21,7 +21,8 @@
             <div class="detail-row">
                 <label>予定期間</label>
                 <div class="detail-col">
-                    {{ task.start_date }} ～ {{ task.end_date }}
+                    {{ task.start_date | format_date("YYYY-MM-DD", "", "") }} ～
+                    {{ task.end_date | format_date("YYYY-MM-DD", "", "") }}
                 </div>
             </div>
             <div class="detail-row">

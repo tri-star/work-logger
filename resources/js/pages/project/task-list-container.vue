@@ -97,8 +97,18 @@
                             <td class="col-status">
                                 {{ getStatusName(task.status) }}
                             </td>
-                            <td class="col-datetime">{{ task.start_date }}</td>
-                            <td class="col-datetime">{{ task.end_date }}</td>
+                            <td class="col-date">
+                                {{
+                                    task.start_date
+                                        | format_date("YYYY-MM-DD", "-")
+                                }}
+                            </td>
+                            <td class="col-date">
+                                {{
+                                    task.end_date
+                                        | format_date("YYYY-MM-DD", "")
+                                }}
+                            </td>
                             <td class="col-datetime">{{ task.updated_at }}</td>
                         </tr>
                     </table>
@@ -283,6 +293,10 @@ export default {
 }
 .col-status {
     width: 100px;
+}
+
+.col-date {
+    width: 120px;
 }
 
 .col-datetime {
