@@ -64,7 +64,7 @@
                 <div class="col">
                     <WlDate
                         name="start_date"
-                        v-model="task.start_date"
+                        v-model="start_date"
                         data-vv-as="開始予定日"
                         v-validate="'date_format:yyyy-MM-dd'"
                         class="text-box"
@@ -86,7 +86,7 @@
                 <div class="col">
                     <WlDate
                         name="end_date"
-                        v-model="task.end_date"
+                        v-model="end_date"
                         data-vv-as="完了予定日"
                         v-validate="'date_format:yyyy-MM-dd'"
                         class="text-box"
@@ -150,6 +150,7 @@
 import Task from "../../domain/task"
 import WlDate from "../../components/form/wl-date"
 import WlDropDown from "../../components/form/wl-dropdown"
+import dayjs from "dayjs"
 
 export default {
     props: {},
@@ -175,6 +176,26 @@ export default {
         },
         canSubmit() {
             return this.errors.all().length === 0
+        },
+        start_date: {
+            get() {
+                return dayjs(this.task.start_date).isValid()
+                    ? dayjs(this.task.start_date).format("YYYY-MM-DD")
+                    : ""
+            },
+            set(value) {
+                this.task.start_date = value
+            }
+        },
+        end_date: {
+            get() {
+                return dayjs(this.task.end_date).isValid()
+                    ? dayjs(this.task.end_date).format("YYYY-MM-DD")
+                    : ""
+            },
+            set(value) {
+                this.task.end_date = value
+            }
         }
     },
 

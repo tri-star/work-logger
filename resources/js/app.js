@@ -5,6 +5,7 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 import Vuex from "vuex"
 import WlErrorHandler from "./lib/errors/wl-error-handler"
+import filters from "./filters"
 import initStore from "./store"
 import routes from "./routes"
 
@@ -23,6 +24,10 @@ window.Vue = Vue
 
 const router = new VueRouter({ mode: "history", routes })
 const store = initStore()
+
+for (const name in filters) {
+    Vue.filter(name, filters[name])
+}
 
 new Vue({
     data: {
