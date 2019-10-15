@@ -112,6 +112,23 @@ class ProjectApiController extends Controller
 
 
     /**
+     * 作業中のタスクの一覧を返す
+     * @param int $id プロジェクトID
+     * @return JsonResponse
+     */
+    public function getInProgressList(int $id)
+    {
+        $user = \Auth::user();
+        $taskList = Task::inProgress($user->id)
+            ->where('project_id', $id)
+            ->get()->mapWithKeys(function ($task) {
+                return [$task->id => $task];
+            });
+        return new JsonResponse($taskList);
+    }
+
+
+    /**
      * 指定されたIDのプロジェクトの情報を返す。(見つからない場合はNotFound例外)
      * @param int $id プロジェクトID
      * @param User $user ログイン中のユーザー
