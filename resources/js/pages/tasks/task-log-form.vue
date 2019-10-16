@@ -10,18 +10,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-header">タグ</div>
-                <div class="col">
-                    <input
-                        type="text"
-                        name="tag"
-                        v-model="taskLog.tag"
-                        data-vv-as="タグ"
-                        class="text-box"
-                    />
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-header">作業時間</div>
                 <div class="col">
                     <input
