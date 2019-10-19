@@ -21,7 +21,7 @@ import SideMenu from "../components/side-menu/side-menu"
 export default {
     data() {
         return {
-            hideMenu: true,
+            hideMenu: false,
             sideMenuType: "default",
             sideMenuParams: {}
         }
