@@ -25,6 +25,14 @@ class ProjectAdapter {
         return response.data
     }
 
+    async getInProgressTasks(id) {
+        const response = await window.axios.get(
+            `/api/v1/project/${id}/in-progress-tasks`
+        )
+
+        return response.data
+    }
+
     async addProject(project) {
         await window.axios.post("/api/v1/project/add", {
             ..._pick(project, ["project_name", "description"])

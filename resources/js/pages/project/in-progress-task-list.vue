@@ -1,7 +1,7 @@
 <template>
     <WlFrame>
         <template slot="title">
-            今日のタスク
+            作業中のタスク
         </template>
         <template slot="body">
             <WlLoadingProxy :loadingFunction="loadingFunction">

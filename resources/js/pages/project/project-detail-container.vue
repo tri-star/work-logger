@@ -65,12 +65,13 @@
                 </template>
                 <template slot="body"></template>
             </WlFrame>
-            <WlFrame class="frame-item" :width="'400px;'">
-                <template slot="title">
-                    見積差分の大きいタスク
-                </template>
-                <template slot="body"></template>
-            </WlFrame>
+            <InProgressTaskList
+                class="frame-item"
+                :width="'400px;'"
+                :taskList="inProgressTasks"
+                :loadingFunction="loadInProgressTasks"
+                @addTaskLog="addTaskLogHandler"
+            />
             <TaskLogFormContainer ref="taskLogForm" />
             <ProjectFormContainer
                 ref="projectForm"
@@ -81,6 +82,7 @@
 </template>
 
 <script>
+import InProgressTaskList from "./in-progress-task-list"
 import ProjectFormContainer from "../project/project-form-container"
 import ScheduledTaskList from "./scheduled-task-list"
 import TaskLogFormContainer from "../tasks/task-log-form-container"
@@ -96,6 +98,7 @@ export default {
         }
     },
     components: {
+        InProgressTaskList,
         ProjectFormContainer,
         ScheduledTaskList,
         TaskLogFormContainer,
@@ -106,7 +109,8 @@ export default {
         return {
             project: {},
             taskStat: {},
-            scheduledTasks: {}
+            scheduledTasks: {},
+            inProgressTasks: {}
         }
     },
 
@@ -134,6 +138,12 @@ export default {
         async loadScheduledTasks() {
             const projectAdapter = adapterFactory.get("ProjectAdapter")
             this.scheduledTasks = await projectAdapter.getScheduledTasks(
+                this.id
+            )
+        },
+        async loadInProgressTasks() {
+            const projectAdapter = adapterFactory.get("ProjectAdapter")
+            this.inProgressTasks = await projectAdapter.getInProgressTasks(
                 this.id
             )
         },

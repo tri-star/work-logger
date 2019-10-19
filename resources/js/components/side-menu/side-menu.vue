@@ -31,7 +31,8 @@ import _cloneDeep from "lodash/cloneDeep"
 
 const menues = {
     default: [
-        { icon: "fas fa-chart-pie", label: "統計情報", to: "" },
+        // { icon: "fas fa-chart-pie", label: "統計情報", to: "" },
+        { icon: "fas fa-chart-line", label: "ダッシュボード", to: "/" },
         { icon: "fas fa-cog", label: "設定", to: "" }
     ],
     project: [
@@ -45,8 +46,8 @@ const menues = {
             icon: "fas fa-tasks",
             label: "タスク一覧",
             to: "/project/:id/tasks"
-        },
-        { icon: "fas fa-cog", label: "設定", to: "" }
+        }
+        // { icon: "fas fa-cog", label: "設定", to: "" }
     ]
 }
 

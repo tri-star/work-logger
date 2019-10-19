@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import WlModal from "../../components/wl-modal"
+import AdapterFactory from "../../adapters/adapter-factory"
 import Task from "../../domain/task"
 import TaskLogForm from "./task-log-form"
-import AdapterFactory from "../../adapters/adapter-factory"
+import WlModal from "../../components/wl-modal"
 
 export default {
     props: {},
@@ -39,7 +39,6 @@ export default {
             this.showModal = true
             this.task = Object.assign({}, this.task, task)
             this.taskLog = {
-                tag: "",
                 hours: 0,
                 memo: "",
                 status: this.task.status
