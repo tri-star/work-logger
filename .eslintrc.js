@@ -30,6 +30,14 @@ module.exports = {
         "semi": ["warn", "never"],
         "template-curly-spacing": "error",
         "yield-star-spacing": "error",
-        "sort-imports": "error"
+        "sort-imports": "error",
+        "import/order": "off",
+        "no-new": "off",
+        "handle-callback-err": "off",
+        "require-await": "off",
+        "no-return-await": "off",
+        "vue/require-default-prop": "off",
+        "vue/require-prop-types": "off",
+        "vue/no-v-html": "off"
     }
 };

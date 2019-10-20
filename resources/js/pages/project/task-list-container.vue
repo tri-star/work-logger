@@ -141,14 +141,14 @@
 
 <script>
 import BulkActionButton from '../../components/bulk-action-button'
+import BulkDateUpdateFormContainer from './bulk-date-update-form-container'
+import BulkStateUpdateFormContainer from './bulk-state-update-form-container'
 import Task from '../../domain/task.js'
 import TaskFormContainer from '../tasks/task-form-container'
 import WlCheckBox from '../../components/form/wl-checkbox'
 import WlDropDown from '../../components/form/wl-dropdown'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
 import adapterFactory from '../../adapters/adapter-factory'
-import BulkStateUpdateFormContainer from './bulk-state-update-form-container'
-import BulkDateUpdateFormContainer from './bulk-date-update-form-container'
 
 export default {
   components: {

@@ -19,7 +19,7 @@ export default {
   },
   props: {
     loadingFunction: {
-      Type: Function,
+      type: Function,
       required: true
     }
   },

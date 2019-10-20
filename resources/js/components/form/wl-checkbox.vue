@@ -36,7 +36,8 @@ export default {
       default: ''
     },
     checkedItems: {
-      type: Array
+      type: Array,
+      default: null
     }
   },
   data () {

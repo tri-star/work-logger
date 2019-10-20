@@ -12,8 +12,8 @@
 
 <script>
 import AdapterFactory from '../../adapters/adapter-factory'
-import WlModal from '../../components/wl-modal'
 import ProjectForm from './project-form'
+import WlModal from '../../components/wl-modal'
 
 export default {
   components: {
@@ -65,7 +65,8 @@ export default {
 
     async loadProject (id) {
       const projectAdapter = AdapterFactory.get('ProjectAdapter')
-      return await projectAdapter.getProject(id)
+      const project = await projectAdapter.getProject(id)
+      return project
     }
   }
 }

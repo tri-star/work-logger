@@ -97,12 +97,12 @@
 
 <script>
 import ProjectFormContainer from '../project/project-form-container'
-import WlFrame from '../../components/wl-frame'
-import WlLoadingProxy from '../../components/wl-loading-proxy'
-import adapterFactory from '../../adapters/adapter-factory'
 import ProjectList from './project-list'
 import ProjectTaskCountList from './project-task-count-list'
 import TaskList from './task-list'
+import WlFrame from '../../components/wl-frame'
+import WlLoadingProxy from '../../components/wl-loading-proxy'
+import adapterFactory from '../../adapters/adapter-factory'
 
 export default {
   components: {

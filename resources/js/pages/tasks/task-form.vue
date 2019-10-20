@@ -163,10 +163,10 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import Task from '../../domain/task'
 import WlDate from '../../components/form/wl-date'
 import WlDropDown from '../../components/form/wl-dropdown'
+import dayjs from 'dayjs'
 
 export default {
 

@@ -43,7 +43,9 @@ export default {
       type: Object,
       required: true
     },
-    value: {}
+    value: {
+
+    }
   },
 
   data () {

@@ -13,8 +13,8 @@
 <script>
 import AdapterFactory from '../../adapters/adapter-factory'
 import Task from '../../domain/task'
-import WlModal from '../../components/wl-modal'
 import TaskLogForm from './task-log-form'
+import WlModal from '../../components/wl-modal'
 
 export default {
 

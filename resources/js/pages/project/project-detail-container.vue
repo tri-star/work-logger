@@ -92,13 +92,13 @@
 </template>
 
 <script>
+import InProgressTaskList from './in-progress-task-list'
 import ProjectFormContainer from '../project/project-form-container'
+import ScheduledTaskList from './scheduled-task-list'
 import TaskLogFormContainer from '../tasks/task-log-form-container'
 import WlFrame from '../../components/wl-frame'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
 import adapterFactory from '../../adapters/adapter-factory'
-import ScheduledTaskList from './scheduled-task-list'
-import InProgressTaskList from './in-progress-task-list'
 
 export default {
   components: {

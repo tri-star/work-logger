@@ -16,6 +16,7 @@ import dayjs from 'dayjs'
 export default {
   props: {
     value: {
+      type: String,
       required: true
     }
   },
