@@ -1,9 +1,9 @@
 <template>
-    <transition name="loading">
-        <div class="spinner-container">
-            <div class="spinner"></div>
-        </div>
-    </transition>
+  <transition name="loading">
+    <div class="spinner-container">
+      <div class="spinner" />
+    </div>
+  </transition>
 </template>
 
 <script>

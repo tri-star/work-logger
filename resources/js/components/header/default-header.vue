@@ -1,5 +1,9 @@
 <template>
-    <header><h1 class="logo">Work Logger</h1></header>
+  <header>
+    <h1 class="logo">
+      Work Logger
+    </h1>
+  </header>
 </template>
 
 <script>
@@ -7,9 +11,9 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-@import "../../../sass/imports";
+  @import "../../../sass/imports";
 
-header {
+  header {
     background-color: $header-background-color;
     color: $header-font-color;
     padding: 5px;
@@ -20,7 +24,7 @@ header {
     z-index: 10000;
 
     .logo {
-        font-size: 40pt;
+      font-size: 40pt;
     }
-}
+  }
 </style>
