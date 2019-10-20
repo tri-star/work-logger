@@ -37,10 +37,15 @@ export default {
     },
     checkedItems: {
       type: Array,
-      default: null
+      default () {
+        return []
+      }
     }
   },
   data () {
+    if (!Array.isArray(this.checkedItems)) {
+      throw new TypeError('初期データが無効です')
+    }
     return {
       internalChecks: this.checkedItems.map((v) => {
         return String(v)
