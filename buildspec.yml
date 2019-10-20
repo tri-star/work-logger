@@ -44,6 +44,7 @@ phases:
       - yarn lint-all
       - yarn dev
       - vendor/bin/phpunit
+      - yarn test
   post_build:
     commands:
       - supervisorctl stop nginx
