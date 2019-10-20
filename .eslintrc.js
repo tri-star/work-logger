@@ -14,6 +14,9 @@ module.exports = {
         parser: "babel-eslint",
         sourceType: "module",
     },
+  globals: {
+      "Vue": true
+  },
     rules: {
         "comma-dangle": ["error", "only-multiline"],
         "generator-star-spacing": "off", // async/awaitを許可するために必要
@@ -38,6 +41,7 @@ module.exports = {
         "no-return-await": "off",
         "vue/require-default-prop": "off",
         "vue/require-prop-types": "off",
-        "vue/no-v-html": "off"
+        "vue/no-v-html": "off",
+        "unicorn/error-message": "off"
     }
 };
