@@ -1,30 +1,30 @@
 <template>
-    <transition name="modal" v-if="showModal">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container">
-                    <div class="body">
-                        <slot name="body"> </slot>
-                    </div>
-                </div>
-            </div>
+  <transition v-if="showModal" name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="body">
+            <slot name="body" />
+          </div>
         </div>
-    </transition>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
 export default {
-    props: {
-        showModal: {
-            type: Boolean,
-            required: true
-        }
+  props: {
+    showModal: {
+      type: Boolean,
+      required: true
     }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.modal-mask {
+  .modal-mask {
     position: fixed;
     z-index: 9999;
     top: 0;
@@ -36,9 +36,9 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
 
-.modal-wrapper {
+  .modal-wrapper {
     min-height: 200px;
     background-color: #fff;
 
@@ -46,23 +46,24 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     padding: 10px;
     transition: all 0.3s ease;
-}
+  }
 
-.modal-container {
-}
+  .modal-container {
+  }
 
-.modal-enter {
+  .modal-enter {
     opacity: 0;
 
     .modal-wrapper {
-        transform: scale(1.1);
+      transform: scale(1.1);
     }
-}
+  }
 
-.modal-leave-active {
+  .modal-leave-active {
     opacity: 0;
+
     .modal-wrapper {
-        transform: scale(1.1);
+      transform: scale(1.1);
     }
-}
+  }
 </style>

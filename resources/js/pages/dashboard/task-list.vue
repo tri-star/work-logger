@@ -1,25 +1,27 @@
 <template>
-    <div>
-        <table class="small-table project-list">
-            <tr v-for="task in tasks" :key="task.id">
-                <td>
-                    <router-link :to="`/task/${task.id}`">{{
-                        task.title
-                    }}</router-link>
-                </td>
-            </tr>
-        </table>
-    </div>
+  <div>
+    <table class="small-table project-list">
+      <tr v-for="task in tasks" :key="task.id">
+        <td>
+          <router-link :to="`/task/${task.id}`">
+            {{
+              task.title
+            }}
+          </router-link>
+        </td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <script>
 export default {
-    props: {
-        tasks: {
-            type: Object,
-            required: true
-        }
+  props: {
+    tasks: {
+      type: Object,
+      required: true
     }
+  }
 }
 </script>
 
