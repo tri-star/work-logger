@@ -2,7 +2,7 @@
   "presets": ["@babel/preset-env"],
   "env": {
     "test": {
-      "presets": ["power-assert"]
+      "presets": ["power-assert", ["env", {"targets":  {"node": "current"}}]]
     }
   }
 }

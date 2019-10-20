@@ -22,6 +22,7 @@
         "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "^10.0.3",
         "babel-jest": "^24.9.0",
+        "babel-preset-env": "^1.7.0",
         "babel-preset-power-assert": "^3.0.0",
         "bootstrap": "^4.3.1",
         "browser-sync": "^2.26.7",
@@ -67,9 +68,23 @@
         "vuex": "^3.1.1"
     },
     "jest": {
+        "globals": {
+            "Vue": true
+        },
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "vue"
+        ],
+        "setupFiles": [
+            "./tests/js/setup.js"
+        ],
         "transform": {
             "^.+\\.js$": "babel-jest",
             "^.+\\.vue$": "vue-jest"
+        },
+        "moduleNameMapper": {
+            "^@/(.*)$": "./resources/js/$1"
         }
     }
 }
