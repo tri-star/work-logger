@@ -1,5 +1,9 @@
 {
-  "presets": ["@babel/preset-env"],
+  "presets": [["@babel/preset-env", {
+      "targets": {
+          "node": true
+      }
+  }]],
   "env": {
     "test": {
       "presets": ["power-assert", ["env", {"targets":  {"node": "current"}}]]
