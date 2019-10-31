@@ -51,7 +51,7 @@
         "power-assert": "^1.6.1",
         "prettier": "^1.18.2",
         "resolve-url-loader": "^3.1.0",
-        "sass": "^1.23.1",
+        "sass": "^1.23.2",
         "sass-loader": "^8.0.0",
         "vee-validate": "^2.2.15",
         "vue": "^2.6.10",
