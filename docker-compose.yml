@@ -1,16 +1,22 @@
 version: "3.5"
 services:
-  # AWS CodeBuild 上で自動テストを実行するコンテナ用のサービス。
-  code_build:
+  web:
     build:
       context: "."
-      dockerfile: docker/code_build/Dockerfile
-      args:
-        HTTP_PROXY: ""
-        HTTPS_PROXY: ""
-        NO_PROXY: ""
+    ports:
+      - "80:80"
     volumes:
-    - ".:/src" # AWS CodeBuildではランダムな名前でマウントされるため注意
-
-  # 上記以外のイメージを作成する場合、以下に追加してください。
-  # Dockerfileはdockerフォルダ配下に作成してください。
+      - "./data/log:/var/log"
+    depends_on:
+      - db
+  db:
+    image: "mysql:5.7"
+    expose:
+      - "3306"
+    environment:
+      MYSQL_DATABASE: "worklogger"
+      MYSQL_USER: "worklogger"
+      MYSQL_PASSWORD: "testtest"
+      MYSQL_ROOT_PASSWORD: "testtest"
+    volumes:
+      - "./data/mysql:/var/lib/mysql"
