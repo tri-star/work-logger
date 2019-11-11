@@ -84,7 +84,7 @@ RUN rm /etc/php-fpm.d/www.conf
 
 VOLUME /var/log
 
-COPY ./docker/web/.env.production.dist /work-logger/.env
+COPY .env.production.dist /work-logger/.env
 COPY ./docker/web/entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
