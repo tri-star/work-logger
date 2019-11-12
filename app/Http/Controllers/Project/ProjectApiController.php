@@ -10,6 +10,7 @@ use WorkLogger\Domain\Task\Task;
 use WorkLogger\Domain\User\User;
 use WorkLogger\Http\Controllers\Controller;
 use WorkLogger\Http\Response\JsonResponse;
+use WorkLogger\UseCase\Project\RegisterProjectUseCase;
 use WorkLogger\UseCase\Project\EditProjectUseCase;
 
 class ProjectApiController extends Controller
