@@ -12,6 +12,4 @@ mkdir -p $APP_DIR/storage/framework/views
 mkdir -p $APP_DIR/storage/logs
 chmod -R go+w $APP_DIR/storage
 
-/usr/bin/supervisord -n
-
 exec "$@"

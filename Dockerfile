@@ -88,4 +88,5 @@ COPY .env.production.dist /work-logger/.env
 COPY ./docker/web/entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
+CMD ["/usr/bin/supervisord", "-n"]
 ENTRYPOINT ["/entrypoint.sh"]
