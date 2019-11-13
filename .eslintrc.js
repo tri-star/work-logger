@@ -1,21 +1,22 @@
 module.exports = {
     extends: [
-        "eslint:recommended",
-        "plugin:vue/essential",
-        "plugin:prettier/recommended",
-        "prettier"
+        "@nuxtjs"
     ],
     plugins: ["vue"],
     env: {
         node: true,
         mocha: true,
         es6: true,
-        browser: true
+        browser: true,
+        jest: true
     },
     parserOptions: {
         parser: "babel-eslint",
         sourceType: "module",
     },
+  globals: {
+      "Vue": true
+  },
     rules: {
         "comma-dangle": ["error", "only-multiline"],
         "generator-star-spacing": "off", // async/awaitを許可するために必要
@@ -32,13 +33,15 @@ module.exports = {
         "semi": ["warn", "never"],
         "template-curly-spacing": "error",
         "yield-star-spacing": "error",
-        "prettier/prettier": [
-            "warn",
-            {
-                semi: false,
-                tabWidth: 4,
-                trailingComma: "none"
-            }
-        ]
+        "sort-imports": "error",
+        "import/order": "off",
+        "no-new": "off",
+        "handle-callback-err": "off",
+        "require-await": "off",
+        "no-return-await": "off",
+        "vue/require-default-prop": "off",
+        "vue/require-prop-types": "off",
+        "vue/no-v-html": "off",
+        "unicorn/error-message": "off"
     }
 };

@@ -14,5 +14,6 @@ class DatabaseServiceProvider extends \Illuminate\Database\DatabaseServiceProvid
         //Fakers配下を自動でロード出来るようにする
         $faker = $this->app[FakerGenerator::class];
         $faker->addProvider(new \WorkLogger\Fakers\CategoryFaker($faker));
+        $faker->addProvider(new \WorkLogger\Fakers\ProjectFaker($faker));
     }
 }

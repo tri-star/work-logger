@@ -2,12 +2,12 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use WorkLogger\Domain\Project\Project;
 use Faker\Generator as Faker;
+use WorkLogger\Domain\Project\Project;
 
 $factory->define(Project::class, function (Faker $faker) {
     return [
-        'project_name' => $faker->realText(20),
-        'description' => $faker->realText(50),
+        'project_name' => $faker->projectName(),
+        'description'  => $faker->numerify('説明文#####'),
     ];
 });

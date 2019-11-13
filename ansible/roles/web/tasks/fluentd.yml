@@ -3,7 +3,7 @@
   register: fluentd_stat_result
 
 - name: Fluentdのインストール
-  shell: curl -L https://toolbelt.treasu/redata.com/sh/install-redhat-td-agent3.sh | bash
+  shell: curl -L https:/toolbelt.treasuredata.com/sh/install-redhat-td-agent3.sh | bash
   when: not fluentd_stat_result.stat.exists
 
 - name: fluent-plugin-cloudwatch-logs がインストールされていること
