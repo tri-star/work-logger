@@ -1,0 +1,140 @@
+# AWS CodeBuildのビルド設定ファイル
+version: 0.2
+
+#env:
+  #variables:
+    # key: "value"
+    # key: "value"
+  #parameter-store:
+    # key: "value"
+    # key: "value"
+
+phases:
+  pre_build:
+    commands:
+      - $(aws ecr get-login --region=us-west-2)
+      - REPOSITORY_URI="563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-web"
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-8)
+
+  build:
+    commands:
+      - docker build -t $REPOSITORY_URI:latest
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - |
+        cat > task-definition.json <<EOT
+        {
+          "family": "work-logger",
+          "executionRoleArn": "arn:aws:iam::563848776164:role/centiworks_ecs_task_exec_role",
+          "containerDefinitions": [
+            {
+              "name": "web",
+              "image": "${REPOSITORY_URI}:${IMAGE_TAG}",
+              "cpu": 200,
+              "memory": 300,
+              "memoryReservation": 100,
+              "essential": true,
+              "links": [
+                  "db"
+              ],
+              "portMappings": [
+                {
+                  "containerPort": 80,
+                  "hostPort": 10000
+                }
+              ],
+              "secrets": [
+                {
+                  "name": "APP_KEY",
+                  "valueFrom": "arn:aws:ssm:us-west-2:563848776164:parameter/work-logger/app-key"
+                },
+                {
+                  "name": "DB_PASSWORD",
+                  "valueFrom": "arn:aws:ssm:us-west-2:563848776164:parameter/work-logger/mysql-password"
+                }
+              ],
+              "mountPoints": [
+                {
+                  "sourceVolume": "web-log",
+                  "containerPath": "/var/log"
+                },
+                {
+                  "sourceVolume": "web-storage",
+                  "containerPath": "/work-logger/storage"
+                }
+              ]
+            },
+            {
+              "name": "db",
+              "image": "mysql:5.7",
+              "cpu": 100,
+              "memory": 500,
+              "memoryReservation": 200,
+              "essential": true,
+              "environment": [
+                {
+                  "name": "MYSQL_DATABASE",
+                  "value": "work_logger"
+                },
+                {
+                  "name": "MYSQL_USER",
+                  "value": "work_logger"
+                }
+              ],
+              "secrets": [
+                {
+                  "name": "MYSQL_PASSWORD",
+                  "valueFrom": "arn:aws:ssm:us-west-2:563848776164:parameter/work-logger/mysql-password"
+                },
+                {
+                  "name": "MYSQL_ROOT_PASSWORD",
+                  "valueFrom": "arn:aws:ssm:us-west-2:563848776164:parameter/work-logger/mysql-password"
+                }
+              ],
+              "mountPoints": [
+                {
+                  "sourceVolume": "mysql-config",
+                  "containerPath": "/etc/mysql/my.conf.d"
+                },
+                {
+                  "sourceVolume": "mysql-data",
+                  "containerPath": "/var/lib/mysql"
+                }
+              ]
+            }
+          ],
+          "volumes": [
+            {
+              "name": "web-log",
+              "host": {
+                "sourcePath": "/volumes/work-logger-db/app-log"
+              }
+            },
+            {
+              "name": "web-storage",
+              "host": {
+                "sourcePath": "/volumes/work-logger-db/storage"
+              }
+            },
+            {
+              "name": "mysql-data",
+              "host": {
+                "sourcePath": "/volumes/work-logger-db/data"
+              }
+            },
+            {
+              "name": "mysql-config",
+              "host": {
+                "sourcePath": "/volumes/work-logger-db/my.conf.d"
+              }
+            }
+          ]
+        }
+        EOT
+
+artifacts:
+  files:
+    - task-definition.json
