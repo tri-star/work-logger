@@ -1,4 +1,4 @@
-# AWS CodeBuildのビルド設定ファイル
+# CodeBuildでの実行時のイメージは公式イメージの「aws/codebuild/standard:2.0」を想定
 version: 0.2
 
 #env:
@@ -10,6 +10,10 @@ version: 0.2
     # key: "value"
 
 phases:
+  install:
+    runtime-versions:
+      docker: 18
+
   pre_build:
     commands:
       - $(aws ecr get-login --region=us-west-2)
