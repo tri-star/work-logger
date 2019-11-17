@@ -22,9 +22,11 @@ export default {}
     position: fixed;
     top: 0;
     z-index: 10000;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
 
     .logo {
-      font-size: 40pt;
+      font-size: 20pt;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
     }
   }
 </style>
