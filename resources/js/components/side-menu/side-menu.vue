@@ -99,6 +99,7 @@ export default {
 
     transition: width 0.3s;
     background-color: $side-menu-background-color;
+    box-shadow: 3px 0 2px rgba(0,0,0,0.3);
 
     .item {
       margin: 3px auto;
