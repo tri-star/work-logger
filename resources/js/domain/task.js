@@ -2,15 +2,19 @@ export default class Task {
   static get STATE_NONE () {
     return 0
   }
+
   static get STATE_IN_PROGRESS () {
     return 10
   }
+
   static get STATE_DONE () {
     return 20
   }
+
   static get STATE_PAUSE () {
     return 30
   }
+
   static get STATE_INVALID () {
     return 40
   }
