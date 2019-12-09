@@ -13,7 +13,7 @@
         "lint-all": "eslint --ignore-path=.gitignore --ext=.js resources/js"
     },
     "devDependencies": {
-        "@babel/core": "^7.7.4",
+        "@babel/core": "^7.7.5",
         "@babel/polyfill": "^7.7.0",
         "@babel/preset-env": "^7.7.4",
         "@nuxtjs/eslint-config": "^2.0.0",
