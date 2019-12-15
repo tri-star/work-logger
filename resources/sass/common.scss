@@ -30,9 +30,13 @@ a:visited {
 }
 
 .text-box {
-  border: 1px solid lighten($brand-color-second, 10%);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0,0,0, 0.5);
   box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
   padding: 5px;
+  background-color: #fff;
 }
 
 .invalid-feedback {
@@ -41,13 +45,32 @@ a:visited {
 }
 
 .button {
-  background-color: lighten($brand-color-primary, 20%);
-  color: $brand-color-second;
+  background-color: $button-color;
+  color: #fff;
   font-weight: bold;
-  border: 1px solid lighten($brand-color-primary, 10%);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
-  padding: 5px 10px;
+  border: none;
+  height: 30px;
+  padding: 5px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+.button:hover {
+  background-color: $button-color-active;
+}
+
+.button:active {
+  background-color: $button-color-active;
+}
+
+.button-lg {
+  @extend .button;
+  height: 50px;
+  padding: 10px 40px;
+  width: 180px;
+}
+
 
 .button:disabled {
   background-color: grayscale(lighten($brand-color-primary, 20%));

@@ -1,6 +1,6 @@
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
-$brand-color-primary: #FF7400;
+$brand-color-primary: #05A2E1;
 $brand-color-second: #006363;
 
 $light-primary-color: #FFF6F0;
@@ -41,3 +41,6 @@ $table-font-color: $primary-font-color;
 $small-table-border-color: #FFF;
 $small-table-background-color: $light-primary-color;
 $small-table-font-color: lighten($primary-font-color, 10%);
+
+$button-color: #05A2E1;
+$button-color-active: #048ABF;
