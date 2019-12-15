@@ -43,7 +43,7 @@ export default {
   },
   props: {
     taskList: {
-      type: Object,
+      type: Array,
       required: true
     },
     loadingFunction: {

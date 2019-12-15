@@ -82,7 +82,6 @@ export default {
   methods: {
     handleToggle() {
       this.hideMenu = !this.hideMenu
-      console.log(this.hideMenu)
     }
   },
   computed: {

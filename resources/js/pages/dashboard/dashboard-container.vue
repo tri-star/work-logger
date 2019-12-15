@@ -115,7 +115,7 @@ export default {
   },
   data () {
     return {
-      projects: {},
+      projects: [],
       projectTaskCountList: {},
       totalCompletedTaskCount: 0,
       nearDeadlineTasks: {},

@@ -18,7 +18,7 @@
 export default {
   props: {
     tasks: {
-      type: Object,
+      type: Array,
       required: true
     }
   }
