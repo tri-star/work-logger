@@ -93,6 +93,10 @@ export default {
       }
       return `${this.idPrefix}-${value}`
     }
+  },
+
+  mounted() {
+    this.selectedKey = this.menues[this.value] ? this.value : null
   }
 }
 </script>
