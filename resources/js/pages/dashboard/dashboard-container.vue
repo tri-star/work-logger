@@ -13,15 +13,6 @@
           プロジェクト別課題件数
         </template>
         <template slot="body">
-          <WlLoadingProxy
-            :loading-function="loadProjectTaskCountList"
-          >
-            <template slot="done">
-              <ProjectTaskCountList
-                :projects="projectTaskCountList"
-              />
-            </template>
-          </WlLoadingProxy>
         </template>
       </WlFrame>
       <WlFrame class="frame-item">
@@ -115,10 +106,6 @@ export default {
   },
 
   methods: {
-    async loadProjectTaskCountList () {
-      const dashboardAdapter = adapterFactory.get('DashboardAdapter')
-      this.projectTaskCountList = await dashboardAdapter.getProjectTaskCountList()
-    },
     async loadProjectList () {
       const dashboardAdapter = adapterFactory.get('DashboardAdapter')
       this.projects = await dashboardAdapter.getProjectList()
