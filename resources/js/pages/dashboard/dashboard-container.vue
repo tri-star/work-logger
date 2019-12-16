@@ -28,7 +28,7 @@
         <template slot="title">
           タスク完了件数
         </template>
-        <template slot="body"/>
+        <template slot="body" />
       </WlFrame>
     </div>
 
@@ -105,7 +105,6 @@ export default {
     return {
       projects: [],
       projectTaskCountList: {},
-      totalCompletedTaskCount: 0,
       nearDeadlineTasks: {},
       inProgressTasks: {}
     }
