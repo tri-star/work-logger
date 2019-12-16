@@ -28,19 +28,7 @@
         <template slot="title">
           タスク完了件数
         </template>
-        <template slot="body">
-          <WlLoadingProxy
-            :loading-function="loadTotalCompletedTaskCount"
-          >
-            <template slot="done">
-              <div class="stat-number-box">
-                <strong class="stat-number">{{
-                  totalCompletedTaskCount
-                }}</strong>
-              </div>
-            </template>
-          </WlLoadingProxy>
-        </template>
+        <template slot="body"/>
       </WlFrame>
     </div>
 
@@ -128,10 +116,6 @@ export default {
   },
 
   methods: {
-    async loadTotalCompletedTaskCount () {
-      const dashboardAdapter = adapterFactory.get('DashboardAdapter')
-      this.totalCompletedTaskCount = await dashboardAdapter.getTotalCompletedTaskCount()
-    },
     async loadProjectTaskCountList () {
       const dashboardAdapter = adapterFactory.get('DashboardAdapter')
       this.projectTaskCountList = await dashboardAdapter.getProjectTaskCountList()

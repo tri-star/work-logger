@@ -126,13 +126,6 @@ class TaskApiController extends Controller
     }
 
 
-    public function getTotalCompletedTaskCount()
-    {
-        $count = \Auth::user()->getTotalCompletedTaskCount();
-        return new JsonResponse(['count' => $count]);
-    }
-
-
     public function getNearDeadlineList()
     {
         $user = \Auth::user();

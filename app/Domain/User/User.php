@@ -43,19 +43,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(\WorkLogger\Domain\Task\Task::class);
     }
-
-
-    /**
-     * ユーザーが参加している全プロジェクトの完了タスク数を返す
-     * @return int
-     */
-    public function getTotalCompletedTaskCount(): int
-    {
-        $totalCount = Task::join('project_user', function ($join) {
-            $join->on('project_user.project_id', '=', 'tasks.project_id')
-                ->where('project_user.user_id', '=', $this->id);
-        })->where('tasks.status', Task::STATE_DONE)
-        ->count('*');
-        return $totalCount;
-    }
 }
