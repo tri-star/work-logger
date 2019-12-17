@@ -36,3 +36,26 @@ jobs:
       env:
         DB_HOST: 127.0.0.1
       run: php artisan migrate:refresh --env=testing
+
+  js-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Cache node packages
+      uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Install Dependencies
+      run: yarn install --frozen-lockfile --ignore-optional
+    - name: Execute lint
+      run: yarn lint-all
+    - name: Execute tests
+      run: yarn test
+    - name: Execute build 
+      run: yarn dev
