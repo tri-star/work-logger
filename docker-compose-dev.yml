@@ -2,8 +2,8 @@ version: "3.5"
 services:
   web:
     image: "563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-web:latest"
-    env_file:
-      - .env
+    environment:
+      USE_TEST_DB: "true"
     ports:
       - "18000:80"
     volumes:
