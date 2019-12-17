@@ -1,0 +1,34 @@
+name: "Run PHP,JS test"
+
+on: 
+  pull_request:
+
+jobs:
+  php-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+    - name: Cache composer
+      uses: actions/cache@v1
+      with:
+        path: vendor
+        key: ${{ runner.os }}-node-${{ hashFiles('**/composer.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+    - name: Generate key
+      run: php artisan key:generate
+    - name: Create Database
+      run: |
+        mysql -u root -proot -e "grant all privileges on work_logger_test.* to work_logger identified by 'secret';"
+        mysql -u root -proot -e "create database work_logger_test default charset utf8mb4;"
+    - name: Execute tests (Unit and Feature tests) via PHPUnit
+      env:
+        DB_HOST: 127.0.0.1
+      run: vendor/bin/phpunit
