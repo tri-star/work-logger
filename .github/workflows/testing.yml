@@ -32,3 +32,7 @@ jobs:
       env:
         DB_HOST: 127.0.0.1
       run: vendor/bin/phpunit
+    - name: Execute migration integrity test.
+      env:
+        DB_HOST: 127.0.0.1
+      run: php artisan migrate:refresh
