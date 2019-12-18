@@ -1,33 +1,11 @@
 <template>
   <div id="#dashboard-page">
     <h1 class="heading-1">
-      DASHBOARD
+      ダッシュボード
     </h1>
 
-    <h2 class="heading-2">
-      統計情報
-    </h2>
     <div class="frame-list clear-fix">
-      <WlFrame class="frame-item">
-        <template slot="title">
-          プロジェクト別課題件数
-        </template>
-        <template slot="body">
-        </template>
-      </WlFrame>
-      <WlFrame class="frame-item">
-        <template slot="title">
-          タスク完了件数
-        </template>
-        <template slot="body" />
-      </WlFrame>
-    </div>
-
-    <h2 class="heading-2">
-      直近の状況
-    </h2>
-    <div class="frame-list clear-fix">
-      <WlFrame class="frame-item" :width="'30%'">
+      <WlFrame>
         <template slot="title">
           プロジェクト一覧
         </template>
@@ -42,19 +20,14 @@
           </WlLoadingProxy>
         </template>
       </WlFrame>
-      <WlFrame class="frame-item" :width="'30%'">
+      <WlFrame>
         <template slot="title">
-          期限の近いタスク一覧
+          プロジェクト毎実績
         </template>
-        <template slot="body">
-          <WlLoadingProxy :loading-function="loadNearDeadlineList">
-            <template slot="done">
-              <TaskList :tasks="nearDeadlineTasks" />
-            </template>
-          </WlLoadingProxy>
-        </template>
+        <template slot="body" />
       </WlFrame>
-      <WlFrame class="frame-item" :width="'30%'">
+
+      <WlFrame>
         <template slot="title">
           作業中のタスク一覧
         </template>
@@ -62,6 +35,18 @@
           <WlLoadingProxy :loading-function="loadInProgressTaskList">
             <template slot="done">
               <TaskList :tasks="inProgressTasks" />
+            </template>
+          </WlLoadingProxy>
+        </template>
+      </WlFrame>
+      <WlFrame>
+        <template slot="title">
+          期限の近いタスク一覧
+        </template>
+        <template slot="body">
+          <WlLoadingProxy :loading-function="loadNearDeadlineList">
+            <template slot="done">
+              <TaskList :tasks="nearDeadlineTasks" />
             </template>
           </WlLoadingProxy>
         </template>
@@ -77,7 +62,6 @@
 <script>
 import ProjectFormContainer from '../project/project-form-container'
 import ProjectList from './project-list'
-import ProjectTaskCountList from './project-task-count-list'
 import TaskList from './task-list'
 import WlFrame from '../../components/wl-frame'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
@@ -89,7 +73,6 @@ export default {
     WlLoadingProxy,
     ProjectFormContainer,
     ProjectList,
-    ProjectTaskCountList,
     TaskList
   },
   data () {
@@ -131,10 +114,6 @@ export default {
 <style lang="scss" sceped>
   #dashboard-page {
     width: 100%;
-  }
-
-  .frame-item {
-    float: left;
   }
 
   .project-list {

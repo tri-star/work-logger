@@ -1,5 +1,5 @@
 <template>
-  <section class="wl-frame" :style="'width: ' + width">
+  <section :class="`wl-frame size-${size}`">
     <div class="title">
       <slot name="title" />
     </div>
@@ -12,8 +12,8 @@
 <script>
 export default {
   props: {
-    width: {
-      default: '400px',
+    size: {
+      default: 'l',
       type: String
     }
   }
@@ -24,23 +24,33 @@ export default {
   @import "../../sass/imports";
 
   .wl-frame {
-    border: 1px solid $brand-color-second;
-    box-shadow: 2px 2px 0 rgb(0, 0, 0, 0.3);
+    background-color: #fff;
     margin-right: 20px;
     margin-bottom: 20px;
-    display: block;
-    min-width: 300px;
-    height: 300px;
+    padding: 10px;
+    display: inline-block;
+    min-height: 300px;
+  }
+
+  .size-xl {
+    width: 100%;
+  }
+
+  .size-l {
+    width: calc(50% - 40px);
+  }
+
+  .size-m {
+    width: calc(33% - 60px);
   }
 
   .title {
-    color: #fff;
-    background-color: $brand-color-second;
-    height: 45px;
-    font-size: 15pt;
+    color: $frame-title-color;
+    background-color: $frame-title-background-color;
+    font-size: $frame-title-size;
     font-weight: bold;
-    line-height: 2.5;
-    padding-left: 5px;
+    text-decoration: underline;
+    margin-bottom: 15px;
   }
 
   .body {
