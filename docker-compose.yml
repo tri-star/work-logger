@@ -4,11 +4,12 @@ services:
     image: "563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-web:latest"
     build:
       context: "."
-    env_file:
-      - .env
+    environment:
+      USE_TEST_DB: "true"
     ports:
       - "18000:80"
     volumes:
+      - ".:/work-logger"
       - "./data/log:/var/log"
     depends_on:
       - db
