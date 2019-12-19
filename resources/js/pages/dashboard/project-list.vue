@@ -1,9 +1,11 @@
 <template>
   <div>
-    <a class="command-button" @click="$emit('openNewProjectForm')">
-      <i class="icon fas fa-plus-circle" />新規作成
-    </a>
+    <a class="icon-button fas fa-plus-circle" title="新規作成" @click="$emit('openNewProjectForm')" />
     <table class="small-table project-list">
+      <tr>
+        <th>プロジェクト名</th>
+        <th>テスト</th>
+      </tr>
       <tr v-for="project in projects" :key="project.id">
         <td>
           <router-link :to="`/project/${project.id}`">
@@ -12,6 +14,7 @@
             }}
           </router-link>
         </td>
+        <td>aaaaaaaaaaa</td>
       </tr>
     </table>
   </div>

@@ -51,6 +51,7 @@ export default {
     font-weight: bold;
     text-decoration: underline;
     margin-bottom: 15px;
+    padding-left: 5px;
   }
 
   .body {

@@ -77,6 +77,25 @@ a:visited {
   padding: 5px 10px;
 }
 
+.icon-button {
+  display: table-cell;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  text-align: center;
+
+  color: lighten($brand-color-second, 10%);
+
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  color: $brand-color-second;
+}
+
+
 .command-button {
   display: inline-block;
   background-color: $light-primary-color;
@@ -156,8 +175,14 @@ a:visited {
 .small-table {
   border-collapse: separate;
   border-spacing: 2px;
-  border: solid 1px $small-table-border-color;
+  // border: solid 1px $small-table-border-color;
   width: 100%;
+
+  th {
+    background-color: $small-table-header-background-color;
+    padding: 5px;
+    color: $small-table-header-font-color;
+  }
 
   td {
     background-color: $small-table-background-color;
