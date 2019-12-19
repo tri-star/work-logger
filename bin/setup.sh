@@ -32,9 +32,9 @@ echo -e "\e[32;1mRun Seeders...\e[m"
 docker-compose exec web php artisan db:seed
 
 echo -e "\e[32;1mRun yarn...\e[m"
-docker-compose run web /root/.yarn/bin/yarn install
+docker-compose run web yarn install
 
 echo -e "\e[32;1mBuild scripts...\e[m"
-docker-compose run web /root/.yarn/bin/yarn dev
+docker-compose run web yarn dev
 
 echo -e "\e[32;1mAll done!\e[m"
