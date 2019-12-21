@@ -2,7 +2,7 @@
   <aside :class="{side: !hideMenu, 'hide-menu': hideMenu}">
     <div class="menu-content">
       <div class="item" @click="handleToggle">
-        <div class="fas fa-bars"></div>
+        <div class="fas fa-bars" />
       </div>
       <router-link
         v-for="(menuItem, index) in menuList"
@@ -11,13 +11,13 @@
         :to="menuItem.to"
         class="item "
       >
-        <div :class="`${menuItem.icon}`"></div>
+        <div :class="`${menuItem.icon}`" />
         <span class="label">{{ menuItem.label }}</span>
       </router-link>
     </div>
     <div class="menu-content-small">
       <div class="item" @click="handleToggle">
-        <div class="fas fa-bars"></div>
+        <div class="fas fa-bars" />
       </div>
       <router-link
         v-for="(menuItem, index) in menuList"
@@ -26,7 +26,7 @@
         :to="menuItem.to"
         class="item"
       >
-        <div :class="`${menuItem.icon}`"></div>
+        <div :class="`${menuItem.icon}`" />
       </router-link>
     </div>
   </aside>
@@ -39,6 +39,7 @@ const menues = {
   default: [
     // { icon: "fas fa-chart-pie", label: "統計情報", to: "" },
     { icon: 'fas fa-home', label: 'ダッシュボード', to: '/' },
+    { icon: 'fas fa-project-diagram', label: 'プロジェクト', to: '/project' },
     { icon: 'fas fa-cog', label: '設定', to: '' }
   ],
   project: [
@@ -74,14 +75,9 @@ export default {
     //   default: false
     // }
   },
-  data() {
+  data () {
     return {
       hideMenu: false
-    }
-  },
-  methods: {
-    handleToggle() {
-      this.hideMenu = !this.hideMenu
     }
   },
   computed: {
@@ -101,6 +97,11 @@ export default {
         }
       )
       return convertedMenues
+    }
+  },
+  methods: {
+    handleToggle () {
+      this.hideMenu = !this.hideMenu
     }
   }
 }
@@ -129,7 +130,6 @@ export default {
       cursor: pointer;
       transition: background-color 0.3s;
       border-radius: 4px;
-
 
       .fas {
         display: inline-block;

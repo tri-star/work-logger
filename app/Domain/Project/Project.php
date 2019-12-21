@@ -25,24 +25,6 @@ class Project extends Model
     }
 
 
-    /**
-     * プロジェクト別のタスクの件数一覧を返す
-     */
-    public static function getTaskCountList(int $userId): Collection
-    {
-        $list = Task::select(['tasks.project_id', 'projects.project_name', \DB::raw('count(*) as count')])
-            ->join('project_user', function ($join) use ($userId) {
-                $join->on('project_user.project_id', '=', 'tasks.project_id')
-                    ->where('project_user.user_id', '=', $userId);
-            })
-            ->join('projects', 'projects.id', '=', 'tasks.project_id')
-            ->groupBy(['tasks.project_id', 'project_name'])
-            ->orderBy('tasks.project_id')
-            ->get();
-
-        return $list;
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('is_admin');

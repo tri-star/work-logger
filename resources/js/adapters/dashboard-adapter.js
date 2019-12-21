@@ -7,22 +7,6 @@ class DashboardAdapter {
     return response.data
   }
 
-  async getProjectTaskCountList () {
-    const response = await window.axios.get(
-      '/api/v1/project/task-count-list'
-    )
-
-    return response.data.projects
-  }
-
-  async getTotalCompletedTaskCount () {
-    const response = await window.axios.get(
-      '/api/v1/task/total-completed-task-count'
-    )
-
-    return response.data.count
-  }
-
   async getNearDeadlineTaskList () {
     const response = await window.axios.get(
       '/api/v1/task/near-deadline-list'
