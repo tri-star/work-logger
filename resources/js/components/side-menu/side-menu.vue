@@ -133,15 +133,16 @@ export default {
 
       .fas {
         display: inline-block;
-        margin-right: 5px;
         height: 25px;
+        line-height: 25px;
         margin: auto 5px;
       }
 
       .label {
         display: inline-block;
-        margin: auto 0;
+        margin: auto 5px;
         height: 28px;
+        line-height: 28px;
       }
 
       &:hover {
@@ -175,9 +176,9 @@ export default {
         display: inline-block;
         margin-right: 5px;
         height: 25px;
+        line-height: 25px;
         width: 25px;
         margin: auto;
-        font-size: 25px;
       }
 
       &:hover {
