@@ -4,7 +4,6 @@
     <table class="small-table project-list">
       <tr>
         <th>プロジェクト名</th>
-        <th>テスト</th>
       </tr>
       <tr v-for="project in projects" :key="project.id">
         <td>
@@ -14,7 +13,6 @@
             }}
           </router-link>
         </td>
-        <td>aaaaaaaaaaa</td>
       </tr>
     </table>
   </div>
