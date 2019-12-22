@@ -5,6 +5,63 @@
     </h1>
 
     <div class="frame-list clear-fix">
+      <WlFrame size="xl">
+        <template slot="title">
+          現在のタスク
+        </template>
+        <template slot="body">
+          <div class="form form-align-left">
+            <div class="row">
+              <div class="col-label label-width-3">
+                プロジェクト名:
+              </div>
+              <div class="col input-width-2">
+                <WlPopupSelect />
+              </div>
+              <div class="col-label label-width-2">
+                タスク名:
+              </div>
+              <div class="col input-width-2">
+                <WlPopupSelect />
+              </div>
+            </div>
+          </div>
+
+          <WlSubFrame size="s">
+            <template slot="title">
+              実績
+            </template>
+            <template slot="body">
+              <div class="form form-align-left">
+                <div class="row">
+                  <div class="col-label label-width-2">
+                    作業時間:
+                  </div>
+                  <div class="col input-width-2">
+                    <input type="number" class="text-box" size="5"> min
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-label label-width-2">
+                    メモ:
+                  </div>
+                  <div class="col input-width-2">
+                    <textarea class="text-box" style="width: 90%; height: 60px;" />
+                  </div>
+                </div>
+                <div class="row row-align-right">
+                  <button class="button">
+                    登録
+                  </button>
+                </div>
+              </div>
+            </template>
+          </WlSubFrame>
+        </template>
+      </Wlframe>
+    </div>
+
+    <div class="frame-list clear-fix">
       <WlFrame>
         <template slot="title">
           プロジェクト一覧
@@ -65,12 +122,16 @@ import ProjectList from './project-list'
 import TaskList from './task-list'
 import WlFrame from '../../components/wl-frame'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
+import WlPopupSelect from '../../components/form/wl-popup-select'
+import WlSubFrame from '../../components/wl-sub-frame'
 import adapterFactory from '../../adapters/adapter-factory'
 
 export default {
   components: {
     WlFrame,
     WlLoadingProxy,
+    WlPopupSelect,
+    WlSubFrame,
     ProjectFormContainer,
     ProjectList,
     TaskList
