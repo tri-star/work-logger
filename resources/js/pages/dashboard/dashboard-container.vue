@@ -115,6 +115,10 @@
     />
     <TaskSelectPopupContainer
       ref="taskSelectPopupContainer"
+      :active-project-id="activeProjectId"
+      :active-project-name="activeProjectName"
+      :active-task-id="activeTaskId"
+      :active-task-name="activeTaskName"
     />
   </div>
 </template>
