@@ -16,13 +16,13 @@
                 プロジェクト名:
               </div>
               <div class="col input-width-2">
-                <WlPopupSelect />
+                <WlPopupSelect :value="activeProjectId" :text="activeProjectName" @openPopup="handleOpenTaskSelectPopup" />
               </div>
               <div class="col-label label-width-2">
                 タスク名:
               </div>
               <div class="col input-width-2">
-                <WlPopupSelect />
+                <WlPopupSelect :value="activeTaskId" :text="activeTaskName" @openPopup="handleOpenTaskSelectPopup" />
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
                     作業時間:
                   </div>
                   <div class="col input-width-2">
-                    <input type="number" class="text-box" size="5"> min
+                    <input type="number" class="text-box" size="5" :disabled="!canRegisterResult"> min
                   </div>
                 </div>
                 <div class="row">
@@ -46,11 +46,11 @@
                     メモ:
                   </div>
                   <div class="col input-width-2">
-                    <textarea class="text-box" style="width: 90%; height: 60px;" />
+                    <textarea class="text-box" style="width: 90%; height: 60px;" :disabled="!canRegisterResult" />
                   </div>
                 </div>
                 <div class="row row-align-right">
-                  <button class="button">
+                  <button class="button" :disabled="!canRegisterResult">
                     登録
                   </button>
                 </div>
@@ -113,6 +113,9 @@
       ref="projectFormContainer"
       @projectSaved="handleProjectSaved"
     />
+    <TaskSelectPopupContainer
+      ref="taskSelectPopupContainer"
+    />
   </div>
 </template>
 
@@ -120,6 +123,7 @@
 import ProjectFormContainer from '../project/project-form-container'
 import ProjectList from './project-list'
 import TaskList from './task-list'
+import TaskSelectPopupContainer from './task-select-popup-container'
 import WlFrame from '../../components/wl-frame'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
 import WlPopupSelect from '../../components/form/wl-popup-select'
@@ -134,14 +138,25 @@ export default {
     WlSubFrame,
     ProjectFormContainer,
     ProjectList,
-    TaskList
+    TaskList,
+    TaskSelectPopupContainer
   },
   data () {
     return {
+      activeProjectId: 0,
+      activeTaskId: 0,
+      activeProjectName: '',
+      activeTaskName: '',
       projects: [],
       projectTaskCountList: {},
       nearDeadlineTasks: {},
       inProgressTasks: {}
+    }
+  },
+
+  computed: {
+    canRegisterResult () {
+      return false
     }
   },
 
@@ -167,6 +182,9 @@ export default {
     },
     handleProjectSaved () {
       this.loadProjectList()
+    },
+    handleOpenTaskSelectPopup () {
+      this.$refs.taskSelectPopupContainer.open()
     }
   }
 }

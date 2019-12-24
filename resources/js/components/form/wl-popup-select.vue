@@ -1,5 +1,5 @@
 <template>
-  <div class="label" />
+  <div class="label" @click="$emit('openPopup', value)" />
 </template>
 
 <script>
