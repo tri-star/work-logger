@@ -8,7 +8,7 @@
               プロジェクト
             </div>
             <div class="col">
-              <input type="text" class="text-box input-width-3" :value="projectName">
+              <WlSuggest class="input-width-3" :value="projectId" :text="projectName" />
             </div>
           </div>
           <div class="row">
@@ -37,10 +37,12 @@
 
 <script>
 import WlModal from '../../components/wl-modal'
+import WlSuggest from '../../components/form/wl-suggest'
 
 export default {
   components: {
-    WlModal
+    WlModal,
+    WlSuggest
   },
 
   props: {
