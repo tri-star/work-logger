@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div
+      :class="{ modal: true, 'modal-visible': showList }"
+      @mousedown="handleCloseList"
+    />
+
     <input type="text" :value="innerName" class="text-box" @input="handleInput">
 
     <ul v-if="showList" class="menu">
@@ -20,6 +25,10 @@ export default {
     text: {
       type: String,
       default: ''
+    },
+    suggestCallback: {
+      type: Function,
+      required: true
     }
   },
 
@@ -38,26 +47,26 @@ export default {
   },
 
   methods: {
-    async loadSuggestions () {
-      this.itemList = [
-        { id: 1, name: 'Test1' },
-        { id: 2, name: 'Test2' },
-        { id: 3, name: 'Test3' },
-        { id: 4, name: 'Test4' }
-      ]
-    },
     handleClick (item) {
       this.innerValue = item.id
       this.innerName = item.name
       this.showList = false
+      this.$emit('selected', {
+        value: this.innerValue,
+        text: this.innerName
+      })
     },
 
     async handleInput (event) {
       this.innerName = event.srcElement.value
-      await this.loadSuggestions()
+      this.itemList = await this.suggestCallback(this.innerName)
       if (this.itemList.length > 0) {
         this.showList = true
       }
+    },
+
+    handleCloseList () {
+      this.showList = false
     }
   }
 }
@@ -69,6 +78,7 @@ export default {
 
 .menu {
   position: absolute;
+  z-index: 100;
   background-color: #fff;
   border: 1px solid rgba(0,0,0,0.5);
   list-style: none;
@@ -83,11 +93,26 @@ export default {
     border: none;
     padding: 5px 10px;
     color: rgba(0,0,0,80%);
+    transition: background-color 0.3s;
   }
 
   li:hover {
     background-color: lighten($dark-brand-color, 80%);
   }
+}
+
+.modal {
+  display: none;
+  z-index: 99;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-visible {
+  display: block;
 }
 
 </style>

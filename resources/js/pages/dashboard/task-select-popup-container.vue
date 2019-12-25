@@ -8,7 +8,7 @@
               プロジェクト
             </div>
             <div class="col">
-              <WlSuggest class="input-width-3" :value="projectId" :text="projectName" />
+              <WlSuggest class="input-width-3" :value="projectId" :text="projectName" :suggest-callback="loadSuggestions" />
             </div>
           </div>
           <div class="row">
@@ -79,6 +79,15 @@ export default {
   methods: {
     async open () {
       this.showModal = true
+    },
+
+    async loadSuggestions () {
+      return [
+        { id: 1, name: '動確Test1' },
+        { id: 2, name: 'Test2' },
+        { id: 3, name: 'Test3' },
+        { id: 4, name: 'Test4' },
+      ]
     },
 
     handleClose () {
