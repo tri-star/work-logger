@@ -16,6 +16,16 @@ class DashboardAdapter {
     return response.data
   }
 
+  async getTaskSuggestionList (projectId, keyword) {
+    const response = await window.axios.get('/api/v1/task/suggest-list', {
+      params: {
+        project_id: projectId,
+        keyword
+      }
+    })
+    return response.data
+  }
+
   async getNearDeadlineTaskList () {
     const response = await window.axios.get(
       '/api/v1/task/near-deadline-list'

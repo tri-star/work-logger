@@ -6,7 +6,7 @@
     />
 
     <template v-if="mode === MODE_EDIT">
-      <input type="text" :value="innerName" class="text-box" @input="handleInput">
+      <input type="text" :value="innerName" :disabled="disabled" class="text-box" @input="handleInput">
     </template>
     <template v-if="mode === MODE_FIXED">
       <p class="selected-text" @click="handleEdit">
@@ -36,6 +36,10 @@ export default {
     suggestCallback: {
       type: Function,
       required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -106,6 +110,10 @@ export default {
         this.init(this.originalName, this.originalValue)
       } else {
         this.init('', 0)
+        this.$emit('selected', {
+          value: this.innerValue,
+          text: this.innerName
+        })
       }
     }
   }

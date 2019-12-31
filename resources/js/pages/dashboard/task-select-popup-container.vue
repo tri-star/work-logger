@@ -22,7 +22,14 @@
               タスク
             </div>
             <div class="col">
-              <input type="text" class="text-box input-width-3" :value="taskName">
+              <WlSuggest
+                class="input-width-3"
+                :value="taskId"
+                :text="taskName"
+                :suggest-callback="loadTaskSuggestions"
+                :disabled="!canEditTask"
+                @selected="handleTaskSelected"
+              />
             </div>
           </div>
           <div class="row">
@@ -85,6 +92,12 @@ export default {
     }
   },
 
+  computed: {
+    canEditTask () {
+      return this.projectId !== 0
+    }
+  },
+
   methods: {
     async open () {
       this.showModal = true
@@ -93,10 +106,22 @@ export default {
     async loadSuggestions (keyword) {
       return dashboardAdapter.getProjectSuggestionList(keyword)
     },
+    async loadTaskSuggestions (keyword) {
+      return dashboardAdapter.getTaskSuggestionList(this.projectId, keyword)
+    },
 
     handleProjectSelected (payload) {
       this.projectId = payload.value
       this.projectName = payload.text
+
+      if (this.projectId === 0) {
+        this.taskId = 0
+        this.taskName = ''
+      }
+    },
+    handleTaskSelected (payload) {
+      this.taskId = payload.value
+      this.taskName = payload.text
     },
     handleSetProjectAndTask () {
       this.$emit('setProjectAndTask', {

@@ -165,7 +165,7 @@ export default {
 
   computed: {
     canRegisterResult () {
-      return false
+      return this.activeTaskId !== 0
     }
   },
 

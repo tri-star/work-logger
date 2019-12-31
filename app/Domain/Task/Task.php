@@ -201,4 +201,22 @@ class Task extends Model
         return $query->where('project_id', $projectId)
             ->orderBy('updated_at', 'desc');
     }
+
+
+    /**
+     * 名前にキーワードが部分一致するものの一覧を返す
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $userId ユーザーID
+     * @param int $projectId プロジェクトID
+     * @param string $keyword キーワード
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public static function scopeIncludeKeyword(Builder $query, int $userId, int $projectId, string $keyword)
+    {
+        return $query
+            ->where('user_id', $userId)
+            ->where('project_id', $projectId)
+            ->where('title', 'like', "%{$keyword}%")
+            ->orderBy('title');
+    }
 }
