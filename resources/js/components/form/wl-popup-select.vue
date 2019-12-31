@@ -1,5 +1,7 @@
 <template>
-  <div class="label" @click="$emit('openPopup', value)" />
+  <div class="label" @click="$emit('openPopup', value)">
+    {{ text }}
+  </div>
 </template>
 
 <script>

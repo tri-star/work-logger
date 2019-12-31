@@ -16,7 +16,11 @@
                 プロジェクト名:
               </div>
               <div class="col input-width-2">
-                <WlPopupSelect :value="activeProjectId" :text="activeProjectName" @openPopup="handleOpenTaskSelectPopup" />
+                <WlPopupSelect
+                  :value="activeProjectId"
+                  :text="activeProjectName"
+                  @openPopup="handleOpenTaskSelectPopup"
+                />
               </div>
               <div class="col-label label-width-2">
                 タスク名:
@@ -119,6 +123,7 @@
       :active-project-name="activeProjectName"
       :active-task-id="activeTaskId"
       :active-task-name="activeTaskName"
+      @setProjectAndTask="handleSetProjectAndTask"
     />
   </div>
 </template>
@@ -189,6 +194,12 @@ export default {
     },
     handleOpenTaskSelectPopup () {
       this.$refs.taskSelectPopupContainer.open()
+    },
+    handleSetProjectAndTask (payload) {
+      this.activeProjectId = payload.projectId
+      this.activeProjectName = payload.projectName
+      this.activeTaskId = payload.taskId
+      this.activeTaskName = payload.taskName
     }
   }
 }
