@@ -23,6 +23,7 @@
             </div>
             <div class="col">
               <WlSuggest
+                ref="taskSuggest"
                 class="input-width-3"
                 :value="taskId"
                 :text="taskName"
@@ -117,6 +118,7 @@ export default {
       if (this.projectId === 0) {
         this.taskId = 0
         this.taskName = ''
+        this.$refs.taskSuggest.init('', 0)
       }
     },
     handleTaskSelected (payload) {

@@ -6,7 +6,15 @@
     />
 
     <template v-if="mode === MODE_EDIT">
-      <input type="text" :value="innerName" :disabled="disabled" class="text-box" @input="handleInput">
+      <input
+        ref="inputBox"
+        type="text"
+        :value="innerName"
+        :disabled="disabled"
+        class="text-box"
+        @blur="handleBlur"
+        @input="handleInput"
+      >
     </template>
     <template v-if="mode === MODE_FIXED">
       <p class="selected-text" @click="handleEdit">
@@ -91,17 +99,23 @@ export default {
     },
 
     handleEdit () {
-      const value = 0
-      this.init(this.innerName, value)
+      this.init(this.innerName, this.innerValue)
       this.mode = this.MODE_EDIT
+      this.$nextTick(() => {
+        this.$refs.inputBox.focus()
+      })
+    },
+
+    handleBlur () {
+      if (!this.showList) {
+        this.handleCancel()
+      }
     },
 
     async handleInput (event) {
       this.innerName = event.srcElement.value
       this.itemList = await this.suggestCallback(this.innerName)
-      if (this.itemList.length > 0) {
-        this.showList = true
-      }
+      this.showList = (this.itemList.length > 0)
     },
 
     handleCancel () {
