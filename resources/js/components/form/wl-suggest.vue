@@ -1,11 +1,18 @@
 <template>
-  <div>
+  <div @keydown.esc="handleCancel">
     <div
       :class="{ modal: true, 'modal-visible': showList }"
-      @mousedown="handleCloseList"
+      @mousedown="handleCancel"
     />
 
-    <input type="text" :value="innerName" class="text-box" @input="handleInput">
+    <template v-if="mode === MODE_EDIT">
+      <input type="text" :value="innerName" class="text-box" @input="handleInput">
+    </template>
+    <template v-if="mode === MODE_FIXED">
+      <p class="selected-text" @click="handleEdit">
+        {{ innerName }}
+      </p>
+    </template>
 
     <ul v-if="showList" class="menu">
       <li v-for="item of itemList" :key="item.id" @click="handleClick(item)">
@@ -34,27 +41,55 @@ export default {
 
   data () {
     return {
+      mode: 0,
       innerValue: 0,
       innerName: '',
+      originalValue: 0,
+      originalName: '',
       showList: false,
       itemList: []
     }
   },
 
+  computed: {
+    MODE_EDIT: () => 0,
+    MODE_FIXED: () => 1
+  },
+
   mounted () {
-    this.innerName = this.text
-    this.innerValue = this.value
+    this.mode = this.MODE_EDIT
+    this.init(this.text, this.value)
   },
 
   methods: {
+
+    init (text, value) {
+      this.innerName = text
+      this.innerValue = value
+      if (this.innerValue === null || this.innerValue === '') {
+        this.innerValue = 0
+      }
+      this.originalName = text
+      this.originalValue = value
+
+      this.mode = this.innerValue === 0 ? this.MODE_EDIT : this.MODE_FIXED
+    },
+
     handleClick (item) {
       this.innerValue = item.id
       this.innerName = item.name
       this.showList = false
+      this.mode = this.MODE_FIXED
       this.$emit('selected', {
         value: this.innerValue,
         text: this.innerName
       })
+    },
+
+    handleEdit () {
+      const value = 0
+      this.init(this.innerName, value)
+      this.mode = this.MODE_EDIT
     },
 
     async handleInput (event) {
@@ -65,8 +100,13 @@ export default {
       }
     },
 
-    handleCloseList () {
+    handleCancel () {
       this.showList = false
+      if (this.innerName !== '') {
+        this.init(this.originalName, this.originalValue)
+      } else {
+        this.init('', 0)
+      }
     }
   }
 }
@@ -75,6 +115,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../sass/imports";
+
+input.text-box {
+  width: 100%;
+}
+
+.selected-text {
+  color: rgba($dark-brand-color, 70%);
+  @extend .text-box;
+}
 
 .menu {
   position: absolute;
