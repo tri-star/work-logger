@@ -1,3 +1,5 @@
+import _pick from 'lodash/pick'
+
 class DashboardAdapter {
   construct () {}
 
@@ -38,6 +40,13 @@ class DashboardAdapter {
     const response = await window.axios.get('/api/v1/task/in-progress-list')
 
     return response.data.tasks
+  }
+
+  async registerResult (taskId, parameters) {
+    const response = await window.axios.post(`/api/v1/task/${taskId}/log/add`, {
+      ..._pick(parameters, ['hours', 'memo', 'status'])
+    })
+    return response.data
   }
 }
 

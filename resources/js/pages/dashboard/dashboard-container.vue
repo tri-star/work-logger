@@ -42,7 +42,7 @@
                     作業時間:
                   </div>
                   <div class="col input-width-2">
-                    <input type="number" class="text-box" size="5" :disabled="!canRegisterResult"> min
+                    <input type="number" class="text-box" size="5" :disabled="!canInputResult" v-model="resultHours"> min
                   </div>
                 </div>
                 <div class="row">
@@ -50,11 +50,11 @@
                     メモ:
                   </div>
                   <div class="col input-width-2">
-                    <textarea class="text-box" style="width: 90%; height: 60px;" :disabled="!canRegisterResult" />
+                    <textarea class="text-box" style="width: 90%; height: 60px;" :disabled="!canInputResult" v-model="resultMemo" />
                   </div>
                 </div>
                 <div class="row row-align-right">
-                  <button class="button" :disabled="!canRegisterResult">
+                  <button class="button" :disabled="!canRegisterResult" @click="handleRegisterResult">
                     登録
                   </button>
                 </div>
@@ -159,13 +159,18 @@ export default {
       projects: [],
       projectTaskCountList: {},
       nearDeadlineTasks: {},
-      inProgressTasks: {}
+      inProgressTasks: {},
+      resultHours: 0.0,
+      resultMemo: '',
     }
   },
 
   computed: {
-    canRegisterResult () {
+    canInputResult () {
       return this.activeTaskId !== 0
+    },
+    canRegisterResult () {
+      return this.activeTaskId !== 0 && this.resultHours > 0
     }
   },
 
@@ -200,6 +205,15 @@ export default {
       this.activeProjectName = payload.projectName
       this.activeTaskId = payload.taskId
       this.activeTaskName = payload.taskName
+    },
+    async handleRegisterResult () {
+      const dashboardAdapter = adapterFactory.get('DashboardAdapter')
+      await dashboardAdapter.registerResult(this.activeTaskId, {
+        hours: this.resultHours,
+        memo: this.resultMemo,
+      })
+      this.resultHours = 0
+      this.resultMemo = ''
     }
   }
 }
