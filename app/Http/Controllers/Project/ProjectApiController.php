@@ -59,6 +59,26 @@ class ProjectApiController extends Controller
     }
 
 
+    public function getProjectSuggestionList(Request $request)
+    {
+        $user = \Auth::user();
+        $keyword = $request->query('keyword', '');
+
+        if (strlen($keyword) < 2) {
+            $projects = collect([]);
+        } else {
+            $projects = Project::ownedBy($user->id)->includeKeyword($keyword)->get();
+        }
+        $list = $projects->map(function($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->project_name
+            ];
+        });
+        return new JsonResponse($list);
+    }
+
+
     public function getDetail(int $id)
     {
         $user = \Auth::user();

@@ -114,6 +114,26 @@ class TaskApiController extends Controller
     }
 
 
+    public function getTaskSuggestionList(Request $request)
+    {
+        $user = \Auth::user();
+        $projectId = $request->query('project_id', 0);
+        $keyword = $request->query('keyword', '');
+
+        if (strlen($keyword) < 2) {
+            $tasks = collect([]);
+        } else {
+            $tasks = Task::includeKeyword($user->id, $projectId, $keyword)->get();
+        }
+        $list = $tasks->map(function($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->title
+            ];
+        });
+        return new JsonResponse($list);
+    }
+
     public function addTaskLog(int $taskId, Request $request, RegisterTaskLogUseCase $useCase)
     {
         $result = $useCase->execute(\Auth::user(), $taskId, $request->input());

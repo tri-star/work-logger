@@ -1,9 +1,9 @@
 <template>
   <section :class="`wl-frame size-${size}`">
-    <div class="title">
+    <div class="wl-frame-title">
       <slot name="title" />
     </div>
-    <div class="body">
+    <div class="wl-frame-body">
       <slot name="body" />
     </div>
   </section>
@@ -30,10 +30,11 @@ export default {
     padding: 10px;
     display: inline-block;
     min-height: 300px;
+    overflow-y: auto;
   }
 
   .size-xl {
-    width: 100%;
+    width: calc(100% - 20px);
   }
 
   .size-l {
@@ -44,7 +45,7 @@ export default {
     width: calc(33% - 60px);
   }
 
-  .title {
+  .wl-frame-title {
     color: $frame-title-color;
     background-color: $frame-title-background-color;
     font-size: $frame-title-size;
@@ -54,11 +55,15 @@ export default {
     padding-left: 5px;
   }
 
-  .body {
+  .wl-frame-body {
     display: inline-block;
     width: 100%;
-    height: calc(300px - 45px - 5px);
     padding: 5px;
-    overflow-y: auto;
+  }
+
+  .fixed-height {
+    .body {
+      overflow-y: auto;
+    }
   }
 </style>
