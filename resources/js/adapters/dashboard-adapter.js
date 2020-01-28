@@ -6,7 +6,21 @@ class DashboardAdapter {
   async getProjectList () {
     const response = await window.axios.get('/api/v1/project/list')
 
-    return response.data
+    return Object.fromEntries(
+      Object.entries(response.data).map(([projectId, row]) => {
+        return [projectId, {
+          ..._pick(row, [
+            'id',
+            'project_name',
+            'task_count',
+            'completed_task_count',
+            'total_result_hours',
+            'total_estimated_hours'
+          ])
+        }]
+      })
+
+    )
   }
 
   async getProjectSuggestionList (keyword) {

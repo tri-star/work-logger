@@ -5,6 +5,7 @@ namespace WorkLogger\Http\Controllers\Project;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WorkLogger\Domain\Project\Project;
+use WorkLogger\Domain\Project\ProjectListStatQueryBuilder;
 use WorkLogger\Domain\Project\TaskStatQueryBuilder;
 use WorkLogger\Domain\Task\Task;
 use WorkLogger\Domain\User\User;
@@ -44,17 +45,8 @@ class ProjectApiController extends Controller
     public function getList()
     {
         $user = \Auth::user();
-        $projects = $user->projects()->orderBy('updated_at', 'desc')->get()->mapWithKeys(function ($project) {
-            return [
-                $project->id => [
-                    'id'           => $project->id,
-                    'project_name' => $project->project_name,
-                    'description'  => $project->description,
-                    'created_at'   => $project->created_at,
-                    'updated_at'   => $project->updated_at,
-                ],
-            ];
-        });
+        $queryBuilder = new ProjectListStatQueryBuilder();
+        $projects = $queryBuilder->getProjectList($user);
         return new JsonResponse($projects);
     }
 
