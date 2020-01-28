@@ -150,7 +150,14 @@ class TaskApiController extends Controller
     {
         $user = \Auth::user();
         $taskList = Task::nearDeadline($user->id, 2)->get()->mapWithKeys(function ($task) {
-            return [$task->id => $task];
+            return [
+                $task->id => [
+                    'id' => $task->id,
+                    'title' => $task->title,
+                    'estimate_minutes' => $task->estimate_minutes,
+                    'actual_time' => $task->getActualTime(),
+                ]
+            ];
         });
         return new JsonResponse(['tasks' => $taskList]);
     }
@@ -159,7 +166,14 @@ class TaskApiController extends Controller
     {
         $user = \Auth::user();
         $taskList = Task::inProgress($user->id)->get()->mapWithKeys(function ($task) {
-            return [$task->id => $task];
+            return [
+                $task->id => [
+                    'id' => $task->id,
+                    'title' => $task->title,
+                    'estimate_minutes' => $task->estimate_minutes,
+                    'actual_time' => $task->getActualTime(),
+                ]
+            ];
         });
         return new JsonResponse(['tasks' => $taskList]);
     }

@@ -1,8 +1,9 @@
 <template>
   <div>
-    <table class="small-table project-list">
+    <table class="small-table task-list">
       <tr>
         <th>タスク名</th>
+        <th>実績/見積工数(h)</th>
       </tr>
       <tr v-for="task in tasks" :key="task.id">
         <td>
@@ -11,6 +12,9 @@
               task.title
             }}
           </router-link>
+        </td>
+        <td class="col-task-stat">
+          {{ task.actual_time }} / {{ task.estimate_minutes }}h
         </td>
       </tr>
     </table>
@@ -28,4 +32,13 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+
+.task-list {
+  .col-task-stat {
+    text-align: right;
+    width: 150px;
+  }
+}
+
+</style>
