@@ -66,7 +66,7 @@
     </div>
 
     <div class="frame-list clear-fix">
-      <WlFrame>
+      <WlFrame size="xl">
         <template slot="title">
           プロジェクト一覧
         </template>
@@ -81,12 +81,12 @@
           </WlLoadingProxy>
         </template>
       </WlFrame>
-      <WlFrame>
+      <!-- <WlFrame>
         <template slot="title">
           プロジェクト毎実績
         </template>
         <template slot="body" />
-      </WlFrame>
+      </WlFrame> -->
 
       <WlFrame>
         <template slot="title">
@@ -224,9 +224,4 @@ export default {
     width: 100%;
   }
 
-  .project-list {
-    td {
-      width: 100%;
-    }
-  }
 </style>
