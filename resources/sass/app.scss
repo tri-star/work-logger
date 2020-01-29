@@ -16,7 +16,7 @@
 }
 
 main {
-  width: calc(100vw - #{$side-menu-width});
+  width: 100%;
   padding-top: $header-height + 10px;
   padding-left: 20px;
 }

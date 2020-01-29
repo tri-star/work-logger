@@ -59,10 +59,25 @@ export default {
     text-align: right;
     width: 150px;
   }
+
+  .col-head-task-stat {
+    display: none;
+  }
   .col-task-stat {
+    display: none;
     text-align: right;
     width: 150px;
   }
 }
 
+@media (min-width: 1400px) {
+  .task-list {
+    .col-head-task-stat {
+      display: table-cell;
+    }
+    .col-task-stat {
+      display: table-cell;
+    }
+  }
+}
 </style>
