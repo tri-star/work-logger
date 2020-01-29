@@ -5,41 +5,6 @@
     </h1>
 
     <WlFrame size="xl" @keyup.enter="loadProjectList">
-      <template slot="title">
-        検索条件
-      </template>
-      <template slot="body">
-        <section class="form form-align-left">
-          <div class="row row-align-left">
-            <label class="col-label">キーワード</label>
-            <div class="col">
-              <input
-                v-model="conditions.keyword"
-                type="text"
-                class="text-box"
-              >
-            </div>
-          </div>
-          <div class="row row-align-left">
-            <label class="col-label">ソート順</label>
-            <div class="col">
-              <WlDropDown
-                v-model="conditions.sortOrder"
-                name="sort-order"
-                :menues="sortOrderList"
-              />
-            </div>
-          </div>
-          <div class="action-area">
-            <button class="button" @click="loadProjectList">
-              <i class="icon fas fa-search" />検索
-            </button>
-          </div>
-        </section>
-      </template>
-    </WlFrame>
-
-    <WlFrame size="xl" @keyup.enter="loadProjectList">
       <template slot="body">
         <section>
           <section class="action-area">
@@ -102,7 +67,6 @@
 
 <script>
 import ProjectFormContainer from './project-form-container'
-import WlDropDown from '../../components/form/wl-dropdown'
 import WlFrame from '../../components/wl-frame'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
 import adapterFactory from '../../adapters/adapter-factory'
@@ -110,23 +74,13 @@ import adapterFactory from '../../adapters/adapter-factory'
 export default {
   components: {
     ProjectFormContainer,
-    WlDropDown,
     WlFrame,
     WlLoadingProxy
   },
 
   data () {
     return {
-      checks: [],
       projectList: {},
-      sortOrderList: {
-        updated_at_desc: '更新日 降順',
-        updated_at_asc: '更新日 昇順',
-      },
-      conditions: {
-        keyword: '',
-        sortOrder: 'updated_at_desc'
-      }
     }
   },
   computed: {
@@ -142,7 +96,7 @@ export default {
     },
     async loadProjectList () {
       const projectAdapter = adapterFactory.get('ProjectAdapter')
-      this.projectList = await projectAdapter.search(this.conditions)
+      this.projectList = await projectAdapter.search({})
     },
 
     openNewForm () {
