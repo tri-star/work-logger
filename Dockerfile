@@ -28,10 +28,10 @@ RUN yum install -y \
 
 # MySQL
 RUN yum install -y \
-    https://downloads.mysql.com/archives/get/file/mysql-community-client-5.7.23-1.el7.x86_64.rpm \
-    https://downloads.mysql.com/archives/get/file/mysql-community-common-5.7.23-1.el7.x86_64.rpm \
-    https://downloads.mysql.com/archives/get/file/mysql-community-libs-5.7.23-1.el7.x86_64.rpm \
-    https://downloads.mysql.com/archives/get/file/mysql-community-devel-5.7.23-1.el7.x86_64.rpm && \
+    https://downloads.mysql.com/archives/get/p/23/file/mysql-community-client-5.7.23-1.el7.x86_64.rpm \
+    https://downloads.mysql.com/archives/get/p/23/file/mysql-community-common-5.7.23-1.el7.x86_64.rpm \
+    https://downloads.mysql.com/archives/get/p/23/file/mysql-community-libs-5.7.23-1.el7.x86_64.rpm \
+    https://downloads.mysql.com/archives/get/p/23/file/mysql-community-devel-5.7.23-1.el7.x86_64.rpm && \
     yum clean all
 
 # Node.js
@@ -65,7 +65,7 @@ RUN curl -o /tmp/composer-setup.php -L https://getcomposer.org/installer && \
 
 COPY package.json yarn.lock /work-logger/
 
-WORKDIR /work-logger 
+WORKDIR /work-logger
 
 RUN ~/.yarn/bin/yarn install --pure-lock-file
 
