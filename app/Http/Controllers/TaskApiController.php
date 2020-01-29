@@ -46,7 +46,7 @@ class TaskApiController extends Controller
     public function bulkUpdateDate(Request $request, BulkUpdateDateUseCase $useCase)
     {
         $ids = $request->input('ids', []);
-        $type = (int)$request->input('type', 0);
+        $type = (int) $request->input('type', 0);
         $params = $request->input('params', []);
         $result = $useCase->execute(\Auth::user(), $ids, $type, $params);
 
@@ -61,7 +61,7 @@ class TaskApiController extends Controller
     public function bulkUpdateState(Request $request, BulkUpdateStateUseCase $useCase)
     {
         $ids = $request->input('ids', []);
-        $newState = (int)$request->input('new_state', 0);
+        $newState = (int) $request->input('new_state', 0);
         $result = $useCase->execute(\Auth::user(), $ids, $newState);
 
         $statusCode = 200;
@@ -114,6 +114,26 @@ class TaskApiController extends Controller
     }
 
 
+    public function getTaskSuggestionList(Request $request)
+    {
+        $user = \Auth::user();
+        $projectId = $request->query('project_id', 0);
+        $keyword = $request->query('keyword', '');
+
+        if (strlen($keyword) < 2) {
+            $tasks = collect([]);
+        } else {
+            $tasks = Task::includeKeyword($user->id, $projectId, $keyword)->get();
+        }
+        $list = $tasks->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->title,
+            ];
+        });
+        return new JsonResponse($list);
+    }
+
     public function addTaskLog(int $taskId, Request $request, RegisterTaskLogUseCase $useCase)
     {
         $result = $useCase->execute(\Auth::user(), $taskId, $request->input());
@@ -126,18 +146,19 @@ class TaskApiController extends Controller
     }
 
 
-    public function getTotalCompletedTaskCount()
-    {
-        $count = \Auth::user()->getTotalCompletedTaskCount();
-        return new JsonResponse(['count' => $count]);
-    }
-
-
     public function getNearDeadlineList()
     {
         $user = \Auth::user();
         $taskList = Task::nearDeadline($user->id, 2)->get()->mapWithKeys(function ($task) {
-            return [$task->id => $task];
+            return [
+                $task->id => [
+                    'id' => $task->id,
+                    'title' => $task->title,
+                    'estimate_minutes' => $task->estimate_minutes,
+                    'actual_time' => $task->getActualTime(),
+                    'end_date' => $task->end_date,
+                ]
+            ];
         });
         return new JsonResponse(['tasks' => $taskList]);
     }
@@ -146,7 +167,15 @@ class TaskApiController extends Controller
     {
         $user = \Auth::user();
         $taskList = Task::inProgress($user->id)->get()->mapWithKeys(function ($task) {
-            return [$task->id => $task];
+            return [
+                $task->id => [
+                    'id' => $task->id,
+                    'title' => $task->title,
+                    'estimate_minutes' => $task->estimate_minutes,
+                    'actual_time' => $task->getActualTime(),
+                    'end_date' => $task->end_date,
+                ]
+            ];
         });
         return new JsonResponse(['tasks' => $taskList]);
     }

@@ -9,6 +9,9 @@ html {
   color: inherit;
 }
 
+body {
+  background-color: $body-background-color;
+}
 
 a {
   color: $link-color;
@@ -22,17 +25,18 @@ a:visited {
   color: $link-visited-color;
 }
 
-.frame {
-  background-color: $frame-background-color;
-  border: 1px solid #FFE0CC;
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
-
-}
-
 .text-box {
-  border: 1px solid lighten($brand-color-second, 10%);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgba(0,0,0, 0.5);
   box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
   padding: 5px;
+  background-color: #fff;
+}
+
+.text-box:disabled {
+  background-color: #f5f5f5;
 }
 
 .invalid-feedback {
@@ -41,31 +45,69 @@ a:visited {
 }
 
 .button {
-  background-color: lighten($brand-color-primary, 20%);
-  color: $brand-color-second;
+  background-color: $button-color;
+  color: #fff;
   font-weight: bold;
-  border: 1px solid lighten($brand-color-primary, 10%);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
-  padding: 5px 10px;
+  border: none;
+  height: 30px;
+  padding: 5px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  i.icon {
+    margin-right: 10px;
+  }
+
 }
 
-.button:disabled {
-  background-color: grayscale(lighten($brand-color-primary, 20%));
-  color: grayscale($brand-color-second);
-  font-weight: bold;
-  border: 1px solid grayscale(lighten($brand-color-primary, 10%));
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
-  padding: 5px 10px;
+.button:hover {
+  background-color: $button-color-active;
 }
+
+.button:active {
+  background-color: $button-color-active;
+}
+
+.button-lg {
+  @extend .button;
+  height: 50px;
+  padding: 10px 40px;
+  width: 180px;
+}
+
+
+.button:disabled {
+  background-color: rgba($button-color, 0.4);
+  cursor: default;
+}
+
+.icon-button {
+  display: table-cell;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  text-align: center;
+
+  color: lighten($brand-color-second, 10%);
+
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  color: $brand-color-second;
+}
+
 
 .command-button {
   display: inline-block;
-  background-color: $light-primary-color;
-  border: darken($light-primary-color, 10%);
-  padding: 5px 10px;
-  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+  background-color: lighten($brand-color-primary, 10%);
+  border-radius: 4px;
+  padding: 10px 25px;
   margin-bottom: 5px;
-  color: $base-font-color;
+  color: rgba(255,255,255, 0.9);
   cursor: pointer;
 
   i.icon {
@@ -74,19 +116,16 @@ a:visited {
 }
 
 .command-button:disabled {
-  background-color: grayscale($light-primary-color);
-  color: grayscale($base-font-color);
-  border: 1px solid grayscale(lighten($light-primary-color, 10%));
+  background-color: grayscale(lighten($brand-color-primary, 10%));
 }
 
 .command-button:hover {
-  background-color: darken($light-primary-color, 5%);
-  color: darken($base-font-color, 5%);
+  background-color: $brand-color-primary;
+  color: rgba(255,255,255, 0.9);
 }
 
 .command-button:hover:disabled {
-  background-color: grayscale(darken($light-primary-color, 5%));
-  color: grayscale(darken($base-font-color, 5%));
+  background-color: grayscale($brand-color-primary);
 }
 
 .heading-1 {
@@ -95,7 +134,7 @@ a:visited {
   font-weight: bold;
   text-decoration: underline;
   color: $heading1-font-color;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .heading-2 {
@@ -115,21 +154,21 @@ a:visited {
 .list-table {
   border-collapse: collapse;
   border-spacing: 1px;
-  border: solid 1px darken($brand-color-primary, 10%);
   width: 100%;
 
   th {
     background-color: $table-head-color;
+    border: 0;
+    padding: 0.3rem;
     border: solid 1px $table-border-color;
-    padding: 5px;
     color: $table-font-color;
     font-weight: bold;
   }
 
   td {
-    background-color: #fff;
-    border: solid 1px $table-border-color;
-    padding: 5px;
+    background-color: $table-background-color;
+    border: 0;
+    padding: 0.3rem;
   }
 
 }
@@ -137,8 +176,14 @@ a:visited {
 .small-table {
   border-collapse: separate;
   border-spacing: 2px;
-  border: solid 1px $small-table-border-color;
+  // border: solid 1px $small-table-border-color;
   width: 100%;
+
+  th {
+    background-color: $small-table-header-background-color;
+    padding: 5px;
+    color: $small-table-header-font-color;
+  }
 
   td {
     background-color: $small-table-background-color;
@@ -178,4 +223,32 @@ a:visited {
 .col-checkbox {
   text-align: center;
   vertical-align: middle;
+}
+
+.input-width-1 {
+  width: 200px;
+}
+
+.input-width-2 {
+  width: 250px;
+}
+
+.input-width-3 {
+  width: 300px;
+}
+
+.label-width-1 {
+  width: 50px;
+}
+
+.label-width-2 {
+  width: 100px;
+}
+
+.label-width-3 {
+  width: 150px;
+}
+
+.label-width-4 {
+  width: 200px;
 }

@@ -48,12 +48,18 @@ class RegisterTaskLogUseCase
                 ];
             }
 
+            $status = $parameters['status'] ?? $task->status;
+
             $taskLog = new TaskLog($parameters);
             $taskLog->task_id = $taskId;
+            $taskLog->status = $status;
+
             $taskLog->save();
 
-            $task->changeStatus($taskLog->status);
-            $task->save();
+            if ($task->status != $status) {
+                $task->changeStatus($status);
+                $task->save();
+            }
             \DB::commit();
         } catch (\Exception $e) {
             \DB::rollback();

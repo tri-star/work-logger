@@ -1,0 +1,55 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+
+  .row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+
+    .col {
+      margin-right: 10px;
+    }
+    .col-label {
+      margin-right: 5px;
+    }
+  }
+
+  .row-align-right {
+    justify-content: flex-end;
+    width: 100%;
+  }
+  .row-align-left {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .button:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  .button-area {
+    margin-top: 10px;
+    justify-self: center;
+  }
+
+  .errors {
+    margin-top: 5px;
+    background-color: rgba(255, 100, 100, 0.2);
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 5px 10px;
+      color: #e00;
+    }
+  }
+
+}
+
+.form-align-left {
+  align-items: start;
+}

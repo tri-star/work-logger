@@ -4,11 +4,12 @@ services:
     image: "563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-web:latest"
     build:
       context: "."
-    env_file:
-      - .env
+    environment:
+      USE_TEST_DB: "true"
     ports:
       - "18000:80"
     volumes:
+      - ".:/work-logger"
       - "./data/log:/var/log"
     depends_on:
       - db
@@ -16,13 +17,15 @@ services:
     image: "mysql:5.7"
     expose:
       - "3306"
+    ports:
+      - "18001:3306"
     env_file:
-      - .env
+    - .env
     environment:
       MYSQL_DATABASE: "${DB_DATABASE}"
       MYSQL_USER: "${DB_USERNAME}"
       MYSQL_PASSWORD: "${DB_PASSWORD}"
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
     volumes:
-      - "./data/mysql:/var/lib/mysql"
+      - "/var/lib/mysql"
       - "./docker/db:/etc/mysql/my.conf.d"

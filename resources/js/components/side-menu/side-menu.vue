@@ -1,27 +1,32 @@
 <template>
-  <aside class="side">
+  <aside :class="{side: !hideMenu, 'hide-menu': hideMenu}">
     <div class="menu-content">
-      <div class="item fas fa-bars" @click="$emit('toggle')" />
+      <div class="item" @click="handleToggle">
+        <div class="fas fa-bars" />
+      </div>
       <router-link
         v-for="(menuItem, index) in menuList"
         :key="index"
         tag="div"
         :to="menuItem.to"
-        :class="`item ${menuItem.icon}`"
+        class="item "
       >
-        {{ menuItem.label }}
+        <div :class="`${menuItem.icon}`" />
+        <span class="label">{{ menuItem.label }}</span>
       </router-link>
     </div>
     <div class="menu-content-small">
-      <div class="item fas fa-bars" @click="$emit('toggle')" />
+      <div class="item" @click="handleToggle">
+        <div class="fas fa-bars" />
+      </div>
       <router-link
         v-for="(menuItem, index) in menuList"
         :key="index"
         tag="div"
         :to="menuItem.to"
-        :class="`item ${menuItem.icon}`"
+        class="item"
       >
-        &nbsp;
+        <div :class="`${menuItem.icon}`" />
       </router-link>
     </div>
   </aside>
@@ -33,11 +38,12 @@ import _cloneDeep from 'lodash/cloneDeep'
 const menues = {
   default: [
     // { icon: "fas fa-chart-pie", label: "統計情報", to: "" },
-    { icon: 'fas fa-chart-line', label: 'ダッシュボード', to: '/' },
+    { icon: 'fas fa-home', label: 'ダッシュボード', to: '/' },
+    { icon: 'fas fa-project-diagram', label: 'プロジェクト', to: '/project' },
     { icon: 'fas fa-cog', label: '設定', to: '' }
   ],
   project: [
-    { icon: 'fas fa-chart-line', label: 'ダッシュボード', to: '/' },
+    { icon: 'fas fa-home', label: 'ダッシュボード', to: '/' },
     {
       icon: 'fas fa-project-diagram',
       label: 'プロジェクト',
@@ -63,6 +69,15 @@ export default {
       default: () => {
         return {}
       }
+    },
+    // hideMenu: {
+    //   type: Boolean,
+    //   default: false
+    // }
+  },
+  data () {
+    return {
+      hideMenu: false
     }
   },
   computed: {
@@ -83,6 +98,11 @@ export default {
       )
       return convertedMenues
     }
+  },
+  methods: {
+    handleToggle () {
+      this.hideMenu = !this.hideMenu
+    }
   }
 }
 </script>
@@ -91,33 +111,81 @@ export default {
   @import "../../../sass/imports";
 
   aside {
-    position: fixed;
-    top: $header-height;
-    left: 0;
-    z-index: 10000;
-    height: 100%;
-
-    transition: width 0.3s;
+    padding-top: $header-height + 10px;
+    width: $side-menu-width;
     background-color: $side-menu-background-color;
-    box-shadow: 3px 0 2px rgba(0,0,0,0.3);
+
+    transition: width 0.3s, opacity 0.3s;
+    overflow: hidden;
+
+    .menu-content-small {
+      display: none;
+    }
 
     .item {
-      margin: 3px auto;
-      cursor: pointer;
-      padding: 5px 0 5px 10px;
-      width: 90%;
-      height: 30px;
+      height: 40px;
       color: #fff;
-      font-size: 1.2rem;
-      transition: padding, background-color 0.3s;
+      display: flex;
+      margin: auto 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border-radius: 4px;
+
+      .fas {
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        margin: auto 5px;
+      }
+
+      .label {
+        display: inline-block;
+        margin: auto 5px;
+        height: 28px;
+        line-height: 28px;
+      }
+
+      &:hover {
+        background-color: lighten($side-menu-background-color, 20%);
+      }
     }
 
-    .item:hover {
-      background-color: lighten($side-menu-background-color, 5%);
-      background-position-y: 3px;
-      box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.4);
-      padding: 3px 0 5px 10px;
-      transition: padding, background-color 0.3s;
-    }
   }
+
+  .hide-menu {
+    width: 50px;
+    overflow: hidden;
+
+    .menu-content {
+      display: none;
+    }
+    .menu-content-small {
+      display: block;
+    }
+
+    .item {
+      height: 40px;
+      color: #fff;
+      display: flex;
+      margin: auto 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border-radius: 4px;
+
+      .fas {
+        display: inline-block;
+        margin-right: 5px;
+        height: 25px;
+        line-height: 25px;
+        width: 25px;
+        margin: auto;
+      }
+
+      &:hover {
+        background-color: lighten($side-menu-background-color, 20%);
+      }
+    }
+
+  }
+
 </style>

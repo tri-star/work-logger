@@ -1,43 +1,61 @@
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
-$brand-color-primary: #FF7400;
-$brand-color-second: #006363;
+$brand-color-primary: #05A2E1;
+$brand-color-second: #0367A6;
 
-$light-primary-color: #FFF6F0;
+$light-primary-color: lighten($brand-color-primary, 60%);
+$dark-brand-color: #011F32;
 
-$base-font-color: $brand-color-second;
 
-$primary-font-color: $brand-color-second;
+$base-font-color: $dark-brand-color;
+
+$primary-font-color: $dark-brand-color;
 
 $link-color: darken($brand-color-second, 10%);
 $link-hover-color: lighten($link-color, 10%);
 $link-visited-color: darken($brand-color-second, 10%);
 
+$body-background-color: #e9e9e9;
 
-$header-background-color: $brand-color-primary;
+$header-background-color: #011F32;
 $header-font-color: #fff;
 $header-height: 50px;
 
-$side-menu-background-color: $brand-color-second;
+$side-menu-background-color: #101010;
 $side-menu-width: 250px;
 $side-menu-small-width: 45px;
 
 $frame-background-color: $light-primary-color;
 $frame-border: 1px solid #FFE0CC;
 
-$heading1-height: 50px;
+$heading1-height: 40px;
 $heading1-font-size: 30pt;
-$heading1-font-color: $brand-color-second;
+$heading1-font-color: $dark-brand-color;
 
 $heading2-height: 50px;
 $heading2-background-color: $light-primary-color;
 $heading2-font-size: 20pt;
 $heading2-font-color: $brand-color-second;
 
-$table-head-color: #FF9640;
-$table-border-color: darken($table-head-color, 30%);
-$table-font-color: $primary-font-color;
+$frame-title-size: 25px;
+$frame-title-background-color: #fff;
+$frame-title-color: $dark-brand-color;
 
-$small-table-border-color: #FFF;
-$small-table-background-color: $light-primary-color;
+$frame-sub-title-size: 16px;
+$frame-sub-background-color: #fff;
+$frame-sub-border-color: #E2E2E2;
+$frame-sub-title-color: $dark-brand-color;
+
+
+$table-head-color: $brand-color-primary;
+$table-border-color: #fff;
+$table-background-color: #fff;
+$table-font-color: rgba(255,255,255,0.9);
+
+$small-table-header-background-color: #E2E2E2;
+$small-table-header-font-color: rgba(40,40,40, 0.6);
+$small-table-background-color: #fff;
 $small-table-font-color: lighten($primary-font-color, 10%);
+
+$button-color: #05A2E1;
+$button-color-active: #048ABF;

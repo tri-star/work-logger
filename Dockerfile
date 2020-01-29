@@ -41,7 +41,7 @@ RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
 
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash && \
      ~/.yarn/bin/yarn global add cross-env && \
-    echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' > /etc/profile.d/yarn.sh
+    ln -s ~/.yarn/bin/yarn /usr/local/bin/yarn
 
 # PHP
 RUN yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
@@ -56,7 +56,6 @@ RUN yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm &
     php-mysqlnd \
     php-opcache \
     php-process \
-    php-soap \
     php-xdebug && \
     yum clean all
 

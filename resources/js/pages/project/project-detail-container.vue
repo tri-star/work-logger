@@ -119,8 +119,8 @@ export default {
     return {
       project: {},
       taskStat: {},
-      scheduledTasks: {},
-      inProgressTasks: {}
+      scheduledTasks: [],
+      inProgressTasks: []
     }
   },
 

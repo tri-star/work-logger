@@ -2,7 +2,7 @@
 
 namespace WorkLogger\Domain\Project;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use WorkLogger\Domain\Task\Task;
 use WorkLogger\Domain\User\User;
@@ -26,21 +26,27 @@ class Project extends Model
 
 
     /**
-     * プロジェクト別のタスクの件数一覧を返す
+     * 名前にキーワードが部分一致するものの一覧を返す
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $userId ユーザーID
+     * @return \Illuminate\Database\Query\Builder
      */
-    public static function getTaskCountList(int $userId): Collection
+    public static function scopeOwnedBy(Builder $query, int $userId)
     {
-        $list = Task::select(['tasks.project_id', 'projects.project_name', \DB::raw('count(*) as count')])
-            ->join('project_user', function ($join) use ($userId) {
-                $join->on('project_user.project_id', '=', 'tasks.project_id')
-                    ->where('project_user.user_id', '=', $userId);
-            })
-            ->join('projects', 'projects.id', '=', 'tasks.project_id')
-            ->groupBy(['tasks.project_id', 'project_name'])
-            ->orderBy('tasks.project_id')
-            ->get();
+        return $query->join('project_user', 'project_user.project_id', '=', 'projects.id')
+            ->where('project_user.user_id', $userId);
+    }
 
-        return $list;
+
+    /**
+     * 名前にキーワードが部分一致するものの一覧を返す
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $keyword キーワード
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public static function scopeIncludeKeyword(Builder $query, string $keyword)
+    {
+        return $query->where('project_name', 'like', "%{$keyword}%")->orderBy('project_name');
     }
 
     public function users()

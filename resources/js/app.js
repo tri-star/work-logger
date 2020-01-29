@@ -40,7 +40,7 @@ new Vue({
   methods: {},
   router,
   store,
-  template: `<DefaultLayout/>`
+  template: '<DefaultLayout/>'
 })
 
 window.Vue.config.errorHandler = (err, vm, info) => {

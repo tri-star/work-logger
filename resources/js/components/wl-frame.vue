@@ -1,9 +1,9 @@
 <template>
-  <section class="wl-frame" :style="'width: ' + width">
-    <div class="title">
+  <section :class="`wl-frame size-${size}`">
+    <div class="wl-frame-title">
       <slot name="title" />
     </div>
-    <div class="body">
+    <div class="wl-frame-body">
       <slot name="body" />
     </div>
   </section>
@@ -12,8 +12,8 @@
 <script>
 export default {
   props: {
-    width: {
-      default: '400px',
+    size: {
+      default: 'l',
       type: String
     }
   }
@@ -24,30 +24,46 @@ export default {
   @import "../../sass/imports";
 
   .wl-frame {
-    border: 1px solid $brand-color-second;
-    box-shadow: 2px 2px 0 rgb(0, 0, 0, 0.3);
+    background-color: #fff;
     margin-right: 20px;
     margin-bottom: 20px;
-    display: block;
-    min-width: 300px;
-    height: 300px;
+    padding: 10px;
+    display: inline-block;
+    min-height: 300px;
+    overflow-y: auto;
   }
 
-  .title {
-    color: #fff;
-    background-color: $brand-color-second;
-    height: 45px;
-    font-size: 15pt;
+  .size-xl {
+    width: calc(100% - 20px);
+  }
+
+  .size-l {
+    width: calc(50% - 40px);
+  }
+
+  .size-m {
+    width: calc(33% - 60px);
+  }
+
+  .wl-frame-title {
+    color: $frame-title-color;
+    background-color: $frame-title-background-color;
+    font-size: $frame-title-size;
     font-weight: bold;
-    line-height: 2.5;
+    text-decoration: underline;
+    margin-bottom: 15px;
     padding-left: 5px;
   }
 
-  .body {
+  .wl-frame-body {
     display: inline-block;
     width: 100%;
-    height: calc(300px - 45px - 5px);
     padding: 5px;
-    overflow-y: auto;
+  }
+
+  .fixed-height {
+    .body {
+      overflow-y: auto;
+    }
   }
 </style>

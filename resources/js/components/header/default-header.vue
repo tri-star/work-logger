@@ -1,7 +1,7 @@
 <template>
   <header>
     <h1 class="logo">
-      Work Logger
+      WORK LOGGER
     </h1>
   </header>
 </template>
