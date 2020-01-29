@@ -54,6 +54,11 @@ a:visited {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+
+  i.icon {
+    margin-right: 10px;
+  }
+
 }
 
 .button:hover {
@@ -98,12 +103,11 @@ a:visited {
 
 .command-button {
   display: inline-block;
-  background-color: $light-primary-color;
-  border: darken($light-primary-color, 10%);
-  padding: 5px 10px;
-  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+  background-color: lighten($brand-color-primary, 10%);
+  border-radius: 4px;
+  padding: 10px 25px;
   margin-bottom: 5px;
-  color: $base-font-color;
+  color: rgba(255,255,255, 0.9);
   cursor: pointer;
 
   i.icon {
@@ -112,19 +116,16 @@ a:visited {
 }
 
 .command-button:disabled {
-  background-color: grayscale($light-primary-color);
-  color: grayscale($base-font-color);
-  border: 1px solid grayscale(lighten($light-primary-color, 10%));
+  background-color: grayscale(lighten($brand-color-primary, 10%));
 }
 
 .command-button:hover {
-  background-color: darken($light-primary-color, 5%);
-  color: darken($base-font-color, 5%);
+  background-color: $brand-color-primary;
+  color: rgba(255,255,255, 0.9);
 }
 
 .command-button:hover:disabled {
-  background-color: grayscale(darken($light-primary-color, 5%));
-  color: grayscale(darken($base-font-color, 5%));
+  background-color: grayscale($brand-color-primary);
 }
 
 .heading-1 {
@@ -153,21 +154,21 @@ a:visited {
 .list-table {
   border-collapse: collapse;
   border-spacing: 1px;
-  border: solid 1px darken($brand-color-primary, 10%);
   width: 100%;
 
   th {
     background-color: $table-head-color;
+    border: 0;
+    padding: 0.3rem;
     border: solid 1px $table-border-color;
-    padding: 5px;
     color: $table-font-color;
     font-weight: bold;
   }
 
   td {
-    background-color: #fff;
-    border: solid 1px $table-border-color;
-    padding: 5px;
+    background-color: $table-background-color;
+    border: 0;
+    padding: 0.3rem;
   }
 
 }

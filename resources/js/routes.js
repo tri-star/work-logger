@@ -4,6 +4,10 @@ export default [
     component: require('./pages/dashboard/dashboard-container').default
   },
   {
+    path: '/project',
+    component: require('./pages/project/project-list-container').default,
+  },
+  {
     path: '/project/:id',
     component: require('./pages/project/project-detail-container').default,
     props: route => ({ id: Number(route.params.id) })
