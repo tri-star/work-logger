@@ -42,7 +42,7 @@
                     作業時間:
                   </div>
                   <div class="col input-width-2">
-                    <input type="number" class="text-box" size="5" :disabled="!canInputResult" v-model="resultHours"> min
+                    <input v-model="resultHours" type="number" class="text-box" size="5" :disabled="!canInputResult"> min
                   </div>
                 </div>
                 <div class="row">
@@ -50,7 +50,7 @@
                     メモ:
                   </div>
                   <div class="col input-width-2">
-                    <textarea class="text-box" style="width: 90%; height: 60px;" :disabled="!canInputResult" v-model="resultMemo" />
+                    <textarea v-model="resultMemo" class="text-box" style="width: 90%; height: 60px;" :disabled="!canInputResult" />
                   </div>
                 </div>
                 <div class="row row-align-right">

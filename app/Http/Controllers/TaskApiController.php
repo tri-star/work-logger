@@ -46,7 +46,7 @@ class TaskApiController extends Controller
     public function bulkUpdateDate(Request $request, BulkUpdateDateUseCase $useCase)
     {
         $ids = $request->input('ids', []);
-        $type = (int)$request->input('type', 0);
+        $type = (int) $request->input('type', 0);
         $params = $request->input('params', []);
         $result = $useCase->execute(\Auth::user(), $ids, $type, $params);
 
@@ -61,7 +61,7 @@ class TaskApiController extends Controller
     public function bulkUpdateState(Request $request, BulkUpdateStateUseCase $useCase)
     {
         $ids = $request->input('ids', []);
-        $newState = (int)$request->input('new_state', 0);
+        $newState = (int) $request->input('new_state', 0);
         $result = $useCase->execute(\Auth::user(), $ids, $newState);
 
         $statusCode = 200;
@@ -125,10 +125,10 @@ class TaskApiController extends Controller
         } else {
             $tasks = Task::includeKeyword($user->id, $projectId, $keyword)->get();
         }
-        $list = $tasks->map(function($item) {
+        $list = $tasks->map(function ($item) {
             return [
                 'id' => $item->id,
-                'name' => $item->title
+                'name' => $item->title,
             ];
         });
         return new JsonResponse($list);
@@ -156,6 +156,7 @@ class TaskApiController extends Controller
                     'title' => $task->title,
                     'estimate_minutes' => $task->estimate_minutes,
                     'actual_time' => $task->getActualTime(),
+                    'end_date' => $task->end_date,
                 ]
             ];
         });
@@ -172,6 +173,7 @@ class TaskApiController extends Controller
                     'title' => $task->title,
                     'estimate_minutes' => $task->estimate_minutes,
                     'actual_time' => $task->getActualTime(),
+                    'end_date' => $task->end_date,
                 ]
             ];
         });
