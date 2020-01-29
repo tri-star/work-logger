@@ -21,7 +21,7 @@ class ProjectListStatQueryBuilder
         })->toArray();
 
         if(count($projectIds) === 0) {
-            return [];
+            return collect([]);
         }
 
         $sql = 'select projects.id, count(distinct tasks.id) as task_count, '
