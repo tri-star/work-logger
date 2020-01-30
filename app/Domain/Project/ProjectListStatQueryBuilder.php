@@ -3,8 +3,8 @@
 namespace WorkLogger\Domain\Project;
 
 use Illuminate\Support\Collection;
-use WorkLogger\Domain\User\User;
 use WorkLogger\Domain\Task\Task;
+use WorkLogger\Domain\User\User;
 
 class ProjectListStatQueryBuilder
 {
@@ -20,7 +20,7 @@ class ProjectListStatQueryBuilder
             return "'" . $project->id . "'";
         })->toArray();
 
-        if(count($projectIds) === 0) {
+        if (count($projectIds) === 0) {
             return collect([]);
         }
 
@@ -36,21 +36,21 @@ class ProjectListStatQueryBuilder
             . ' group by projects.id ';
 
         $projectStats = collect(\DB::select($sql, [
-            'completed_status' => Task::STATE_DONE
-        ]))->mapWithKeys(function($row){
+            'completed_status' => Task::STATE_DONE,
+        ]))->mapWithKeys(function ($row) {
             return [$row->id => $row];
         })->toArray();
 
-        return $projects->mapWithKeys(function($project) use($projectStats){
+        return $projects->mapWithKeys(function ($project) use ($projectStats) {
             return [
                 $project->id => [
-                    'id' => $project->id,
-                    'project_name' => $project->project_name,
-                    'task_count' => $projectStats[$project->id]->task_count,
-                    'completed_task_count' => $projectStats[$project->id]->completed_task_count,
-                    'total_result_hours' => $projectStats[$project->id]->total_result_hours,
+                    'id'                    => $project->id,
+                    'project_name'          => $project->project_name,
+                    'task_count'            => $projectStats[$project->id]->task_count,
+                    'completed_task_count'  => $projectStats[$project->id]->completed_task_count,
+                    'total_result_hours'    => $projectStats[$project->id]->total_result_hours,
                     'total_estimated_hours' => $projectStats[$project->id]->total_estimated_hours,
-                ]
+                ],
             ];
         });
     }

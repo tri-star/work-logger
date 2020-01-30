@@ -21,7 +21,8 @@ class ProjectListStatQueryBuilderTest extends TestCase
     private $queryBuilder;
 
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         parent::setUp();
         $this->queryBuilder = new ProjectListStatQueryBuilder();
     }
@@ -76,11 +77,11 @@ class ProjectListStatQueryBuilderTest extends TestCase
 
         factory(Task::class, 3)->create([
             'project_id' => $projects[0]->id,
-            'status' => Task::STATE_DONE,
+            'status'     => Task::STATE_DONE,
         ]);
         factory(Task::class, 1)->create([
             'project_id' => $projects[0]->id,
-            'status' => Task::STATE_IN_PROGRESS,
+            'status'     => Task::STATE_IN_PROGRESS,
         ]);
 
         $result = $this->queryBuilder->getProjectList($user);
@@ -105,15 +106,15 @@ class ProjectListStatQueryBuilderTest extends TestCase
 
         factory(TaskLog::class, 2)->create([
             'task_id' => $tasks[0]->id,
-            'hours' => 2.5,
+            'hours'   => 2.5,
         ]);
         factory(TaskLog::class, 2)->create([
             'task_id' => $tasks[1]->id,
-            'hours' => 2.5,
+            'hours'   => 2.5,
         ]);
         factory(TaskLog::class, 1)->create([
             'task_id' => $anotherProjectTask[0]->id,
-            'hours' => 3,
+            'hours'   => 3,
         ]);
 
         $result = $this->queryBuilder->getProjectList($user);
@@ -131,11 +132,11 @@ class ProjectListStatQueryBuilderTest extends TestCase
         $projects[1]->users()->save($user);
 
         factory(Task::class, 3)->create([
-            'project_id' => $projects[0]->id,
+            'project_id'       => $projects[0]->id,
             'estimate_minutes' => 1.4,
         ]);
         factory(Task::class, 1)->create([
-            'project_id' => $projects[1]->id,
+            'project_id'       => $projects[1]->id,
             'estimate_minutes' => 2,
         ]);
 
@@ -144,5 +145,4 @@ class ProjectListStatQueryBuilderTest extends TestCase
         $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimated_hours']);
         $this->assertEquals(2, $result[$projects[1]->id]['total_estimated_hours']);
     }
-
 }
