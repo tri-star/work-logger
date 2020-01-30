@@ -130,11 +130,11 @@ class ProjectListStatQueryBuilderTest extends TestCase
         $projects[0]->users()->save($user);
         $projects[1]->users()->save($user);
 
-        $tasks = factory(Task::class, 3)->create([
+        factory(Task::class, 3)->create([
             'project_id' => $projects[0]->id,
             'estimate_minutes' => 1.4,
         ]);
-        $anotherProjectTask = factory(Task::class, 1)->create([
+        factory(Task::class, 1)->create([
             'project_id' => $projects[1]->id,
             'estimate_minutes' => 2,
         ]);
