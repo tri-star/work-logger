@@ -21,7 +21,8 @@ class ProjectListStatQueryBuilderTest extends TestCase
     private $queryBuilder;
 
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         parent::setUp();
         $this->queryBuilder = new ProjectListStatQueryBuilder();
     }
@@ -76,11 +77,11 @@ class ProjectListStatQueryBuilderTest extends TestCase
 
         factory(Task::class, 3)->create([
             'project_id' => $projects[0]->id,
-            'status' => Task::STATE_DONE,
+            'status'     => Task::STATE_DONE,
         ]);
         factory(Task::class, 1)->create([
             'project_id' => $projects[0]->id,
-            'status' => Task::STATE_IN_PROGRESS,
+            'status'     => Task::STATE_IN_PROGRESS,
         ]);
 
         $result = $this->queryBuilder->getProjectList($user);
@@ -105,15 +106,15 @@ class ProjectListStatQueryBuilderTest extends TestCase
 
         factory(TaskLog::class, 2)->create([
             'task_id' => $tasks[0]->id,
-            'hours' => 2.5,
+            'hours'   => 2.5,
         ]);
         factory(TaskLog::class, 2)->create([
             'task_id' => $tasks[1]->id,
-            'hours' => 2.5,
+            'hours'   => 2.5,
         ]);
         factory(TaskLog::class, 1)->create([
             'task_id' => $anotherProjectTask[0]->id,
-            'hours' => 3,
+            'hours'   => 3,
         ]);
 
         $result = $this->queryBuilder->getProjectList($user);
@@ -130,12 +131,12 @@ class ProjectListStatQueryBuilderTest extends TestCase
         $projects[0]->users()->save($user);
         $projects[1]->users()->save($user);
 
-        $tasks = factory(Task::class, 3)->create([
-            'project_id' => $projects[0]->id,
+        factory(Task::class, 3)->create([
+            'project_id'       => $projects[0]->id,
             'estimate_minutes' => 1.4,
         ]);
-        $anotherProjectTask = factory(Task::class, 1)->create([
-            'project_id' => $projects[1]->id,
+        factory(Task::class, 1)->create([
+            'project_id'       => $projects[1]->id,
             'estimate_minutes' => 2,
         ]);
 
@@ -145,4 +146,32 @@ class ProjectListStatQueryBuilderTest extends TestCase
         $this->assertEquals(2, $result[$projects[1]->id]['total_estimated_hours']);
     }
 
+
+    /**
+     * #378: 過去に発生した不具合の修正。テーブルをJOINする関係で作業履歴がN件あると、見積時間の集計がずれていた
+     */
+    public function test_総見積時間_作業履歴が複数登録されている場合でも見積時間が正しく計算されること()
+    {
+        $projects = factory(Project::class, 2)->create();
+        $user = factory(User::class)->create();
+        $projects[0]->users()->save($user);
+        $projects[1]->users()->save($user);
+
+        $tasks = factory(Task::class, 3)->create([
+            'project_id'       => $projects[0]->id,
+            'estimate_minutes' => 1.4,
+        ]);
+        factory(Task::class, 1)->create([
+            'project_id'       => $projects[1]->id,
+            'estimate_minutes' => 2,
+        ]);
+        factory(TaskLog::class, 2)->create([
+            'task_id' => $tasks[0]->id,
+        ]);
+
+        $result = $this->queryBuilder->getProjectList($user);
+
+        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimated_hours']);
+        $this->assertEquals(2, $result[$projects[1]->id]['total_estimated_hours']);
+    }
 }
