@@ -1,6 +1,6 @@
 name: "Run PHP,JS test"
 
-on: 
+on:
   pull_request:
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
         DB_HOST: 127.0.0.1
       run: php artisan migrate:refresh --env=testing
     - name: upload to Codecov
-      env: 
+      env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: bash <(curl -s https://codecov.io/bash) -f coverage.xml
 
@@ -61,5 +61,14 @@ jobs:
       run: yarn lint-all
     - name: Execute tests
       run: yarn test
-    - name: Execute build 
+    - name: Execute build
       run: yarn dev
+    - name: upload coverage
+      uses: actions/upload-artifact@v1
+      with:
+        name: jest-coverage
+        path: ./coverage
+    - name: upload to Codecov
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: bash <(curl -s https://codecov.io/bash)

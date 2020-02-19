@@ -1,6 +1,7 @@
 /.idea
 /.vagrant
 /.vscode
+/coverage
 /data
 /node_modules
 /public/css
