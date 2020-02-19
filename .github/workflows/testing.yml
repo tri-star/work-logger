@@ -31,11 +31,15 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_HOST: 127.0.0.1
-      run: vendor/bin/phpunit
+      run: vendor/bin/phpunit --coverage-clover=coverage.xml
     - name: Execute migration integrity test.
       env:
         DB_HOST: 127.0.0.1
       run: php artisan migrate:refresh --env=testing
+    - name: upload to Codecov
+      env: 
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: bash <(curl -s https://codecov.io/bash) -f coverage.xml
 
   js-test:
     runs-on: ubuntu-latest
