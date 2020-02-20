@@ -39,7 +39,7 @@ jobs:
     - name: upload to Codecov
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: bash <(curl -s https://codecov.io/bash) -f coverage.xml
+      run: bash <(curl -s https://codecov.io/bash) -f coverage.xml -cF php
 
   js-test:
     runs-on: ubuntu-latest
@@ -71,4 +71,4 @@ jobs:
     - name: upload to Codecov
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: bash <(curl -s https://codecov.io/bash)
+      run: bash <(curl -s https://codecov.io/bash) -cF javascript
