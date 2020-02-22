@@ -40,11 +40,6 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: bash <(curl -s https://codecov.io/bash) -f coverage.xml -cF php
-
-  js-test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
     - name: Cache node packages
       uses: actions/cache@v1
       with:
