@@ -14,10 +14,27 @@ coverage:
         paths:
           - "app"
       javascript:
-        target: 70%
-        threshold: 20%
+        target: 9%
+        threshold: 9%
         base: auto
         flags:
           - javascript
+        paths:
+          - "resources/js"
+    patch:
+      php:
+        target: 70%
+        threshold: 0%
+        base: auto
+        flags:
+          - "php"
+        paths:
+          - "app"
+          javascript:
+        target: 70%
+        threshold: 0%
+        base: auto
+        flags:
+          - "javascript"
         paths:
           - "resources/js"
