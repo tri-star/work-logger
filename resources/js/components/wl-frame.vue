@@ -1,6 +1,6 @@
 <template>
   <section :class="{'wl-frame': true, [`size-${size}`]: true, 'min-height': !noMinHeight}">
-    <div v-if="!noTitle" :class="wl-frame-title">
+    <div v-if="!noTitle" class="wl-frame-title">
       <slot name="title" />
     </div>
     <div class="wl-frame-body">
