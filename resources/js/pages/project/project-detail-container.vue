@@ -5,22 +5,25 @@
         {{ project.project_name }}
       </h1>
       <div class="heading-item">
-        <a
-          class="command-button edit-button"
+        <button
+          class="button edit-button"
           @click="openProjectFormHandler"
         >
           <i class="icon fas fa-pen" />編集
-        </a>
+        </button>
       </div>
     </div>
 
-    <div class="description">
-      {{ project.description }}
-    </div>
+    <WlFrame size="xl" no-min-height:="true" no-title:="true">
+      <template slot="body">
+        <div class="description">
+          {{ project.description }}
+        </div>
+      </template>
+    </WlFrame>
 
-    <h2 class="heading-2">
-      統計情報
-    </h2>
+    <WlTabBar :items="tabItems" :initial-selected="selectedTab" />
+
     <div class="clear-fix">
       <WlFrame class="frame-item" :width="'400px;'">
         <template slot="title">
@@ -98,6 +101,7 @@ import ScheduledTaskList from './scheduled-task-list'
 import TaskLogFormContainer from '../tasks/task-log-form-container'
 import WlFrame from '../../components/wl-frame'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
+import WlTabBar from '../../components/wl-tab-bar'
 import adapterFactory from '../../adapters/adapter-factory'
 
 export default {
@@ -107,7 +111,8 @@ export default {
     ScheduledTaskList,
     TaskLogFormContainer,
     WlFrame,
-    WlLoadingProxy
+    WlLoadingProxy,
+    WlTabBar
   },
   props: {
     id: {
@@ -120,7 +125,19 @@ export default {
       project: {},
       taskStat: {},
       scheduledTasks: [],
-      inProgressTasks: []
+      inProgressTasks: [],
+      selectedTab: 'summary',
+      tabItems: {
+        summary: {
+          tabKey: 'summary',
+          label: '概要',
+        },
+        tasks: {
+          tabKey: 'tasks',
+          label: 'タスク一覧',
+        },
+
+      }
     }
   },
 
