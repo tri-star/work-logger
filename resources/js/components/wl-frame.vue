@@ -1,6 +1,6 @@
 <template>
-  <section :class="`wl-frame size-${size}`">
-    <div class="wl-frame-title">
+  <section :class="{'wl-frame': true, [`size-${size}`]: true, 'min-height': !noMinHeight}">
+    <div v-if="!noTitle" :class="wl-frame-title">
       <slot name="title" />
     </div>
     <div class="wl-frame-body">
@@ -15,6 +15,14 @@ export default {
     size: {
       default: 'l',
       type: String
+    },
+    noTitle: {
+      default: false,
+      type: Boolean
+    },
+    noMinHeight: {
+      default: false,
+      type: Boolean
     }
   }
 }
@@ -29,8 +37,11 @@ export default {
     margin-bottom: 20px;
     padding: 10px;
     display: inline-block;
-    min-height: 300px;
     overflow-y: auto;
+  }
+
+  .min-height {
+    min-height: 300px;
   }
 
   .size-xl {
