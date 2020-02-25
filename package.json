@@ -82,6 +82,9 @@
         "collectCoverage": true,
         "collectCoverageFrom": [
             "<rootDir>/resources/js/**/*.{js,vue}",
+            "!<rootDir>/resources/js/app.js",
+            "!<rootDir>/resources/js/bootstrap.js",
+            "!<rootDir>/resources/js/routes.js",
             "!**/node_modules/**",
             "!**/vendor/**"
         ],
