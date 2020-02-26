@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <WlFrame size="xl" no-min-height:="true" no-title:="true">
+    <WlFrame size="xl" :no-min-height="true" :no-title="true">
       <template slot="body">
         <div class="description">
           {{ project.description }}
