@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'tab-item': 1, 'active': isActive}" @click="$emit('selected', tabKey)">
+  <div :class="{'tab-item': 1, 'active': isActive}" :tab-key="tabKey" @click="$emit('selected', tabKey)">
     {{ label }}
   </div>
 </template>
