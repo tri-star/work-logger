@@ -35,12 +35,16 @@ export default {
 
   mounted () {
     this.current = this.initialSelected
+    this.$emit('tabChange', this.current)
   },
   methods: {
     isActive (key) {
       return this.current === key
     },
     handleSelected (selectedKey) {
+      if (this.current !== selectedKey) {
+        this.$emit('tabChange', selectedKey)
+      }
       this.current = selectedKey
     }
   }
