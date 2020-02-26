@@ -120,8 +120,9 @@ export default {
 
   .select {
     padding: 5px;
-    border: 1px solid $primary-font-color;
-    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    border-bottom: 1px solid $primary-font-color;
+    box-shadow: 0px 1px 0 rgba(0, 0, 0, 0.2);
     width: 200px;
     position: relative;
     cursor: pointer;
@@ -158,8 +159,8 @@ export default {
     opacity: 0;
     transition: 0.5s;
 
-    border: 1px solid $primary-font-color;
-    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0,0,0,0.5);
+    box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.2);
   }
 
   .select.show-menu ul {
