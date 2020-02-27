@@ -1,0 +1,40 @@
+
+coverage:
+  precision: 2
+  round: down
+  range: "50...100"
+  status:
+    project:
+      php:
+        target: 20%
+        threshold: 20%
+        base: auto
+        flags:
+          - php
+        paths:
+          - "app"
+      javascript:
+        target: 9%
+        threshold: 9%
+        base: auto
+        flags:
+          - javascript
+        paths:
+          - "resources/js"
+    patch:
+      php:
+        target: 70%
+        threshold: 0%
+        base: auto
+        flags:
+          - "php"
+        paths:
+          - "app"
+          javascript:
+        target: 70%
+        threshold: 0%
+        base: auto
+        flags:
+          - "javascript"
+        paths:
+          - "resources/js"
