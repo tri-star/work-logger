@@ -47,13 +47,8 @@ const menues = {
     {
       icon: 'fas fa-project-diagram',
       label: 'プロジェクト',
-      to: '/project/:id'
+      to: '/project'
     },
-    {
-      icon: 'fas fa-tasks',
-      label: 'タスク一覧',
-      to: '/project/:id/tasks'
-    }
     // { icon: "fas fa-cog", label: "設定", to: "" }
   ]
 }

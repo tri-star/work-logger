@@ -38,7 +38,7 @@
 <script>
 import ProjectFormContainer from '../project/project-form-container'
 import ProjectSummary from './project-summary'
-import TaskList from './task-list'
+import TaskListContainer from './task-list-container'
 import WlFrame from '../../components/wl-frame'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
 import WlTabBar from '../../components/wl-tab-bar'
@@ -48,7 +48,7 @@ export default {
   components: {
     ProjectFormContainer,
     ProjectSummary,
-    TaskList,
+    TaskListContainer,
     WlFrame,
     WlLoadingProxy,
     WlTabBar
@@ -76,7 +76,7 @@ export default {
       },
       tabMap: {
         summary: 'ProjectSummary',
-        tasks: 'TaskList',
+        tasks: 'TaskListContainer',
       }
     }
   },
