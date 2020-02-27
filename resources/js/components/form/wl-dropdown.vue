@@ -73,6 +73,10 @@ export default {
     }
   },
 
+  mounted () {
+    this.selectedKey = this.menues[this.value] ? this.value : null
+  },
+
   methods: {
     toggleMenuList () {
       this.showMenu = !this.showMenu
@@ -93,10 +97,6 @@ export default {
       }
       return `${this.idPrefix}-${value}`
     }
-  },
-
-  mounted() {
-    this.selectedKey = this.menues[this.value] ? this.value : null
   }
 }
 </script>

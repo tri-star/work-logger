@@ -1,12 +1,5 @@
 <template>
   <div>
-    <h1 class="heading-1">
-      {{ project.project_name }}: タスク一覧
-    </h1>
-
-    <h2 class="heading-2">
-      検索条件
-    </h2>
     <section class="search-form" @keyup.enter="loadTaskList">
       <div class="row">
         <label class="label">キーワード</label>
@@ -52,9 +45,6 @@
       </a>
     </section>
 
-    <h2 class="heading-2">
-      一覧
-    </h2>
     <section>
       <section class="action-area">
         <a class="command-button" @click="openNewForm">
@@ -161,15 +151,14 @@ export default {
     WlLoadingProxy
   },
   props: {
-    id: {
-      type: Number,
+    project: {
+      type: Object,
       required: true
     }
   },
   data () {
     return {
       checks: [],
-      project: {},
       taskList: {},
       bulkActionMenuList: [
         {
@@ -226,7 +215,7 @@ export default {
     },
     async loadTaskList () {
       const taskAdapter = adapterFactory.get('TaskAdapter')
-      this.taskList = await taskAdapter.search(this.id, this.conditions)
+      this.taskList = await taskAdapter.search(this.project.id, this.conditions)
     },
 
     openNewForm () {
@@ -236,15 +225,6 @@ export default {
       this.$refs.taskForm.open(id)
     },
     handleMounted () {
-      this.$emit('changeSideMenu', 'project', {
-        id: this.id
-      })
-
-      const projectAdapter = adapterFactory.get('ProjectAdapter')
-      projectAdapter.getProject(this.id).then((project) => {
-        this.project = project
-      })
-
       this.loadTaskList()
     },
     toggleChecks (checked) {
