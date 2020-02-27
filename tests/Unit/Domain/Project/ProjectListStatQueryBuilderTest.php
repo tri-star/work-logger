@@ -124,6 +124,45 @@ class ProjectListStatQueryBuilderTest extends TestCase
     }
 
 
+    /**
+     * 集計クエリの不具合の修正を確認するテスト。
+     * 作業時間の合計を求める際、「完了」ステータスのタスクが複数件あると
+     * レコードがN行に増えた状態で集計されていた
+     */
+    public function test_総作業時間_1タスクに複数の作業履歴が登録されていても正しく計算されること()
+    {
+        $projects = factory(Project::class, 2)->create();
+        $user = factory(User::class)->create();
+        $projects[0]->users()->save($user);
+        $projects[1]->users()->save($user);
+
+        $tasks = factory(Task::class, 3)->create([
+            'project_id' => $projects[0]->id,
+        ]);
+        $tasks[1]->status = Task::STATE_DONE;
+        $tasks[1]->save();
+        $tasks[2]->status = Task::STATE_DONE;
+        $tasks[2]->save();
+
+        factory(TaskLog::class, 4)->create([
+            'task_id' => $tasks[0]->id,
+            'hours'   => 1,
+        ]);
+        factory(TaskLog::class, 2)->create([
+            'task_id' => $tasks[1]->id,
+            'hours'   => 2,
+        ]);
+        factory(TaskLog::class, 3)->create([
+            'task_id' => $tasks[2]->id,
+            'hours'   => 1,
+        ]);
+
+        $result = $this->queryBuilder->getProjectList($user);
+
+        $this->assertEquals((1 * 4) + (2 * 2) + (1 * 3), $result[$projects[0]->id]['total_result_hours']);
+    }
+
+
     public function test_総見積時間_プロジェクト配下の全タスクの見積時間が合計されること()
     {
         $projects = factory(Project::class, 2)->create();
