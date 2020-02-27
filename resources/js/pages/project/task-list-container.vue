@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="search-form" @keyup.enter="loadTaskList">
+    <section class="search-form clear-fix" @keyup.enter="loadTaskList">
       <div class="row">
         <label class="label">キーワード</label>
         <div class="col">
@@ -38,18 +38,20 @@
           />
         </div>
       </div>
-    </section>
-    <section class="action-area">
-      <a class="command-button" @click="loadTaskList">
-        <i class="icon fas fa-search" />検索
-      </a>
+      <div class="row">
+        <div class="col">
+          <button class="button" @click="loadTaskList">
+            <b class="icon fas fa-search" />
+          </button>
+        </div>
+      </div>
     </section>
 
     <section>
       <section class="action-area">
-        <a class="command-button" @click="openNewForm">
+        <button class="command-button" @click="openNewForm">
           <i class="icon fas fa-plus-circle" />新規登録
-        </a>
+        </button>
         <BulkActionButton
           title="一括操作"
           :disabled="!itemChecked"
@@ -249,18 +251,23 @@ export default {
 <style lang="scss" scoped>
   .search-form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     padding: 10px;
 
     .row {
       display: flex;
       justify-content: flex-start;
-      align-content: center;
-      padding: 10px;
+      align-items: center;
+      height: 50px;
+      margin-right: 20px;
 
       .label {
-        width: 120px;
+        display: block;
+        text-align: right;
+        line-height: 1.5;
+        margin-right: 10px;
+        font-weight: bold;
       }
 
       .col {
@@ -271,12 +278,10 @@ export default {
       margin-right: 20px;
     }
 
-    .button-area {
-      margin-top: 10px;
-    }
   }
 
   .action-area {
+    margin-top: 20px;
     margin-bottom: 10px;
   }
 

@@ -102,17 +102,11 @@ a:visited {
 
 
 .command-button {
-  display: inline-block;
-  background-color: lighten($brand-color-primary, 10%);
-  border-radius: 4px;
-  padding: 10px 25px;
-  margin-bottom: 5px;
-  color: rgba(255,255,255, 0.9);
-  cursor: pointer;
+  @extend .button;
 
-  i.icon {
-    margin-right: 10px;
-  }
+  // i.icon {
+  //   margin-right: 10px;
+  // }
 }
 
 .command-button:disabled {
