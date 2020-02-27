@@ -71,6 +71,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "../../sass/imports";
   .wrapper {
     display: inline-block;
   }
@@ -110,12 +111,14 @@ export default {
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.2);
 
-    box-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 0 rgba(0, 0, 0, 0.2);
   }
 
   li {
     padding: 5px;
     background-color: #fff;
+    color: $base-font-color;
+    font-weight: normal;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     white-space: nowrap;
   }

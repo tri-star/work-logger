@@ -44,12 +44,12 @@
     </div>
 
     <div class="action-area">
-      <a class="command-button" @click="$emit('openEditForm')">
+      <button class="command-button" @click="$emit('openEditForm')">
         <i class="icon fas fa-pen" />編集
-      </a>
-      <a class="command-button" @click="$emit('openTaskLogForm')">
+      </button>
+      <button class="command-button" @click="$emit('openTaskLogForm')">
         <i class="icon fas fa-plus" />作業履歴
-      </a>
+      </button>
     </div>
 
     <h2 class="heading-2">
