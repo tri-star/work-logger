@@ -26,12 +26,14 @@ class ProjectListStatQueryBuilder
 
         //タスクや作業ログのレコード数に応じて、キャッシュの利用などを検討する。
         $sql = 'select projects.id, count(distinct tasks.id) as task_count, '
-            . '     count(distinct completed_tasks.id) as completed_task_count, '
+            . '     completed_tasks.count as completed_task_count, '
             . '     sum(task_logs.hours) as total_result_hours, '
             . '     estimate_hours_total.total as total_estimated_hours '
             . ' from projects '
             . ' left join tasks on (tasks.project_id=projects.id) '
-            . ' left join tasks completed_tasks on (completed_tasks.project_id=projects.id and completed_tasks.status=:completed_status) '
+            . ' left join ('
+            . '      select project_id, count(*) as count from tasks where status=:completed_status group by project_id'
+            . ' ) completed_tasks on (completed_tasks.project_id=projects.id) '
             . ' left join ('
             . '     select project_id, sum(estimate_minutes) as total from tasks group by project_id '
             . ' ) estimate_hours_total on (estimate_hours_total.project_id=projects.id)'
