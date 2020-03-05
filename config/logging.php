@@ -38,6 +38,10 @@ return [
             'driver'   => 'stack',
             'channels' => ['daily'],
         ],
+        'production' => [
+            'driver'   => 'stack',
+            'channels' => ['stderr'],
+        ],
 
         'single' => [
             'driver' => 'single',
