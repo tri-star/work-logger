@@ -1,8 +1,5 @@
 #!/bin/bash
 
-mkdir -p /var/log/nginx
-
-
 APP_DIR=/work-logger
 chmod -R go+w $APP_DIR/bootstrap/cache
 mkdir -p $APP_DIR/storage/app/public

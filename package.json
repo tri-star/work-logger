@@ -2,17 +2,19 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "development": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "hot": "NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "test": "vue-cli-service test:unit",
         "test-watch": "node ./node_modules/jest/bin/jest.js --watch",
         "lint-all": "eslint --ignore-path=.gitignore --ext=.js resources/js"
     },
     "devDependencies": {
+    },
+    "dependencies": {
         "@babel/core": "^7.8.4",
         "@babel/polyfill": "^7.8.3",
         "@babel/preset-env": "^7.8.6",
@@ -60,9 +62,7 @@
         "vue-jest": "^3.0.5",
         "vue-loader": "^15.9.0",
         "vue-test-utils": "^1.0.0-beta.11",
-        "webpack-cli": "^3.3.11"
-    },
-    "dependencies": {
+        "webpack-cli": "^3.3.11",
         "@fortawesome/fontawesome-free": "^5.12.1",
         "babel-loader": "^8.0.6",
         "css-loader": "^3.4.2",
