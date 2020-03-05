@@ -1,18 +1,31 @@
 version: "3.5"
 services:
+  app:
+    image: "563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-app:latest"
+    build:
+      context: "."
+      dockerfile: "./docker/app/Dockerfile"
+    environment:
+      USE_TEST_DB: "true"
+    ports:
+      - "9000:9000"
+    volumes:
+      - ".:/work-logger"
+    depends_on:
+      - db
+
   web:
     image: "563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-web:latest"
     build:
       context: "."
-    environment:
-      USE_TEST_DB: "true"
+      dockerfile: "./docker/web/Dockerfile"
     ports:
       - "18000:80"
     volumes:
       - ".:/work-logger"
-      - "./data/log:/var/log"
     depends_on:
-      - db
+      - app
+
   db:
     image: "mysql:5.7"
     expose:
