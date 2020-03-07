@@ -5,6 +5,9 @@ WORKDIR /work-logger
 COPY package.json yarn.lock /work-logger/
 RUN yarn install --production --pure-lock-file
 RUN mkdir -p public/images public/css public/js
+# "."をまるごとコピーしないと、なぜかyarn productionに失敗してしまう。
+# (/public/cssフォルダを作れない、というエラー。/work-logger-/public/cssが出力先のはず)
+# 丸ごとコピーしている限り、ほぼ毎回キャッシュを利用できなくなってしまうので改善したい
 COPY . /work-logger/
 RUN yarn production
 
