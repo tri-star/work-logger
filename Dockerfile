@@ -59,11 +59,10 @@ WORKDIR /work-logger
 COPY composer.json composer.lock /work-logger/
 COPY --from=node /work-logger/public/mix-manifest.json /work-logger/public/
 
-RUN composer install --no-autoloader
+RUN composer install --no-autoloader --no-progress
 
 
 COPY . /work-logger/
-RUN rm public/index.php
 
 RUN composer dump-autoload -o
 
