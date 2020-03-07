@@ -3,8 +3,8 @@ services:
   app:
     image: "563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-app:latest"
     build:
+      target: "app"
       context: "."
-      dockerfile: "./docker/app/Dockerfile"
     environment:
       USE_TEST_DB: "true"
     ports:
@@ -17,8 +17,8 @@ services:
   web:
     image: "563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-web:latest"
     build:
+      target: "web"
       context: "."
-      dockerfile: "./docker/web/Dockerfile"
     ports:
       - "18000:80"
     volumes:
