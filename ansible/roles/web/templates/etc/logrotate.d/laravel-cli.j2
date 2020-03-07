@@ -1,9 +1,0 @@
-{{ project_root }}/storage/logs/cli.log {
-    su {{ app_user }} {{ app_user }}
-    create 0644 {{ app_user }} {{ app_user }}
-    daily
-    dateext
-    missingok
-    notifempty
-    rotate {{ log_keep_days }}
-}
