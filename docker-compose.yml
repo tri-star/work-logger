@@ -19,6 +19,8 @@ services:
     build:
       target: "web"
       context: "."
+    environment:
+      APP_HOST: app
     ports:
       - "18000:80"
     volumes:

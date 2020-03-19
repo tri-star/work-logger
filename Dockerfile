@@ -25,6 +25,12 @@ COPY --from=node /work-logger/public/mix-manifest.json /work-logger/public/
 
 COPY ./docker/web/etc /etc
 
+COPY ./docker/web/entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
+
+CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/entrypoint.sh"]
+
 
 FROM php:7.2-fpm-buster AS app
 
