@@ -82,7 +82,7 @@ describe('ProjectList', () => {
     test('4列目:総見積時間', async () => {
       const totalEstimatedHours = 5.5
       const project = createProject({
-        total_estimated_hours: totalEstimatedHours
+        total_estimate_hours: totalEstimatedHours
       })
       const wrapper = createProjectList({
         [project.id]: project
