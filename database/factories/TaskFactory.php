@@ -17,7 +17,7 @@ $factory->define(WorkLogger\Domain\Task\Task::class, function (Faker $faker) {
         'issue_no'         => $faker->numerify('Issue-####'),
         'title'            => $faker->title,
         'description'      => $faker->lexify('説明文 ???????'),
-        'estimate_minutes' => $faker->numberBetween(30, 240),
+        'estimate_hours'   => $faker->numberBetween(30, 240),
         'actual_minutes'   => 0,
         'status'           => array_rand([
             Task::STATE_NONE,

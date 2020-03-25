@@ -35,7 +35,7 @@ class ProjectListStatQueryBuilder
             . '      select project_id, count(*) as count from tasks where status=:completed_status group by project_id'
             . ' ) completed_tasks on (completed_tasks.project_id=projects.id) '
             . ' left join ('
-            . '     select project_id, sum(estimate_minutes) as total from tasks group by project_id '
+            . '     select project_id, sum(estimate_hours) as total from tasks group by project_id '
             . ' ) estimate_hours_total on (estimate_hours_total.project_id=projects.id)'
             . ' left join task_logs on task_logs.task_id=tasks.id '
             . ' where projects.id in (' . implode(',', $projectIds) . ')'

@@ -14,7 +14,7 @@
                 </router-link>
               </td>
               <td class="col-number">
-                {{ task.estimate_minutes }}h
+                {{ task.estimate_hours }}h
               </td>
               <td class="col-icons">
                 <a

@@ -27,7 +27,7 @@ class Task extends Model
         'description',
         'start_date',
         'end_date',
-        'estimate_minutes',
+        'estimate_hours',
         'actual_minutes',
         'status',
     ];

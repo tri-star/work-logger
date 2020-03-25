@@ -22,7 +22,7 @@
           {{ formatDate(task.end_date) }}
         </td>
         <td class="col-task-stat">
-          {{ task.actual_time }} / {{ task.estimate_minutes }}h
+          {{ task.actual_time }} / {{ task.estimate_hours }}h
         </td>
       </tr>
     </table>

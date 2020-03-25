@@ -32,7 +32,7 @@
       <div class="detail-row">
         <label>実績(予定工数)</label>
         <div class="detail-col">
-          {{ task.actual_time }}h(予定: {{ task.estimate_minutes }}h)
+          {{ task.actual_time }}h(予定: {{ task.estimate_hours }}h)
         </div>
       </div>
       <div class="detail-row">

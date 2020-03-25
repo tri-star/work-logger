@@ -48,7 +48,7 @@ export default {
           title: '',
           start_date: '',
           end_date: '',
-          estimate_minutes: 0,
+          estimate_hours: 0,
           status: 0
         }
       } else {
