@@ -181,8 +181,8 @@ class ProjectListStatQueryBuilderTest extends TestCase
 
         $result = $this->queryBuilder->getProjectList($user);
 
-        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimated_hours']);
-        $this->assertEquals(2, $result[$projects[1]->id]['total_estimated_hours']);
+        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimate_hours']);
+        $this->assertEquals(2, $result[$projects[1]->id]['total_estimate_hours']);
     }
 
 
@@ -210,7 +210,7 @@ class ProjectListStatQueryBuilderTest extends TestCase
 
         $result = $this->queryBuilder->getProjectList($user);
 
-        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimated_hours']);
-        $this->assertEquals(2, $result[$projects[1]->id]['total_estimated_hours']);
+        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimate_hours']);
+        $this->assertEquals(2, $result[$projects[1]->id]['total_estimate_hours']);
     }
 }

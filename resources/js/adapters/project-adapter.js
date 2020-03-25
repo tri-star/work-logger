@@ -15,7 +15,7 @@ class ProjectAdapter {
             'task_count',
             'completed_task_count',
             'total_result_hours',
-            'total_estimated_hours',
+            'total_estimate_hours',
             'updated_at'
           ])
         }]
