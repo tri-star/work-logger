@@ -9,9 +9,10 @@
 <script>
 export default {
 
-  data() {
-    return {
-      env: process.env.MIX_APP_ENV
+  props: {
+    env: {
+      type: String,
+      default: process.env.MIX_APP_ENV
     }
   }
 
