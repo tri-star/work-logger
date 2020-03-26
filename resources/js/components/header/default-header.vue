@@ -1,13 +1,22 @@
 <template>
-  <header>
+  <header :class="{ dev: env == 'local' }">
     <h1 class="logo">
-      WORK LOGGER
+      <span v-if="env == 'local'">(LOCAL)</span>WORK LOGGER
     </h1>
   </header>
 </template>
 
 <script>
-export default {}
+export default {
+
+  props: {
+    env: {
+      type: String,
+      default: process.env.MIX_APP_ENV
+    }
+  }
+
+}
 </script>
 
 <style lang="scss" scoped>
@@ -29,4 +38,9 @@ export default {}
       text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
     }
   }
+
+  .dev {
+    background-color: $header-background-color-dev;
+  }
+
 </style>
