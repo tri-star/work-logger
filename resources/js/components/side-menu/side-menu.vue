@@ -1,35 +1,37 @@
 <template>
-  <aside :class="{side: !hideMenu, 'hide-menu': hideMenu}">
-    <div class="menu-content">
-      <div class="item" @click="handleToggle">
-        <div class="fas fa-bars" />
+  <div :class="{placeholder: true, side: !hideMenu, 'hide-menu': hideMenu}">
+    <aside>
+      <div class="menu-content">
+        <div class="item" @click="handleToggle">
+          <div class="fas fa-bars" />
+        </div>
+        <router-link
+          v-for="(menuItem, index) in menuList"
+          :key="index"
+          tag="div"
+          :to="menuItem.to"
+          class="item "
+        >
+          <div :class="`${menuItem.icon}`" />
+          <span class="label">{{ menuItem.label }}</span>
+        </router-link>
       </div>
-      <router-link
-        v-for="(menuItem, index) in menuList"
-        :key="index"
-        tag="div"
-        :to="menuItem.to"
-        class="item "
-      >
-        <div :class="`${menuItem.icon}`" />
-        <span class="label">{{ menuItem.label }}</span>
-      </router-link>
-    </div>
-    <div class="menu-content-small">
-      <div class="item" @click="handleToggle">
-        <div class="fas fa-bars" />
+      <div class="menu-content-small">
+        <div class="item" @click="handleToggle">
+          <div class="fas fa-bars" />
+        </div>
+        <router-link
+          v-for="(menuItem, index) in menuList"
+          :key="index"
+          tag="div"
+          :to="menuItem.to"
+          class="item"
+        >
+          <div :class="`${menuItem.icon}`" />
+        </router-link>
       </div>
-      <router-link
-        v-for="(menuItem, index) in menuList"
-        :key="index"
-        tag="div"
-        :to="menuItem.to"
-        class="item"
-      >
-        <div :class="`${menuItem.icon}`" />
-      </router-link>
-    </div>
-  </aside>
+    </aside>
+  </div>
 </template>
 
 <script>
@@ -105,13 +107,24 @@ export default {
 <style lang="scss" scoped>
   @import "../../../sass/imports";
 
+  .placeholder {
+    width: $side-menu-width;
+    height: 100vh;
+    margin-right: 50px;
+    transition: width 0.3s, opacity 0.3s;
+  }
+
   aside {
     padding-top: $header-height + 10px;
+    position: fixed;
+
     width: $side-menu-width;
+    height: 100vh;
     background-color: $side-menu-background-color;
 
     transition: width 0.3s, opacity 0.3s;
     overflow: hidden;
+    word-break: keep-all;
 
     .menu-content-small {
       display: none;
@@ -150,6 +163,10 @@ export default {
   .hide-menu {
     width: 50px;
     overflow: hidden;
+
+    aside {
+      width: 50px;
+    }
 
     .menu-content {
       display: none;
