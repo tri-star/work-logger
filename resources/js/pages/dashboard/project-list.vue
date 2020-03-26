@@ -23,7 +23,7 @@
           {{ hours(project.total_result_hours) }}h
         </td>
         <td class="col-total-estimate-hours" data-test="col-total-estimate-hours">
-          {{ hours(project.total_estimated_hours) }}h
+          {{ hours(project.total_estimate_hours) }}h
         </td>
       </tr>
     </table>

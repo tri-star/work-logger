@@ -154,7 +154,7 @@ class TaskApiController extends Controller
                 $task->id => [
                     'id' => $task->id,
                     'title' => $task->title,
-                    'estimate_minutes' => $task->estimate_minutes,
+                    'estimate_hours' => $task->estimate_hours,
                     'actual_time' => $task->getActualTime(),
                     'end_date' => $task->end_date,
                 ]
@@ -171,7 +171,7 @@ class TaskApiController extends Controller
                 $task->id => [
                     'id' => $task->id,
                     'title' => $task->title,
-                    'estimate_minutes' => $task->estimate_minutes,
+                    'estimate_hours' => $task->estimate_hours,
                     'actual_time' => $task->getActualTime(),
                     'end_date' => $task->end_date,
                 ]

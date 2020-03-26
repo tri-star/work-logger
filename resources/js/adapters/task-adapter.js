@@ -10,7 +10,7 @@ class TaskAdapter {
         description: task.description,
         start_date: task.start_date,
         end_date: task.end_date,
-        estimate_minutes: task.estimate_minutes,
+        estimate_hours: task.estimate_hours,
         status: task.status
       }
     )
@@ -25,7 +25,7 @@ class TaskAdapter {
       description: task.description,
       start_date: task.start_date,
       end_date: task.end_date,
-      estimate_minutes: task.estimate_minutes,
+      estimate_hours: task.estimate_hours,
       status: task.status
     })
 
