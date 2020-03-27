@@ -54,7 +54,7 @@ class TaskTest extends TestCase
 
             return $tasks;
         };
-        
+
 
         //自分のプロジェクトで自分が担当しているタスクで、開始日を過ぎて未着手なものはカウントすること
         $now = Carbon::now();
@@ -344,5 +344,104 @@ class TaskTest extends TestCase
 
         $actualCount = Task::inProgress($task->user_id, $projects[0]->id)->count();
         $this->assertEquals(1, $actualCount);
+    }
+
+
+    public function test_scopeIncludeKeyword_キーワード指定なしでも検索可能()
+    {
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create();
+
+        $task = factory(Task::class)->create([
+            'user_id'    => $user->id,
+            'project_id' => $project->id,
+            'status'     => Task::STATE_NONE,
+        ]);
+
+        $matchedTasks = Task::includeKeyword($user->id, $project->id, '')->get();
+        $this->assertCount(1, $matchedTasks);
+        $this->assertEquals($task->id, $matchedTasks[0]->id);
+    }
+
+
+    /**
+     * @dataProvider for_test_scopeIncludeKeyword_指定キーワードに部分一致するものが含まれること
+     */
+    public function test_scopeIncludeKeyword_指定キーワードに部分一致するものが含まれること($title, $keyword, $expectedCount)
+    {
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create();
+
+        $task = factory(Task::class)->create([
+            'user_id'    => $user->id,
+            'title'      => $title,
+            'status'     => Task::STATE_NONE,
+            'project_id' => $project->id,
+        ]);
+
+        $matchedTasks = Task::includeKeyword($user->id, $project->id, $keyword)->get();
+        $this->assertCount($expectedCount, $matchedTasks);
+    }
+
+    public function for_test_scopeIncludeKeyword_指定キーワードに部分一致するものが含まれること()
+    {
+        return [
+            '先頭と一致' => ['title' => 'タイトルのテスト', 'keyword' => 'タイトル', 'expectedCount' => 1],
+            '部分一致'  => ['title' => 'タイトルのテスト', 'keyword' => 'ルのテ', 'expectedCount' => 1],
+            '後方と一致' => ['title' => 'タイトルのテスト', 'keyword' => 'テスト', 'expectedCount' => 1],
+            '一致しない' => ['title' => 'タイトルのテスト', 'keyword' => 'サンプル', 'expectedCount' => 0],
+        ];
+    }
+
+
+
+    /**
+     * @dataProvider for_test_scopeIncludeKeyword_状態別
+     */
+    public function test_scopeIncludeKeyword_状態別($status, $expected)
+    {
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create();
+
+        $task = factory(Task::class)->create([
+            'user_id'    => $user->id,
+            'project_id' => $project->id,
+            'status'     => $status,
+        ]);
+
+        $matchedTasks = Task::includeKeyword($user->id, $project->id, '')->get();
+        $this->assertCount($expected, $matchedTasks);
+    }
+
+
+    public function for_test_scopeIncludeKeyword_状態別()
+    {
+        return [
+            '未着手' => ['status' => Task::STATE_NONE, 'expected' => 1,],
+            '作業中' => ['status' => Task::STATE_IN_PROGRESS, 'expected' => 1,],
+            '完了'  => ['status' => Task::STATE_DONE, 'expected' => 0,],
+            '無効'  => ['status' => Task::STATE_INVALID, 'expected' => 0,],
+            '保留'  => ['status' => Task::STATE_PAUSE, 'expected' => 0,],
+        ];
+    }
+
+
+    public function test_scopeIncludeKeyword_指定プロジェクトのもののみ含まれること()
+    {
+        $user = factory(User::class)->create();
+        $projects = factory(Project::class, 2)->create();
+
+        $tasks = factory(Task::class, 2)->create([
+            'user_id' => $user->id,
+            'status'  => Task::STATE_NONE,
+        ]);
+        $tasks[0]->project_id = $projects[0]->id;
+        $tasks[0]->save();
+        $tasks[1]->project_id = $projects[1]->id;
+        $tasks[1]->save();
+
+        $matchedTasks = Task::includeKeyword($user->id, $projects[0]->id, '')->get();
+        $this->assertCount(1, $matchedTasks);
+        $this->assertEquals($tasks[0]->id, $matchedTasks[0]->id);
     }
 }
