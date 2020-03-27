@@ -12,6 +12,7 @@
         :value="innerName"
         :disabled="disabled"
         class="text-box"
+        @focus="handleFocus"
         @blur="handleBlur"
         @input="handleInput"
       >
@@ -104,6 +105,13 @@ export default {
       this.$nextTick(() => {
         this.$refs.inputBox.focus()
       })
+    },
+
+    async handleFocus (item) {
+      if (this.innerName === '') {
+        this.itemList = await this.suggestCallback(this.innerName)
+        this.showList = (this.itemList.length > 0)
+      }
     },
 
     handleBlur () {

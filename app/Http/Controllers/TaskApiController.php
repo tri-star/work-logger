@@ -119,15 +119,14 @@ class TaskApiController extends Controller
         $user = \Auth::user();
         $projectId = $request->query('project_id', 0);
         $keyword = $request->query('keyword', '');
-
-        if (strlen($keyword) < 2) {
-            $tasks = collect([]);
-        } else {
-            $tasks = Task::includeKeyword($user->id, $projectId, $keyword)->get();
+        if (is_null($keyword)) {
+            $keyword = '';
         }
+
+        $tasks = Task::includeKeyword($user->id, $projectId, $keyword)->limit(20)->get();
         $list = $tasks->map(function ($item) {
             return [
-                'id' => $item->id,
+                'id'   => $item->id,
                 'name' => $item->title,
             ];
         });
@@ -152,12 +151,12 @@ class TaskApiController extends Controller
         $taskList = Task::nearDeadline($user->id, 2)->get()->mapWithKeys(function ($task) {
             return [
                 $task->id => [
-                    'id' => $task->id,
-                    'title' => $task->title,
+                    'id'             => $task->id,
+                    'title'          => $task->title,
                     'estimate_hours' => $task->estimate_hours,
-                    'actual_time' => $task->getActualTime(),
-                    'end_date' => $task->end_date,
-                ]
+                    'actual_time'    => $task->getActualTime(),
+                    'end_date'       => $task->end_date,
+                ],
             ];
         });
         return new JsonResponse(['tasks' => $taskList]);
@@ -169,12 +168,12 @@ class TaskApiController extends Controller
         $taskList = Task::inProgress($user->id)->get()->mapWithKeys(function ($task) {
             return [
                 $task->id => [
-                    'id' => $task->id,
-                    'title' => $task->title,
+                    'id'             => $task->id,
+                    'title'          => $task->title,
                     'estimate_hours' => $task->estimate_hours,
-                    'actual_time' => $task->getActualTime(),
-                    'end_date' => $task->end_date,
-                ]
+                    'actual_time'    => $task->getActualTime(),
+                    'end_date'       => $task->end_date,
+                ],
             ];
         });
         return new JsonResponse(['tasks' => $taskList]);
