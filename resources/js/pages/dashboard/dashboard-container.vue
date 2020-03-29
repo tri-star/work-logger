@@ -16,17 +16,27 @@
                 プロジェクト名:
               </div>
               <div class="col input-width-2">
-                <WlPopupSelect
+                <WlSuggest
+                  class="input-width-3"
                   :value="activeProjectId"
                   :text="activeProjectName"
-                  @openPopup="handleOpenTaskSelectPopup"
+                  :suggest-callback="loadSuggestions"
+                  @selected="handleProjectSelected"
                 />
               </div>
               <div class="col-label label-width-2">
                 タスク名:
               </div>
               <div class="col input-width-2">
-                <WlPopupSelect :value="activeTaskId" :text="activeTaskName" @openPopup="handleOpenTaskSelectPopup" />
+                <WlSuggest
+                  ref="taskSuggest"
+                  class="input-width-3"
+                  :value="activeTaskId"
+                  :text="activeTaskName"
+                  :suggest-callback="loadTaskSuggestions"
+                  :disabled="!canEditTask"
+                  @selected="handleTaskSelected"
+                />
               </div>
             </div>
           </div>
@@ -135,16 +145,16 @@ import TaskList from './task-list'
 import TaskSelectPopupContainer from './task-select-popup-container'
 import WlFrame from '../../components/wl-frame'
 import WlLoadingProxy from '../../components/wl-loading-proxy'
-import WlPopupSelect from '../../components/form/wl-popup-select'
 import WlSubFrame from '../../components/wl-sub-frame'
+import WlSuggest from '../../components/form/wl-suggest'
 import adapterFactory from '../../adapters/adapter-factory'
 
 export default {
   components: {
     WlFrame,
     WlLoadingProxy,
-    WlPopupSelect,
     WlSubFrame,
+    WlSuggest,
     ProjectFormContainer,
     ProjectList,
     TaskList,
@@ -171,6 +181,9 @@ export default {
     },
     canRegisterResult () {
       return this.activeTaskId !== 0 && this.resultHours > 0
+    },
+    canEditTask () {
+      return this.activeProjectId !== 0
     }
   },
 
@@ -191,6 +204,30 @@ export default {
       const dashboardAdapter = adapterFactory.get('DashboardAdapter')
       this.inProgressTasks = await dashboardAdapter.getInProgressTaskList()
     },
+    async loadSuggestions (keyword) {
+      const dashboardAdapter = adapterFactory.get('DashboardAdapter')
+      return dashboardAdapter.getProjectSuggestionList(keyword)
+    },
+    async loadTaskSuggestions (keyword) {
+      const dashboardAdapter = adapterFactory.get('DashboardAdapter')
+      return dashboardAdapter.getTaskSuggestionList(this.activeProjectId, keyword)
+    },
+
+    handleProjectSelected (payload) {
+      this.activeProjectId = payload.value
+      this.activeProjectName = payload.text
+
+      if (this.activeProjectId === 0) {
+        this.activeTaskId = 0
+        this.activeTaskName = ''
+        // this.$refs.taskSuggest.init('', 0)
+      }
+    },
+    handleTaskSelected (payload) {
+      this.activeTaskId = payload.value
+      this.activeTaskName = payload.text
+    },
+
     handleOpenNewProjectForm () {
       this.$refs.projectFormContainer.open(0)
     },
