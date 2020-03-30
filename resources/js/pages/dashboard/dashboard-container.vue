@@ -218,7 +218,7 @@ export default {
       if (this.activeProjectId === 0) {
         this.activeTaskId = 0
         this.activeTaskName = ''
-        // this.$refs.taskSuggest.init('', 0)
+        this.$refs.taskSuggest.init('', 0)
       }
     },
     handleTaskSelected (payload) {
