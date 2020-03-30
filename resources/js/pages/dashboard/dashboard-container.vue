@@ -17,7 +17,6 @@
               </div>
               <div class="col input-width-2">
                 <WlSuggest
-                  class="input-width-3"
                   :value="activeProjectId"
                   :text="activeProjectName"
                   :suggest-callback="loadSuggestions"
@@ -30,7 +29,6 @@
               <div class="col input-width-2">
                 <WlSuggest
                   ref="taskSuggest"
-                  class="input-width-3"
                   :value="activeTaskId"
                   :text="activeTaskName"
                   :suggest-callback="loadTaskSuggestions"
