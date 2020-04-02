@@ -14,6 +14,7 @@
               :value="activeProjectId"
               :text="activeProjectName"
               :suggest-callback="loadSuggestions"
+              data-test="project-input"
               @selected="handleProjectSelected"
             />
           </div>
@@ -27,6 +28,7 @@
               :text="activeTaskName"
               :suggest-callback="loadTaskSuggestionsCallback"
               :disabled="!canEditTask"
+              data-test="task-input"
               @selected="handleTaskSelected"
             />
           </div>
@@ -44,7 +46,14 @@
                 作業時間:
               </div>
               <div class="col input-width-2">
-                <input v-model="resultHours" type="number" class="text-box" size="5" :disabled="!canInputResult"> min
+                <input
+                  v-model="resultHours"
+                  type="number"
+                  class="text-box"
+                  data-test="result-hours"
+                  size="5"
+                  :disabled="!canInputResult"
+                > min
               </div>
             </div>
             <div class="row">
@@ -52,11 +61,17 @@
                 メモ:
               </div>
               <div class="col input-width-2">
-                <textarea v-model="resultMemo" class="text-box" style="width: 90%; height: 60px;" :disabled="!canInputResult" />
+                <textarea
+                  v-model="resultMemo"
+                  class="text-box"
+                  data-test="result-memo"
+                  style="width: 90%; height: 60px;"
+                  :disabled="!canInputResult"
+                />
               </div>
             </div>
             <div class="row row-align-right">
-              <button class="button" :disabled="!canRegisterResult" @click="handleRegisterResult">
+              <button class="button" :disabled="!canRegisterResult" data-test="register-button" @click="handleRegisterResult">
                 登録
               </button>
             </div>
