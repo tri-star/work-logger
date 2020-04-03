@@ -125,7 +125,7 @@ export default {
       return this.activeTaskId !== 0
     },
     canRegisterResult () {
-      return this.activeTaskId !== 0 && this.resultHours > 0
+      return this.activeTaskId !== 0 && this.resultHours > 0 && this.resultMemo !== ''
     },
     canEditTask () {
       return this.activeProjectId !== 0

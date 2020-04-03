@@ -94,14 +94,81 @@ describe('TaskSelect', () => {
     })
   })
 
-  describe('タスク選択欄', () => {
-    // タスクを選択解除しても、プロジェクトには影響しない
-    // タスクを選択解除すると、実績は登録できなくなる
-  })
+  // タスク名欄を未入力にしてもイベントが発火しないため
+  // 選択解除した場合のテストを実装できない。
+  // describe('タスク選択欄', () => {
+  //   // タスクを選択解除しても、プロジェクトには影響しない
+  //   // タスクを選択解除すると、実績は登録できなくなる
+  // })
 
   describe('実績入力欄', () => {
-    // 作業時間は未入力不可
-    // メモ欄も未入力不可
-    //
+    const resultHours = ['', '0', '0.0']
+    resultHours.forEach((resultHour) => {
+      test(`作業時間未入力(${resultHour})の場合、登録実行できないこと`, async () => {
+        const projectSuggestFunction = keyword => [{ id: 1, name: 'Project1' }]
+        const taskSuggestFunction = keyword => [{ id: 1, name: 'Task1' }]
+        const wrapper = createTaskSelect(projectSuggestFunction, taskSuggestFunction)
+
+        await selectProject(wrapper, 'Project1')
+        await selectTask(wrapper, 'Task1')
+
+        wrapper.find('[data-test="result-hours"]').element.value = resultHour
+        expect(wrapper.find('[data-test="register-button"]').element.disabled).toBeTruthy()
+      })
+    })
+
+    test('メモ欄未入力の場合、登録実行できないこと', async () => {
+      const projectSuggestFunction = keyword => [{ id: 1, name: 'Project1' }]
+      const taskSuggestFunction = keyword => [{ id: 1, name: 'Task1' }]
+      const wrapper = createTaskSelect(projectSuggestFunction, taskSuggestFunction)
+
+      await selectProject(wrapper, 'Project1')
+      await selectTask(wrapper, 'Task1')
+
+      wrapper.find('[data-test="result-hours"]').element.value = '1'
+      wrapper.find('[data-test="result-hours"]').trigger('input')
+      wrapper.find('[data-test="result-memo"]').element.value = ''
+      wrapper.find('[data-test="result-memo"]').trigger('input')
+      await flushPromises()
+      expect(wrapper.find('[data-test="register-button"]').element.disabled).toBeTruthy()
+    })
+
+    test('作業時間、メモ欄入力済の場合、登録実行できること', async () => {
+      const projectSuggestFunction = keyword => [{ id: 1, name: 'Project1' }]
+      const taskSuggestFunction = keyword => [{ id: 1, name: 'Task1' }]
+      const wrapper = createTaskSelect(projectSuggestFunction, taskSuggestFunction)
+
+      await selectProject(wrapper, 'Project1')
+      await selectTask(wrapper, 'Task1')
+
+      wrapper.find('[data-test="result-hours"]').element.value = '1'
+      wrapper.find('[data-test="result-hours"]').trigger('input')
+      wrapper.find('[data-test="result-memo"]').element.value = 'test'
+      wrapper.find('[data-test="result-memo"]').trigger('input')
+      await flushPromises()
+      expect(wrapper.find('[data-test="register-button"]').element.disabled).toBeFalsy()
+    })
+
+    test('作業履歴を登録するとイベントが発行されること', async () => {
+      const projectSuggestFunction = keyword => [{ id: 1, name: 'Project1' }]
+      const taskSuggestFunction = keyword => [{ id: 10, name: 'Task1' }]
+      const wrapper = createTaskSelect(projectSuggestFunction, taskSuggestFunction)
+
+      await selectProject(wrapper, 'Project1')
+      await selectTask(wrapper, 'Task1')
+
+      wrapper.find('[data-test="result-hours"]').element.value = '1'
+      wrapper.find('[data-test="result-hours"]').trigger('input')
+      wrapper.find('[data-test="result-memo"]').element.value = 'test'
+      wrapper.find('[data-test="result-memo"]').trigger('input')
+      await flushPromises()
+
+      wrapper.find('[data-test="register-button"]').trigger('click')
+      expect(wrapper.emitted('register-result')[0][0]).toStrictEqual({
+        taskId: 10,
+        resultHours: '1',
+        resultMemo: 'test',
+      })
+    })
   })
 })
