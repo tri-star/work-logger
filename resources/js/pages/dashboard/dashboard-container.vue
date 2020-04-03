@@ -28,13 +28,15 @@
           </WlLoadingProxy>
         </template>
       </WlFrame>
-      <!-- <WlFrame>
+    </div>
+    <!-- <WlFrame>
         <template slot="title">
           プロジェクト毎実績
         </template>
         <template slot="body" />
       </WlFrame> -->
 
+    <div class="frame-list clear-fix">
       <WlFrame>
         <template slot="title">
           作業中のタスク一覧
