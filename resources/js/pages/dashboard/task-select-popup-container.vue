@@ -7,31 +7,13 @@
             <div class="col-label label-width-2">
               プロジェクト
             </div>
-            <div class="col">
-              <WlSuggest
-                class="input-width-3"
-                :value="projectId"
-                :text="projectName"
-                :suggest-callback="loadSuggestions"
-                @selected="handleProjectSelected"
-              />
-            </div>
+            <div class="col" />
           </div>
           <div class="row">
             <div class="col-label label-width-2">
               タスク
             </div>
-            <div class="col">
-              <WlSuggest
-                ref="taskSuggest"
-                class="input-width-3"
-                :value="taskId"
-                :text="taskName"
-                :suggest-callback="loadTaskSuggestions"
-                :disabled="!canEditTask"
-                @selected="handleTaskSelected"
-              />
-            </div>
+            <div class="col" />
           </div>
           <div class="row">
             <div class="col">
@@ -50,11 +32,8 @@
 </template>
 
 <script>
-import AdapterFactory from '../../adapters/adapter-factory'
 import WlModal from '../../components/wl-modal'
 import WlSuggest from '../../components/form/wl-suggest'
-
-const dashboardAdapter = AdapterFactory.get('DashboardAdapter')
 
 export default {
   components: {
@@ -94,9 +73,6 @@ export default {
   },
 
   computed: {
-    canEditTask () {
-      return this.projectId !== 0
-    }
   },
 
   methods: {
@@ -104,27 +80,6 @@ export default {
       this.showModal = true
     },
 
-    async loadSuggestions (keyword) {
-      return dashboardAdapter.getProjectSuggestionList(keyword)
-    },
-    async loadTaskSuggestions (keyword) {
-      return dashboardAdapter.getTaskSuggestionList(this.projectId, keyword)
-    },
-
-    handleProjectSelected (payload) {
-      this.projectId = payload.value
-      this.projectName = payload.text
-
-      if (this.projectId === 0) {
-        this.taskId = 0
-        this.taskName = ''
-        this.$refs.taskSuggest.init('', 0)
-      }
-    },
-    handleTaskSelected (payload) {
-      this.taskId = payload.value
-      this.taskName = payload.text
-    },
     handleSetProjectAndTask () {
       this.$emit('setProjectAndTask', {
         projectId: this.projectId,
