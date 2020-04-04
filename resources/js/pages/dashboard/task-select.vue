@@ -53,7 +53,7 @@
                   data-test="result-hours"
                   size="5"
                   :disabled="!canInputResult"
-                > min
+                > h
               </div>
             </div>
             <div class="row">
