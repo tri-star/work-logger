@@ -63,6 +63,7 @@ describe('TaskSelect', () => {
       expect(wrapper.find('[data-test="project-input"]').exists()).toBeTruthy()
       expect(wrapper.find('[data-test="project-input"]').props()).not.toMatchObject({ disabled: true })
       expect(wrapper.find('[data-test="task-input"]').props()).toMatchObject({ disabled: true })
+      expect(wrapper.find('[data-test="add-task-button"]').classes()).toContain('icon-button-disabled')
       expect(wrapper.find('[data-test="result-hours"]').element.disabled).toBeTruthy()
       expect(wrapper.find('[data-test="result-memo"]').element.disabled).toBeTruthy()
       expect(wrapper.find('[data-test="register-button"]').element.disabled).toBeTruthy()
@@ -77,6 +78,7 @@ describe('TaskSelect', () => {
 
       expect(wrapper.find('[data-test="project-input"] .selected-text').text()).toBe('Project1')
       expect(wrapper.find('[data-test="task-input"]').props()).not.toMatchObject({ disabled: true })
+      expect(wrapper.find('[data-test="add-task-button"]').classes()).not.toContain('icon-button-disabled')
     })
 
     // タスク名まで渡した場合、実績の入力が出来る

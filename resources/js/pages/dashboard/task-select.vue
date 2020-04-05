@@ -35,6 +35,7 @@
           <div class="col input-width-1">
             <a
               :class="['icon-button', 'fas' ,'fa-plus-circle', canEditTask ? '' : 'icon-button-disabled']"
+              data-test="add-task-button"
               title="新規タスク"
               @click="handleAddTaskClick"
             />
