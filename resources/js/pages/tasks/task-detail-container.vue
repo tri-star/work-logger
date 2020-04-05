@@ -9,7 +9,7 @@
     />
     <TaskFormContainer
       ref="editForm"
-      :project="project"
+      :project-id="project.id"
       @taskSaved="handleTaskSaved"
     />
     <TaskLogFormContainer

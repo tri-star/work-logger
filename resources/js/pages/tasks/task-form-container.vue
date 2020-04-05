@@ -19,8 +19,8 @@ export default {
     TaskForm
   },
   props: {
-    project: {
-      type: Object,
+    projectId: {
+      type: Number,
       required: true
     }
   },
@@ -71,7 +71,7 @@ export default {
     },
     async addTask (task) {
       const adapter = AdapterFactory.get('TaskAdapter')
-      await adapter.addTask(this.project.id, task)
+      await adapter.addTask(this.projectId, task)
       this.$emit('taskRegistered')
       this.showModal = false
     },
