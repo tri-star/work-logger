@@ -71,8 +71,8 @@ export default {
     },
     async addTask (task) {
       const adapter = AdapterFactory.get('TaskAdapter')
-      await adapter.addTask(this.projectId, task)
-      this.$emit('taskRegistered')
+      const result = await adapter.addTask(this.projectId, task)
+      this.$emit('taskRegistered', result.registered_task)
       this.showModal = false
     },
     async updateTask (task) {
