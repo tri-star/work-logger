@@ -43,49 +43,66 @@
         </div>
       </div>
 
-      <WlSubFrame size="s">
-        <template slot="title">
-          実績
-        </template>
-        <template slot="body">
-          <div class="form form-align-left">
-            <div class="row">
-              <div class="col-label label-width-2">
-                作業時間:
+      <div class="form form-align-left">
+        <div class="row">
+          <WlSubFrame size="s">
+            <template slot="title">
+              実績
+            </template>
+            <template slot="body">
+              <div class="form form-align-left">
+                <div class="row">
+                  <div class="col-label label-width-2">
+                    作業時間:
+                  </div>
+                  <div class="col input-width-2">
+                    <input
+                      v-model="resultHours"
+                      type="number"
+                      class="text-box"
+                      data-test="result-hours"
+                      size="5"
+                      :disabled="!canInputResult"
+                    > h
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-label label-width-2">
+                    メモ:
+                  </div>
+                  <div class="col input-width-2">
+                    <textarea
+                      v-model="resultMemo"
+                      class="text-box"
+                      data-test="result-memo"
+                      style="width: 90%; height: 60px;"
+                      :disabled="!canInputResult"
+                    />
+                  </div>
+                </div>
+                <div class="row row-align-right">
+                  <button class="button" :disabled="!canRegisterResult" data-test="register-button" @click="handleRegisterResult">
+                    登録
+                  </button>
+                </div>
               </div>
-              <div class="col input-width-2">
-                <input
-                  v-model="resultHours"
-                  type="number"
-                  class="text-box"
-                  data-test="result-hours"
-                  size="5"
-                  :disabled="!canInputResult"
-                > h
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-label label-width-2">
-                メモ:
-              </div>
-              <div class="col input-width-2">
-                <textarea
-                  v-model="resultMemo"
-                  class="text-box"
-                  data-test="result-memo"
-                  style="width: 90%; height: 60px;"
-                  :disabled="!canInputResult"
-                />
-              </div>
-            </div>
-            <div class="row row-align-right">
-              <button class="button" :disabled="!canRegisterResult" data-test="register-button" @click="handleRegisterResult">
-                登録
-              </button>
-            </div>
-          </div>
-        </template>
-      </WlSubFrame>
+            </template>
+          </WlSubFrame>
+          <WlSubFrame size="s">
+            <template slot="title">
+              ポモドーロ
+            </template>
+            <template slot="body">
+              <WlCircleTimer
+                remained-seconds="10"
+                time-limit="60"
+                :disabled="true"
+              />
+            </template>
+          </WlSubFrame>
+        </div>
+      </div>
+
       <TaskFormContainer
         ref="addTaskForm"
         :project-id="activeProjectId"
@@ -98,6 +115,7 @@
 <script>
 
 import TaskFormContainer from '../tasks/task-form-container'
+import WlCircleTimer from '../../components/wl-circle-timer'
 import WlFrame from '../../components/wl-frame'
 import WlSubFrame from '../../components/wl-sub-frame'
 import WlSuggest from '../../components/form/wl-suggest'
@@ -106,6 +124,7 @@ export default {
 
   components: {
     TaskFormContainer,
+    WlCircleTimer,
     WlFrame,
     WlSubFrame,
     WlSuggest
