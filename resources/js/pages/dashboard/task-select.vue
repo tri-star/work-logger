@@ -32,6 +32,14 @@
               @selected="handleTaskSelected"
             />
           </div>
+          <div class="col input-width-1">
+            <a
+              :class="['icon-button', 'fas' ,'fa-plus-circle', canEditTask ? '' : 'icon-button-disabled']"
+              data-test="add-task-button"
+              title="新規タスク"
+              @click="handleAddTaskClick"
+            />
+          </div>
         </div>
       </div>
 
@@ -78,12 +86,18 @@
           </div>
         </template>
       </WlSubFrame>
+      <TaskFormContainer
+        ref="addTaskForm"
+        :project-id="activeProjectId"
+        @taskRegistered="handleTaskRegistered"
+      />
     </template>
   </Wlframe>
 </template>
 
 <script>
 
+import TaskFormContainer from '../tasks/task-form-container'
 import WlFrame from '../../components/wl-frame'
 import WlSubFrame from '../../components/wl-sub-frame'
 import WlSuggest from '../../components/form/wl-suggest'
@@ -91,6 +105,7 @@ import WlSuggest from '../../components/form/wl-suggest'
 export default {
 
   components: {
+    TaskFormContainer,
     WlFrame,
     WlSubFrame,
     WlSuggest
@@ -161,7 +176,17 @@ export default {
         resultHours: this.resultHours,
         resultMemo: this.resultMemo,
       }, done)
-    }
+    },
+
+    async handleAddTaskClick () {
+      const taskId = 0
+      this.$refs.addTaskForm.open(taskId)
+    },
+    handleTaskRegistered (payload) {
+      this.activeTaskId = payload.id
+      this.activeTaskName = payload.title
+      this.$refs.taskSuggest.init(payload.title, payload.id)
+    },
 
   },
 

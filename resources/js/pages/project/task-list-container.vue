@@ -123,7 +123,7 @@
     </section>
     <TaskFormContainer
       ref="taskForm"
-      :project="project"
+      :project-id="project.id"
       @taskRegistered="handleTaskRegistered"
     />
     <BulkDateUpdateFormContainer ref="bulkDateUpdateFormContainer" />
