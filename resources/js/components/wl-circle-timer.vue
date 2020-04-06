@@ -85,6 +85,7 @@ export default {
   height: 200px;
   background-color: #ddd;
 
+  //グラフの余白部分(0%の時はslice-2)。
   .slice {
     position: absolute;
     top: 0;
@@ -92,10 +93,12 @@ export default {
     width: 100%;
     height: 100%;
 
+    // 上半分を塗りつぶす(50%未満の表現に使用する)
     &.slice-1 {
       clip: rect(0 200px 100px 0);
       background-color: #f00;
     }
+    // 左半分を塗りつぶす(50%以上の表現に使用する。50%未満の時は色を変更する)
     &.slice-2 {
       clip: rect(0 100px 200px 0);
       background-color: #f00;
@@ -103,6 +106,7 @@ export default {
 
   }
 
+  // グラフの中央部分(ドーナツ状に表示するために使用)
   .timer-center {
     position: absolute;
     border-radius: 50%;
