@@ -13,10 +13,6 @@
 export default {
 
   props: {
-    taskId: {
-      type: Number,
-      required: true,
-    },
     timeLimit: {
       type: Number,
       required: true
@@ -33,11 +29,11 @@ export default {
 
   computed: {
     percentage () {
-      if (this.remainedSeconds > this.timeLimit) {
-        return 100
-      }
       if (this.timeLimit <= 0 || this.remainedSeconds <= 0) {
         return 0
+      }
+      if (this.remainedSeconds > this.timeLimit) {
+        return 100
       }
 
       return (this.remainedSeconds / this.timeLimit) * 100

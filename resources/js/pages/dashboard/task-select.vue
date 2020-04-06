@@ -94,8 +94,9 @@
             </template>
             <template slot="body">
               <WlCircleTimer
-                remained-seconds="10"
-                time-limit="60"
+                :task-id="1"
+                :remained-seconds="10"
+                :time-limit="60"
                 :disabled="true"
               />
             </template>
