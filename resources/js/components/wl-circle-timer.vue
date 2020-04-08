@@ -3,7 +3,7 @@
     <div class="slice slice-1" :style="`transform:rotate(${slice1Degree}deg); background-color: #f00;`" />
     <div class="slice slice-2" :style="`transform:rotate(calc(${slice2Degree}deg)); background-color: ${slice2Color};`" />
     <div class="timer-center">
-      <span>{{ remainedSeconds }}</span>
+      <span>{{ formatTime(remainedSeconds) }}</span>
     </div>
   </div>
 </template>
@@ -65,6 +65,14 @@ export default {
       return '#f00'
     }
 
+  },
+
+  methods: {
+    formatTime (seconds) {
+      const min = String(Math.floor(seconds / 60)).padStart(2, '0')
+      const sec = String(seconds % 60).padStart(2, '0')
+      return `${min}:${sec}`
+    }
   }
 
 }
