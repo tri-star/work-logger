@@ -93,12 +93,22 @@
               ポモドーロ
             </template>
             <template slot="body">
-              <WlCircleTimer
-                :task-id="1"
-                :remained-seconds="10"
-                :time-limit="60"
-                :disabled="true"
-              />
+              <div class="pomodoro-container">
+                <div class="pomodoro-column">
+                  <TaskTimer
+                    ref="taskTimer"
+                    :task-id="1"
+                  />
+                </div>
+                <div class="pomodoro-column-form">
+                  <button v-show="isTimerStartButtonVisible" class="button" data-test="start-timer-button" @click="handleStartTimer">
+                    スタート
+                  </button>
+                  <button v-show="isTimerStopButtonVisible" class="button" data-test="start-timer-button" @click="handleStopTimer">
+                    停止
+                  </button>
+                </div>
+              </div>
             </template>
           </WlSubFrame>
         </div>
@@ -115,17 +125,23 @@
 
 <script>
 
+import { PomodoroController } from '../../domain/pomodoro/pomodoro'
 import TaskFormContainer from '../tasks/task-form-container'
-import WlCircleTimer from '../../components/wl-circle-timer'
+import TaskTimer from './task-timer'
 import WlFrame from '../../components/wl-frame'
 import WlSubFrame from '../../components/wl-sub-frame'
 import WlSuggest from '../../components/form/wl-suggest'
+
+const TIMER_STATE_STOPPED = 0
+const TIMER_STATE_RUNNING = 1
+const TIMER_STATE_PAUSED = 2
+const pomodoroController = new PomodoroController()
 
 export default {
 
   components: {
     TaskFormContainer,
-    WlCircleTimer,
+    TaskTimer,
     WlFrame,
     WlSubFrame,
     WlSuggest
@@ -151,7 +167,8 @@ export default {
       activeTaskName: '',
       resultHours: 0.0,
       resultMemo: '',
-
+      pomodoroState: null,
+      timerState: TIMER_STATE_STOPPED,
     }
   },
 
@@ -164,7 +181,17 @@ export default {
     },
     canEditTask () {
       return this.activeProjectId !== 0
-    }
+    },
+    canStartTimer () {
+      return this.activeTaskId !== 0
+    },
+    isTimerStartButtonVisible () {
+      return this.timerState === TIMER_STATE_STOPPED
+    },
+    isTimerStopButtonVisible () {
+      return this.timerState === TIMER_STATE_RUNNING
+    },
+
   },
 
   methods: {
@@ -207,9 +234,35 @@ export default {
       this.activeTaskName = payload.title
       this.$refs.taskSuggest.init(payload.title, payload.id)
     },
+    handleStartTimer () {
+      this.pomodoroState = { ...pomodoroController.progressState() }
+      this.timerState = TIMER_STATE_RUNNING
+      this.$refs.taskTimer.start(this.pomodoroState.minutes * 60)
+    },
+    handleStopTimer () {
+      pomodoroController.restoreState()
+      this.pomodoroState = { ...pomodoroController.getCurrentState() }
+      this.timerState = TIMER_STATE_STOPPED
+      this.$refs.taskTimer.stop()
+    }
 
   },
 
 }
 
 </script>
+
+<style lang="scss" scoped>
+
+.pomodoro-container {
+  display: flex;
+
+  .pomodoro-column-form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+  }
+}
+
+</style>
