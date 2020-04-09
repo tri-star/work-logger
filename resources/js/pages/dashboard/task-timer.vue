@@ -61,6 +61,18 @@ export default {
       this.$emit('paused')
     },
 
+    resume () {
+      this.state = STATE_RUNNING
+      this.timer = setInterval(() => {
+        this.remainedSeconds--
+        if (this.remainedSeconds <= 0) {
+          clearTimeout(this.timer)
+          this.state = STATE_STOPPED
+          this.$emit('done')
+        }
+      }, 1000)
+    },
+
     stop () {
       if (this.timer !== null) {
         clearTimeout(this.timer)

@@ -88,7 +88,7 @@
               </div>
             </template>
           </WlSubFrame>
-          <WlSubFrame size="s">
+          <WlSubFrame size="m">
             <template slot="title">
               ポモドーロ
             </template>
@@ -98,15 +98,37 @@
                   <TaskTimer
                     ref="taskTimer"
                     :task-id="1"
+                    @done="handleTimerDone"
                   />
                 </div>
                 <div class="pomodoro-column-form">
-                  <button v-show="isTimerStartButtonVisible" class="button" data-test="start-timer-button" @click="handleStartTimer">
-                    スタート
-                  </button>
-                  <button v-show="isTimerStopButtonVisible" class="button" data-test="start-timer-button" @click="handleStopTimer">
-                    停止
-                  </button>
+                  <div class="label">
+                    <p>作業内容：</p>
+                  </div>
+                  <div class="memo">
+                    <textarea v-model="pomodoroMemo" :disabled="!canInputPomodoroMemo" />
+                  </div>
+                  <div v-show="isTimerStartButtonVisible">
+                    <button class="button" data-test="start-timer-button" :disabled="!canStartTimer" @click="handleStartTimer">
+                      スタート
+                    </button>
+                  </div>
+                  <div v-show="isTimerStopButtonVisible">
+                    <button v-show="timerState == getTimerStates().TIMER_STATE_RUNNING" class="button" data-test="start-timer-button" @click="handlePauseTimer">
+                      一時停止
+                    </button>
+                    <button v-show="timerState == getTimerStates().TIMER_STATE_PAUSED" class="button" data-test="start-timer-button" @click="handleResumeTimer">
+                      再開
+                    </button>
+                    <button class="button" data-test="start-timer-button" @click="handleStopTimer">
+                      停止
+                    </button>
+                  </div>
+                  <div v-show="isTimerDoneButtonVisible">
+                    <button class="button" data-test="start-timer-button" :disabled="!canSavePomodoroResult" @click="handleRegisterPomodoro">
+                      完了
+                    </button>
+                  </div>
                 </div>
               </div>
             </template>
@@ -125,7 +147,7 @@
 
 <script>
 
-import { PomodoroController } from '../../domain/pomodoro/pomodoro'
+import { PomodoroController, PomodoroState } from '../../domain/pomodoro/pomodoro'
 import TaskFormContainer from '../tasks/task-form-container'
 import TaskTimer from './task-timer'
 import WlFrame from '../../components/wl-frame'
@@ -135,6 +157,7 @@ import WlSuggest from '../../components/form/wl-suggest'
 const TIMER_STATE_STOPPED = 0
 const TIMER_STATE_RUNNING = 1
 const TIMER_STATE_PAUSED = 2
+const TIMER_STATE_DONE = 3
 const pomodoroController = new PomodoroController()
 
 export default {
@@ -168,6 +191,7 @@ export default {
       resultHours: 0.0,
       resultMemo: '',
       pomodoroState: null,
+      pomodoroMemo: '',
       timerState: TIMER_STATE_STOPPED,
     }
   },
@@ -185,13 +209,46 @@ export default {
     canStartTimer () {
       return this.activeTaskId !== 0
     },
+    canSavePomodoroResult () {
+      if (this.activeTaskId === 0) {
+        return false
+      }
+
+      if (this.pomodoroState && this.pomodoroState.state === PomodoroState.STATE_WORK &&
+          String(this.pomodoroMemo).trim() === '') {
+        return false
+      }
+
+      return true
+    },
+    canInputPomodoroMemo () {
+      if (this.activeTaskId === 0) {
+        return false
+      }
+      if (this.pomodoroState && this.pomodoroState.state === PomodoroState.STATE_BREAK) {
+        return false
+      }
+      return true
+    },
     isTimerStartButtonVisible () {
       return this.timerState === TIMER_STATE_STOPPED
     },
     isTimerStopButtonVisible () {
-      return this.timerState === TIMER_STATE_RUNNING
+      return this.timerState === TIMER_STATE_RUNNING ||
+      this.timerState === TIMER_STATE_PAUSED
     },
+    isTimerDoneButtonVisible () {
+      return this.timerState === TIMER_STATE_DONE
+    }
 
+  },
+  watch: {
+    activeTaskId (newTaskId, oldTaskId) {
+      console.log(newTaskId)
+      if (newTaskId === 0 && this.timerState !== TIMER_STATE_STOPPED) {
+        this.handleStopTimer()
+      }
+    }
   },
 
   methods: {
@@ -237,16 +294,40 @@ export default {
     handleStartTimer () {
       this.pomodoroState = { ...pomodoroController.progressState() }
       this.timerState = TIMER_STATE_RUNNING
-      this.$refs.taskTimer.start(this.pomodoroState.minutes * 60)
+      this.$refs.taskTimer.start(this.pomodoroState.minutes)
     },
     handleStopTimer () {
       pomodoroController.restoreState()
       this.pomodoroState = { ...pomodoroController.getCurrentState() }
       this.timerState = TIMER_STATE_STOPPED
       this.$refs.taskTimer.stop()
-    }
+    },
+    handlePauseTimer () {
+      this.timerState = TIMER_STATE_PAUSED
+      this.$refs.taskTimer.pause()
+    },
+    handleResumeTimer () {
+      this.timerState = TIMER_STATE_RUNNING
+      this.$refs.taskTimer.resume()
+    },
 
-  },
+    handleTimerDone () {
+      this.timerState = TIMER_STATE_DONE
+    },
+
+    handleRegisterPomodoro () {
+      this.timerState = TIMER_STATE_STOPPED
+    },
+
+    getTimerStates () {
+      return {
+        TIMER_STATE_STOPPED,
+        TIMER_STATE_RUNNING,
+        TIMER_STATE_PAUSED,
+        TIMER_STATE_DONE
+      }
+    },
+  }
 
 }
 
@@ -259,9 +340,24 @@ export default {
 
   .pomodoro-column-form {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
     width: 100%;
+    margin-left: 20px;
+
+    .label {
+      align-self: flex-start;
+    }
+
+    .memo {
+      width: 100%;
+      textarea {
+        width: 100%;
+        height: 100px;
+      }
+
+    }
   }
 }
 
