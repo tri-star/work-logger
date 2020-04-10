@@ -295,7 +295,7 @@ export default {
     handleStartTimer () {
       this.pomodoroState = { ...pomodoroController.progressState() }
       this.timerState = TIMER_STATE_RUNNING
-      this.$refs.taskTimer.start(this.pomodoroState.minutes / 60)
+      this.$refs.taskTimer.start(this.pomodoroState.minutes * 60)
     },
     handleStopTimer () {
       pomodoroController.restoreState()
