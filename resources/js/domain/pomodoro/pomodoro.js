@@ -33,6 +33,15 @@ export class PomodoroController {
     return this.currentState
   }
 
+  reset () {
+    const initialState = PomodoroState.STATE_INITIAL
+    this.currentState = {
+      state: initialState,
+      minutes: this._getMinutes(initialState),
+    }
+    this.prevState = null
+  }
+
   _getNextState (state) {
     switch (state) {
       case PomodoroState.STATE_INITIAL:
