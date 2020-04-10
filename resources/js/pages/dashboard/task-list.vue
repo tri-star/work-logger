@@ -36,7 +36,7 @@ import dayjs from 'dayjs'
 export default {
   props: {
     tasks: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
