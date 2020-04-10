@@ -49,4 +49,17 @@ describe('PomodoroController', () => {
       expect(state.state).toBe(PomodoroState.STATE_WORK)
     })
   })
+
+  describe('リセット', () => {
+    test('リセットすると常にSTATE_INITIALに戻ること', () => {
+      const controller = new PomodoroController(PomodoroState.STATE_WORK)
+      controller.progressState()
+
+      controller.reset()
+
+      const state = controller.getCurrentState()
+      expect(state.state).toBe(PomodoroState.STATE_INITIAL)
+      expect(state.minutes).toBe(0)
+    })
+  })
 })

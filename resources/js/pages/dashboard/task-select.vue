@@ -226,9 +226,6 @@ export default {
       if (this.activeTaskId === 0) {
         return false
       }
-      if (this.pomodoroState && this.pomodoroState.state === PomodoroState.STATE_BREAK) {
-        return false
-      }
       return true
     },
     isTimerStartButtonVisible () {
@@ -245,9 +242,12 @@ export default {
   },
   watch: {
     activeTaskId (newTaskId, oldTaskId) {
-      console.log(newTaskId)
-      if (newTaskId === 0 && this.timerState !== TIMER_STATE_STOPPED) {
-        this.handleStopTimer()
+      if (newTaskId === 0) {
+        if (this.timerState !== TIMER_STATE_STOPPED) {
+          this.handleStopTimer()
+        }
+        pomodoroController.reset()
+        this.timerState = TIMER_STATE_STOPPED
       }
     }
   },
@@ -317,6 +317,11 @@ export default {
     },
 
     handleRegisterPomodoro () {
+      if (this.pomodoroState.state === PomodoroState.STATE_BREAK) {
+        this.timerState = TIMER_STATE_STOPPED
+        return
+      }
+
       const done = () => {
         this.timerState = TIMER_STATE_STOPPED
       }
