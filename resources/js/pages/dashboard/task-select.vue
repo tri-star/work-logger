@@ -153,6 +153,7 @@ import TaskTimer from './task-timer'
 import WlFrame from '../../components/wl-frame'
 import WlSubFrame from '../../components/wl-sub-frame'
 import WlSuggest from '../../components/form/wl-suggest'
+import _floor from 'lodash/floor'
 
 const TIMER_STATE_STOPPED = 0
 const TIMER_STATE_RUNNING = 1
@@ -294,7 +295,7 @@ export default {
     handleStartTimer () {
       this.pomodoroState = { ...pomodoroController.progressState() }
       this.timerState = TIMER_STATE_RUNNING
-      this.$refs.taskTimer.start(this.pomodoroState.minutes)
+      this.$refs.taskTimer.start(this.pomodoroState.minutes / 60)
     },
     handleStopTimer () {
       pomodoroController.restoreState()
@@ -316,7 +317,14 @@ export default {
     },
 
     handleRegisterPomodoro () {
-      this.timerState = TIMER_STATE_STOPPED
+      const done = () => {
+        this.timerState = TIMER_STATE_STOPPED
+      }
+      this.$emit('register-result', {
+        taskId: this.activeTaskId,
+        resultHours: _floor(this.pomodoroState.minutes / 60, 1),
+        resultMemo: this.pomodoroMemo,
+      }, done)
     },
 
     getTimerStates () {
