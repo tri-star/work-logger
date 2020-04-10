@@ -35,10 +35,12 @@ export default {
 
   .size-l {
     width: calc(100% - 20px);
+    min-width: 800px;
   }
 
   .size-m {
     width: calc(50% - 40px);
+    min-width: 600px;
   }
 
   .size-s {

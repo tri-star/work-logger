@@ -28,14 +28,14 @@ class ProjectListStatQueryBuilder
         $sql = 'select projects.id, count(distinct tasks.id) as task_count, '
             . '     completed_tasks.count as completed_task_count, '
             . '     sum(task_logs.hours) as total_result_hours, '
-            . '     estimate_hours_total.total as total_estimated_hours '
+            . '     estimate_hours_total.total as total_estimate_hours '
             . ' from projects '
             . ' left join tasks on (tasks.project_id=projects.id) '
             . ' left join ('
             . '      select project_id, count(*) as count from tasks where status=:completed_status group by project_id'
             . ' ) completed_tasks on (completed_tasks.project_id=projects.id) '
             . ' left join ('
-            . '     select project_id, sum(estimate_minutes) as total from tasks group by project_id '
+            . '     select project_id, sum(estimate_hours) as total from tasks group by project_id '
             . ' ) estimate_hours_total on (estimate_hours_total.project_id=projects.id)'
             . ' left join task_logs on task_logs.task_id=tasks.id '
             . ' where projects.id in (' . implode(',', $projectIds) . ')'
@@ -55,7 +55,7 @@ class ProjectListStatQueryBuilder
                     'task_count'            => $projectStats[$project->id]->task_count,
                     'completed_task_count'  => $projectStats[$project->id]->completed_task_count,
                     'total_result_hours'    => $projectStats[$project->id]->total_result_hours,
-                    'total_estimated_hours' => $projectStats[$project->id]->total_estimated_hours,
+                    'total_estimate_hours' => $projectStats[$project->id]->total_estimate_hours,
                 ],
             ];
         });

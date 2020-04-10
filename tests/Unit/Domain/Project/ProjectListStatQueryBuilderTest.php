@@ -171,18 +171,18 @@ class ProjectListStatQueryBuilderTest extends TestCase
         $projects[1]->users()->save($user);
 
         factory(Task::class, 3)->create([
-            'project_id'       => $projects[0]->id,
-            'estimate_minutes' => 1.4,
+            'project_id'     => $projects[0]->id,
+            'estimate_hours' => 1.4,
         ]);
         factory(Task::class, 1)->create([
-            'project_id'       => $projects[1]->id,
-            'estimate_minutes' => 2,
+            'project_id'     => $projects[1]->id,
+            'estimate_hours' => 2,
         ]);
 
         $result = $this->queryBuilder->getProjectList($user);
 
-        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimated_hours']);
-        $this->assertEquals(2, $result[$projects[1]->id]['total_estimated_hours']);
+        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimate_hours']);
+        $this->assertEquals(2, $result[$projects[1]->id]['total_estimate_hours']);
     }
 
 
@@ -197,12 +197,12 @@ class ProjectListStatQueryBuilderTest extends TestCase
         $projects[1]->users()->save($user);
 
         $tasks = factory(Task::class, 3)->create([
-            'project_id'       => $projects[0]->id,
-            'estimate_minutes' => 1.4,
+            'project_id'     => $projects[0]->id,
+            'estimate_hours' => 1.4,
         ]);
         factory(Task::class, 1)->create([
-            'project_id'       => $projects[1]->id,
-            'estimate_minutes' => 2,
+            'project_id'     => $projects[1]->id,
+            'estimate_hours' => 2,
         ]);
         factory(TaskLog::class, 2)->create([
             'task_id' => $tasks[0]->id,
@@ -210,7 +210,7 @@ class ProjectListStatQueryBuilderTest extends TestCase
 
         $result = $this->queryBuilder->getProjectList($user);
 
-        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimated_hours']);
-        $this->assertEquals(2, $result[$projects[1]->id]['total_estimated_hours']);
+        $this->assertEquals(1.4 * 3, $result[$projects[0]->id]['total_estimate_hours']);
+        $this->assertEquals(2, $result[$projects[1]->id]['total_estimate_hours']);
     }
 }

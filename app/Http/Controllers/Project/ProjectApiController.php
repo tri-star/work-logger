@@ -55,16 +55,15 @@ class ProjectApiController extends Controller
     {
         $user = \Auth::user();
         $keyword = $request->query('keyword', '');
-
-        if (strlen($keyword) < 2) {
-            $projects = collect([]);
-        } else {
-            $projects = Project::ownedBy($user->id)->includeKeyword($keyword)->get();
+        if (is_null($keyword)) {
+            $keyword = '';
         }
-        $list = $projects->map(function($item) {
+
+        $projects = Project::ownedBy($user->id)->includeKeyword($keyword)->limit(20)->get();
+        $list = $projects->map(function ($item) {
             return [
-                'id' => $item->id,
-                'name' => $item->project_name
+                'id'   => $item->id,
+                'name' => $item->project_name,
             ];
         });
         return new JsonResponse($list);

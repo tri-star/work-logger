@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="clear-fix">
+    <div class="frame-list">
       <WlFrame class="frame-item" :width="'400px;'">
         <template slot="title">
           タスク完了件数
@@ -37,7 +37,7 @@
         </template>
       </WlFrame>
     </div>
-    <div class="clear-fix">
+    <div class="frame-list">
       <ScheduledTaskList
         class="frame-item"
         :width="'400px;'"
@@ -51,6 +51,8 @@
         </template>
         <template slot="body" />
       </WlFrame>
+    </div>
+    <div class="frame-list">
       <InProgressTaskList
         class="frame-item"
         :width="'400px;'"
@@ -60,6 +62,7 @@
       />
       <TaskLogFormContainer ref="taskLogForm" />
     </div>
+    <TaskLogFormContainer ref="taskLogForm" />
   </div>
 </template>
 

@@ -1,0 +1,29 @@
+server {
+  listen *:80 default_server;
+
+  root /work-logger/public;
+
+  location / {
+    try_files $uri @app;
+  }
+
+  location = /status {
+    allow 127.0.0.1;
+    deny all;
+    fastcgi_pass unix:/run/php7.2-fpm.sock;
+    fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+    include fastcgi_params;
+  }
+
+
+  location @app {
+    fastcgi_pass $APP_HOST:9000;
+    fastcgi_param  SCRIPT_FILENAME  $realpath_root/index.php;
+    include fastcgi_params;
+  }
+
+  userid          on;
+  userid_name     wl-web-id;
+  userid_path     /;
+  userid_expires  365d;
+}

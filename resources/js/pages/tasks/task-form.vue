@@ -119,17 +119,17 @@
         </div>
         <div class="col">
           <input
-            v-model="task.estimate_minutes"
+            v-model="task.estimate_hours"
             v-validate="'required|min_value:0.1'"
             type="number"
-            name="estimate_minutes"
+            name="estimate_hours"
             data-vv-as="予定工数"
             class="text-box estimate-time"
           >
           <ul class="errors">
             <li
               v-for="(error, index) in errors.collect(
-                'estimate_minutes'
+                'estimate_hours'
               )"
               :key="index"
             >

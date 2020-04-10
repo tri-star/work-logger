@@ -46,7 +46,7 @@
                     }}h
                   </td>
                   <td class="col-total-estimate-hours">
-                    {{ project.total_estimated_hours }}
+                    {{ project.total_estimate_hours }}
                   </td>
                   <td class="col-date-time">
                     {{ project.updated_at | format_date('YYYY-MM-DD HH:mm:ss') }}
@@ -61,7 +61,6 @@
     <ProjectFormContainer
       ref="projectForm"
     />
-    </projectformcontainer>
   </div>
 </template>
 

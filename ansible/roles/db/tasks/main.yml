@@ -1,5 +1,0 @@
-- include: mysql.yml
-  when: env == 'vagrant'
-
-- include: tbls.yml
-  when: env == 'vagrant'

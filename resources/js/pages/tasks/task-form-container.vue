@@ -19,8 +19,8 @@ export default {
     TaskForm
   },
   props: {
-    project: {
-      type: Object,
+    projectId: {
+      type: Number,
       required: true
     }
   },
@@ -48,7 +48,7 @@ export default {
           title: '',
           start_date: '',
           end_date: '',
-          estimate_minutes: 0,
+          estimate_hours: 0,
           status: 0
         }
       } else {
@@ -71,8 +71,8 @@ export default {
     },
     async addTask (task) {
       const adapter = AdapterFactory.get('TaskAdapter')
-      await adapter.addTask(this.project.id, task)
-      this.$emit('taskRegistered')
+      const result = await adapter.addTask(this.projectId, task)
+      this.$emit('taskRegistered', result.registered_task)
       this.showModal = false
     },
     async updateTask (task) {

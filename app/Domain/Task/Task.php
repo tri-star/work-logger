@@ -27,7 +27,7 @@ class Task extends Model
         'description',
         'start_date',
         'end_date',
-        'estimate_minutes',
+        'estimate_hours',
         'actual_minutes',
         'status',
     ];
@@ -217,6 +217,8 @@ class Task extends Model
             ->where('user_id', $userId)
             ->where('project_id', $projectId)
             ->where('title', 'like', "%{$keyword}%")
+            ->whereIn('status', [Task::STATE_NONE, Task::STATE_IN_PROGRESS])
             ->orderBy('title');
     }
+
 }
