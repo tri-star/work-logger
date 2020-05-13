@@ -18,7 +18,7 @@
     "dependencies": {
         "@babel/core": "^7.9.6",
         "@babel/polyfill": "^7.8.7",
-        "@babel/preset-env": "^7.9.5",
+        "@babel/preset-env": "^7.9.6",
         "@fortawesome/fontawesome-free": "^5.13.0",
         "@nuxtjs/eslint-config": "^2.0.2",
         "@vue/cli-plugin-unit-jest": "^4.3.0",
