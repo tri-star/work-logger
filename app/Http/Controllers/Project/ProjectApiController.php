@@ -2,6 +2,7 @@
 
 namespace WorkLogger\Http\Controllers\Project;
 
+use BeyondCode\ServerTiming\Facades\ServerTiming;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WorkLogger\Domain\Project\Project;
@@ -45,8 +46,10 @@ class ProjectApiController extends Controller
     public function getList()
     {
         $user = \Auth::user();
+        ServerTiming::start('Project: getList');
         $queryBuilder = new ProjectListStatQueryBuilder();
         $projects = $queryBuilder->getProjectList($user);
+        ServerTiming::stop('Project: getList');
         return new JsonResponse($projects);
     }
 
@@ -73,7 +76,10 @@ class ProjectApiController extends Controller
     public function getDetail(int $id)
     {
         $user = \Auth::user();
+        ServerTiming::start('getProjectDetail');
         $project = $this->getProject($id, $user);
+        ServerTiming::stop('getProjectDetail');
+
 
         $json = [
             'id'           => $project->id,
@@ -95,11 +101,13 @@ class ProjectApiController extends Controller
         $user = \Auth::user();
         $project = $this->getProject($id, $user);
 
+        ServerTiming::start('getTaskStatList');
         $taskStatQueryBuilder = new TaskStatQueryBuilder();
         $data = [
             'weekly_done_count' => $taskStatQueryBuilder->getWeeklyDoneTaskStat($project->id),
             'daily_done_list'   => $taskStatQueryBuilder->getDailyDoneTaskList($project->id),
         ];
+        ServerTiming::stop('getTaskStatList');
 
         return new JsonResponse($data);
     }
