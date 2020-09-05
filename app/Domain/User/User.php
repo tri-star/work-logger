@@ -3,6 +3,7 @@
 namespace WorkLogger\Domain\User;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,5 +43,16 @@ class User extends Authenticatable
     public function tasks()
     {
         return $this->hasMany(\WorkLogger\Domain\Task\Task::class);
+    }
+
+    /**
+     * 配列／JSONシリアライズのためデータを準備する
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }
