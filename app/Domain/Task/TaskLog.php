@@ -2,6 +2,7 @@
 
 namespace WorkLogger\Domain\Task;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -22,5 +23,16 @@ class TaskLog extends Model
     public function task()
     {
         return $this->belongsTo(\WorkLogger\Domain\Task\Task::class);
+    }
+
+    /**
+     * 配列／JSONシリアライズのためデータを準備する
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

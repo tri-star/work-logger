@@ -3,6 +3,7 @@
 namespace WorkLogger\Domain\Task;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -66,6 +67,17 @@ class Task extends Model
         ];
     }
 
+
+    /**
+     * 配列／JSONシリアライズのためデータを準備する
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * タスクの状態を更新する(状態変化に伴う操作も実行する)。
@@ -220,5 +232,4 @@ class Task extends Model
             ->whereIn('status', [Task::STATE_NONE, Task::STATE_IN_PROGRESS])
             ->orderBy('title');
     }
-
 }

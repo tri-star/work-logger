@@ -2,6 +2,7 @@
 
 namespace WorkLogger\Domain\Project;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use WorkLogger\Domain\Task\Task;
@@ -67,5 +68,17 @@ class Project extends Model
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+
+    /**
+     * 配列／JSONシリアライズのためデータを準備する
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }
