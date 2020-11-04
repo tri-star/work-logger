@@ -54,7 +54,7 @@
         "jsdom": "^16.2.2",
         "jsdom-global": "^3.0.2",
         "laravel-mix": "^5.0.4",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.20",
         "material-design-icons-iconfont": "^5.0.1",
         "mocha": "^5.2.0",
         "mocha-webpack": "^1.1.0",
