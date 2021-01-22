@@ -7,72 +7,76 @@ jobs:
   php-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Cache composer
-      uses: actions/cache@v1
-      with:
-        path: vendor
-        key: ${{ runner.os }}-node-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Start MySQL
-      run: sudo /etc/init.d/mysql start
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-    - name: Generate key
-      run: php artisan key:generate
-    - name: Create Database
-      run: |
-        mysql -u root -proot -e "grant all privileges on work_logger_test.* to work_logger identified by 'secret';"
-        mysql -u root -proot -e "create database work_logger_test default charset utf8mb4;"
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        DB_HOST: 127.0.0.1
-      run: vendor/bin/phpunit --coverage-clover=coverage.xml
-    - name: Execute migration integrity test.
-      env:
-        DB_HOST: 127.0.0.1
-      run: php artisan migrate:refresh --env=testing
-    - name: upload to Codecov
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: bash <(curl -s https://codecov.io/bash) -f coverage.xml -cF php
+      - uses: actions/checkout@v1
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Setup PHP 7.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.2"
+      - name: Cache composer
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: ${{ runner.os }}-node-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Start MySQL
+        run: sudo /etc/init.d/mysql start
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Create Database
+        run: |
+          mysql -u root -proot -e "grant all privileges on work_logger_test.* to work_logger identified by 'secret';"
+          mysql -u root -proot -e "create database work_logger_test default charset utf8mb4;"
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          DB_HOST: 127.0.0.1
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Execute migration integrity test.
+        env:
+          DB_HOST: 127.0.0.1
+        run: php artisan migrate:refresh --env=testing
+      - name: upload to Codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: bash <(curl -s https://codecov.io/bash) -f coverage.xml -cF php
 
   js-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - uses: actions/checkout@v1
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: Cache node packages
-      uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+      - name: Cache node packages
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-    - name: Install Dependencies
-      run: yarn install
-    - name: Execute lint
-      run: yarn lint-all
-    - name: Execute tests
-      run: yarn test
-    - name: Execute build
-      run: yarn dev
-    - name: upload coverage
-      uses: actions/upload-artifact@v1
-      with:
-        name: jest-coverage
-        path: ./coverage
-    - name: upload to Codecov
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: bash <(curl -s https://codecov.io/bash) -cF javascript
+      - name: Install Dependencies
+        run: yarn install
+      - name: Execute lint
+        run: yarn lint-all
+      - name: Execute tests
+        run: yarn test
+      - name: Execute build
+        run: yarn dev
+      - name: upload coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: jest-coverage
+          path: ./coverage
+      - name: upload to Codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: bash <(curl -s https://codecov.io/bash) -cF javascript
