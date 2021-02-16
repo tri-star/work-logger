@@ -14,4 +14,8 @@ if [ "${USE_TEST_DB}" ]; then
     mysql -u root -psecret -h db -e "grant all privileges on work_logger_test.* to work_logger@'%' identified by 'secret'"
 fi
 
+if [ "${USE_DEBUG}" ]; then
+    mv /usr/local/php/xdebug.ini /usr/local/php/conf.d/
+fi
+
 exec "$@"
