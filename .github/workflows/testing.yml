@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
         with:
-          token: { { secrets.COMPOSER_PRIVATE_TOKEN } }
+          token: ${{ secrets.COMPOSER_PRIVATE_TOKEN }}
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Setup PHP 7.2
@@ -54,7 +54,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
         with:
-          token: { { secrets.COMPOSER_PRIVATE_TOKEN } }
+          token: ${{ secrets.COMPOSER_PRIVATE_TOKEN }}
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
