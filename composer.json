@@ -7,6 +7,12 @@
         "laravel"
     ],
     "license": "MIT",
+    "repositories": {
+        "tri-star/sample-private-lib": {
+            "type": "vcs",
+            "url": "git@github.com:tri-star/sample-private-lib.git"
+        }
+    },
     "require": {
         "php": "^7.2.5",
         "barryvdh/laravel-debugbar": "^3.2",
@@ -16,7 +22,8 @@
         "laravel/passport": "^9.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.2",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "tristar/sample-private-lib": "^0.1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.5",
