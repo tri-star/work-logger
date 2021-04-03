@@ -28,6 +28,25 @@ services:
     depends_on:
       - app
 
+  worker:
+    image: "563848776164.dkr.ecr.us-west-2.amazonaws.com/work-logger-app:latest"
+    build:
+      target: "app"
+      context: "."
+    command:
+      [
+        "/usr/local/bin/php",
+        "/work-logger/artisan",
+        "queue:listen",
+        "--timeout=0",
+      ]
+    environment:
+      APP_HOST: app
+    volumes:
+      - ".:/work-logger"
+    depends_on:
+      - db
+
   db:
     image: "mysql:5.7"
     expose:
@@ -35,7 +54,7 @@ services:
     ports:
       - "18001:3306"
     env_file:
-    - .env
+      - .env
     environment:
       MYSQL_DATABASE: "${DB_DATABASE}"
       MYSQL_USER: "${DB_USERNAME}"
